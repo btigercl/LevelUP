@@ -1,15 +1,10 @@
-import SecretKeys 
+import os
 from angellist import AngelList
-import sys
 
-access_token = SecretKeys.token
-print access_token
-
-
-
+access_token = os.environ.get("AngelList_Token")
 angelapi = AngelList(access_token)
 
-results = angelapi.jobs({'method':'GET', 'query':'python'})
+results = angelapi.jobs({'method':'GET'})
 
 print results
 

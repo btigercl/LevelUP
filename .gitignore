@@ -22,6 +22,7 @@ lib64
 __pycache__
 env
 SecretKeys.py
+secret.sh
 
 # Installer logs
 pip-log.txt
