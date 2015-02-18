@@ -1,0 +1,43 @@
+body{
+	background: #FFFFFF;
+	font-size: medium;
+}
+
+.navbar {
+	font-family: Orbitron;
+	background: #000000;
+	font-size: 150%; 
+	padding: 0;
+	margin: 0;
+} 
+
+/*#page-header {
+	font color: white;
+}*/
+
+#table {
+	display: table;
+	margin: 0;
+	padding: 0;
+	width: 100%;
+}
+
+#search {
+	display: table-cell;
+	vertical-align: top;
+	font-family: Electrolize;
+	font-size: 100%;
+	padding: 15px;
+	border: solid;
+	border width: 2px;
+	border-color: #FAFAFA;
+	width: 20%;
+}
+
+#result {
+	display: table-cell;
+	vertical-align: top;
+	padding: 15px;
+	font-family: Electrolize;
+}
+
