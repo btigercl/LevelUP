@@ -12,21 +12,36 @@ intial_dict = req["jobs"]
 for subdict in intial_dict:
 	skills = []
 	skill_list = []
+	location = []
 	job_id = subdict["id"]
 	date_job_posted = subdict["created_at"]
 	company = subdict["startup"]["name"]
 	job_description = subdict['description']
 	job_title = subdict["title"]
 	for tag in subdict["tags"]:
-		skills.append((tag["name"], tag["id"], tag["display_name"], tag["tag_type"]))
-	for rtup
-	# print ("Job ID: %r \
-	# 	Date Posted: %r\
-	# 	Company: %s \
-	# 	Job Description: %s \
-	# 	Job Title: %s \
-	# 	Skills: %s"
-	# 	 % (job_id, date_job_posted, company, job_description, job_title, skills)	
+		skills.append((tag["id"], tag["display_name"], tag["name"], tag["tag_type"]))
+	for tup in skills:
+		if "SkillTag" in tup:
+			for item in tup:
+				if item != "SkillTag":
+					if type(item) != int:
+						skill_list.append(normalize('NFKD', item).encode('ascii', 'ignore'))
+					else:
+						skill_list.append(item)
+		if "LocationTag" in tup:
+			for item in tup:
+				if item != "LocationTag":
+					if type(item) != int:
+						location.append(normalize('NFKD', item).encode('ascii', 'ignore'))
+					else:
+						location.append(item)
+	print ("Job ID: %r \
+		Date Posted: %r\
+		Company: %s \
+		Location: %r \
+		Job Description: %s \
+		Job Title: %s \
+		Skills: %s") % (job_id, date_job_posted, company, location, job_description, job_title, skill_list)	
 		
 
 
