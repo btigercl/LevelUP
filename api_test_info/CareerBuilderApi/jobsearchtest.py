@@ -1,8 +1,9 @@
 from careerbuilder import CareerBuilder 
-import SecretKeys
+import os
 from unicodedata import normalize  
+import request
 
-DEV_KEY = SecretKeys.Dev_Key 
+DEV_KEY = os.environ.get("CareerBuilder") 
 
 cb =CareerBuilder(DEV_KEY)
 
