@@ -5,10 +5,48 @@
 		<img src="http://media.tumblr.com/tumblr_lv0u82arJO1qhyqty.png">
 	</div>
 	<div id="search">
-		<form action="">
-			<label><input type="search">Search</input></label>
-			<br>
-			<label><input type="submit"></label>
+		<div>
+		<form action="skill_angelList_call" method="GET" role="form" class="form-horizontal">
+			<div class="input-group-btn">
+				<button type="button" class="btn btn-default" 
+					tabindex="-1">Technology
+				</button>
+				<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" tabindex="-1">
+					 <span class="caret"></span>
+					 <span class="sr-only">Toggle Dropdown</span>
+				</button>
+					{{for kw in keywords}}
+					<ul class="dropdown-menu">
+						<li data-id="{{kw.id}}">Python</li>
+					 	<li>Java</li>
+					 	<li>Ruby</li>
+					 	<li class="divider"></li>
+					 	<li><a href="#">Separated link</a></li>
+					</ul>
+			</div>
 		</form>
+		</div>
+		<div>
+		<form action="" method="GET" role="form" class="form-horizontal">
+			<div class="input-group-btn">
+				<button type="button" class="btn btn-default" 
+					tabindex="-1">Job Title  
+				</button>
+				<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" tabindex="-1">
+					<span class="caret"></span>
+					<span class="sr-only">Toggle Dropdown</span>
+				</button>
+					<ul class="dropdown-menu pull-right">
+						<li><a href="#">Action</a></li>
+					 	<li><a href="#">Another action</a></li>
+					 	<li><a href="#">Something else here</a></li>
+					 	<li class="divider"></li>
+					 	<li><a href="#">Separated link</a></li>
+					</ul>
+			   </div>
+			   <!--button type="submit" value=" Send" class="btn btn-success" id="submit" /> Submit -->
+		</form>
+		</div>
 	</div>
+</div>
 {% endblock %}

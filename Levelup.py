@@ -19,6 +19,14 @@ def skill_sets():
 	"""This should render the jinja insert for the graphical representation of skill clusters"""
 	return render_template("clusters.html")
 
+@app.route("skill_angelList_call", methods=["GET"])
+def skill_angelList_call():
+	# request.form.get("skill")
+
+@app.route("/jobtitle_angelList_call", methods=["GET"])
+def jobtitle_angelList_call():
+	
+
 @app.route("/trends")
 def trends():
 	"""This should render the jinja insert for the trends. This should hold the alorythm 

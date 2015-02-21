@@ -16,7 +16,8 @@ def main_angellist(session):
     pass
 
 def load_job_listing(session):
-	"""Called from the main to make use of single api call. Should load AngelList """
+	"""Called from the main to make use of single api call. Should load AngelList Listing ID as key, date listing was posted,
+	job title, role_tag, company  """
 	pass
 
 def load_skills(session):
