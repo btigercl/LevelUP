@@ -26,34 +26,27 @@ def angellist(session):
 			for tup in tag_tups:
 				if "SkillTag" in tup:
 					skill_list = []
-						for item in tup:
-							if item != "SkillTag":
-								if type(item) != int:
-									skill_list.append(normalize('NFKD', item).encode('ascii', 'ignore'))
-								else:
-									skill_list.append(item)
-					skill = slimmodel.Skills 
-					skill.id = skill_list[0]
-					skill.tagdisplayname = skill_list[1]
-					skill.tagname = skill_list[2]
-					session.merge(skill) 
+					for item in tup:
+						if item != "SkillTag":
+							if type(item) != int:
+								skill_list.append(normalize('NFKD', item).encode('ascii', 'ignore'))
+							else:
+								skill_list.append(item)
+					skilltag = slimmodel.Skills(id = skill_list[0], tagdisplayname = skill_list[1], tagname = skill_list[2])
+					session.merge(skilltag) 
 					session.commit()
 
 				if "RoleTag" in tup:
 					roletag_list = []
-						for item in tup:
-							if item != "RoleTag":
-								if type(item) != int:
-									roletag_list.append(normalize('NFKD', item).encode('ascii', 'ignore'))
-								else:
-									roletag_list.append(item)					
-						job = slimmodel.JobTitle 
-						job.id = roletag_list[0]
-						job.tagdisplayname = roletag_list[1]
-						job.tagname = roletag_list[2]
-						job.jobtitle = job_title
-						session.merge(job) 
-						session.commit()
+					for item in tup:
+						if item != "RoleTag":
+							if type(item) != int:
+								roletag_list.append(normalize('NFKD', item).encode('ascii', 'ignore'))
+							else:
+								roletag_list.append(item)					
+					job = slimmodel.JobTitle(id = roletag_list[0], tagdisplay = roletag_list[1], tagname = roletag_list[2], jobtitle = job_title) 
+					session.merge(job) 
+					session.commit()
 
 
 # def skill_cleanse(tup,):

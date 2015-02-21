@@ -3,6 +3,7 @@ from careerbuilder import CareerBuilder
 # import model
 import jinja2
 import os
+from db import slimmodel
 
 app = Flask(__name__)
 app.secret_key = 'kittens'
@@ -17,15 +18,25 @@ def landing():
 @app.route("/skill_sets")
 def skill_sets():
 	"""This should render the jinja insert for the graphical representation of skill clusters"""
-	return render_template("clusters.html")
+	skills = slimmodel.get_skills_list() 
+	jobtitles = slimmodel.get_jobtitles_list()
+	return render_template("clusters.html", skills=skills, jobtitles=jobtitles)
 
-@app.route("skill_angelList_call", methods=["GET"])
+@app.route("/skill_angelList_call", methods=["GET"])
 def skill_angelList_call():
-	# request.form.get("skill")
+	#skill_id = request.form.get("skill")
+	#make a call to AngleList in seperate file 
+	#return scrubed info. convert to json object
+	#send to D3 script 
+	pass 
 
 @app.route("/jobtitle_angelList_call", methods=["GET"])
 def jobtitle_angelList_call():
-	
+	#jobtitle_id = request.form.get("jobtitle")
+	#make a call to AngleList in seperate file 
+	#return scrubed info. convert to json object
+	#send to D3 script 
+	pass 	
 
 @app.route("/trends")
 def trends():
@@ -33,10 +44,36 @@ def trends():
 	for line graphs"""
 	return render_template("trends.html")
 
+@app.route("/db_call_trend_lanuage", methods=["GET"])
+def db_call_trend_lanuage():
+	#language1 = request.form.get("language1")
+	#language2 = request.form.get("language2")
+	#language3 = request.form.get("language3")
+	#makes database call based on values
+	#returns info
+	#pass info to D3 file 
+	pass
+
 @app.route("/geographic_demand")
 def geographic_demand():
 	"""Render jinja insert for geographic_demands. Map of geographic demand for skill set""" 
 	return render_template("geo.html")
+
+@app.route("/geographic_demand_skill", methods=["GET"])
+def geographic_demand_skill():
+	#skill = request.form.get("skill")
+	#make careerbuilder api call with skill name
+	#get back dict of lat and long of job listings with this skill
+	#pass lat and long to D3 file
+	pass
+
+@app.route("/geographic_demand_jobtitle", methods=["GET"])
+def geographic_demand_jobtitle():
+	#jobtitle = request.form.get("jobtitle")
+	#make careerbuilder api call with jobtitle name
+	#get back dict of lat and long of job listings with this skill
+	#pass lat and long to D3 file
+	pass 
 
 # @app.route("/new_data_requests")
 # def new_data_requests():

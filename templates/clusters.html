@@ -4,49 +4,25 @@
 	<div id="results">
 		<img src="http://media.tumblr.com/tumblr_lv0u82arJO1qhyqty.png">
 	</div>
-	<div id="search">
-		<div>
-		<form action="skill_angelList_call" method="GET" role="form" class="form-horizontal">
-			<div class="input-group-btn">
-				<button type="button" class="btn btn-default" 
-					tabindex="-1">Technology
-				</button>
-				<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" tabindex="-1">
-					 <span class="caret"></span>
-					 <span class="sr-only">Toggle Dropdown</span>
-				</button>
-					{{for kw in keywords}}
-					<ul class="dropdown-menu">
-						<li data-id="{{kw.id}}">Python</li>
-					 	<li>Java</li>
-					 	<li>Ruby</li>
-					 	<li class="divider"></li>
-					 	<li><a href="#">Separated link</a></li>
-					</ul>
-			</div>
+	<<div id="search">
+		<form action="/skill_angelList_call">
+			 Select Technology: 
+	        <label><SELECT name="selected_skill">
+	            {% for i in skills %}
+	            <label><option value={{ i.id }}>{{ i.tagdisplayname }}</option></label>
+	            {% endfor %}
+	        </SELECT></label>
+	        <label><input type="submit">Submit</input></label>
 		</form>
-		</div>
-		<div>
-		<form action="" method="GET" role="form" class="form-horizontal">
-			<div class="input-group-btn">
-				<button type="button" class="btn btn-default" 
-					tabindex="-1">Job Title  
-				</button>
-				<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" tabindex="-1">
-					<span class="caret"></span>
-					<span class="sr-only">Toggle Dropdown</span>
-				</button>
-					<ul class="dropdown-menu pull-right">
-						<li><a href="#">Action</a></li>
-					 	<li><a href="#">Another action</a></li>
-					 	<li><a href="#">Something else here</a></li>
-					 	<li class="divider"></li>
-					 	<li><a href="#">Separated link</a></li>
-					</ul>
-			   </div>
-			   <!--button type="submit" value=" Send" class="btn btn-success" id="submit" /> Submit -->
-		</form>
-		</div>
+		<br>
+		<form action="/jobtitle_angelList_call" >
+	        Select Job Title:
+	        <label><SELECT name="select_jobtitle">
+	            {% for i in jobtitles %}
+	            <label><option value={{ i.id }}>{{ i.tagdisplay }}</option></label>
+	            {% endfor %}
+	        </SELECT></label>
+	        <label><input type="submit">Submit</input></label>
+       </form>
 	</div>
-</div>
 {% endblock %}
