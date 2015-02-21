@@ -5,13 +5,13 @@ from sqlalchemy.orm import sessionmaker, scoped_session
 from sqlalchemy import ForeignKey
 from sqlalchemy.orm import relationship, backref
 
-# ENGINE = None
-# Session = None
-ENGINE = create_engine("sqlite:///levelup.db", echo=True)
-Session = scoped_session(sessionmaker(bind=ENGINE, autocommit = False, autoflush = False))
+ENGINE = None
+Session = None
+# ENGINE = create_engine("sqlite:///levelup.db", echo=True)
+# Session = scoped_session(sessionmaker(bind=ENGINE, autocommit = False, autoflush = False))
 
 Base = declarative_base()
-Base.query = Session.query_property()
+# Base.query = Session.query_property()
 
 #Class declaratison
 class JobTitle(Base):
@@ -73,5 +73,5 @@ def connect():
 
     return Session()
 
-if __name__ == "__main__":
-    main()
+# if __name__ == "__main__":
+#     main()
