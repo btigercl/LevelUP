@@ -5,7 +5,9 @@ import time
 import datetime
 import gzip
 import urllib2
-from dateutil.relativedelta import relativedelta
+from StringIO import StringIO
+from relativedelta import relativedelta
+# import slimmodel 
 
 
 DEV_KEY = os.environ.get("StackExchange_Key")
@@ -14,13 +16,11 @@ def date_converstion(date):
     #changes reable dates to unix
     cleandate = datetime.datetime.strptime(date, '%Y-%m-%d')
     converted_date = time.mktime(cleandate.timetuple())
-    return str(int(converted_date))
+    return int(converted_date)
 
-def tag_count_by_month(tag, fromyearmonthday, toyearmonthday, DEV_KEY):
+def tag_count_by_day(tag, fromyearmonthday, toyearmonthday, DEV_KEY):
     list = []
-    fd = date_converstion(fromyearmonthday)
-    td = date_converstion(toyearmonthday)
-    addy = ("http://api.stackexchange.com/2.2/tags?fromdate=" + fd + "&todate=" + td + "&order=desc&sort=popular&inname=" + tag + "&site=stackoverflow&key=" + DEV_KEY)
+    addy = ("http://api.stackexchange.com/2.2/tags?fromdate=" + str(fromyearmonthday) + "&todate=" + str(toyearmonthday) + "&order=desc&sort=popular&inname=" + tag + "&site=stackoverflow&key=" + DEV_KEY)
     req = urllib2.Request(addy)
     req.add_header('Accept-encoding', 'gzip')
     response = urllib2.urlopen(req)
@@ -38,13 +38,16 @@ def tag_count_by_month(tag, fromyearmonthday, toyearmonthday, DEV_KEY):
     # session.commit()
 
 def main():
-    while start_
-        
-        start_date_from = "2008-09-01"
-        start_date_to = "2008-09-30"
-
-    tag_count_by_month("python", start_date_from, start_date_to, DEV_KEY)
-    if 
+    start_date_from = date_converstion("2008-09-01")
+    start_date_to = date_converstion("2008-09-02") 
+    current = (time.time())
+    while start_date_to <= current:
+        tag_count_by_day("python", start_date_from, start_date_to, DEV_KEY)    
+        start_date_from = start_date_from + 86400
+        start_date_to = start_date_to + 86400 
+        time.sleep(0.1)
+        print start_date_from
+        print start_date_to
 
 if __name__ == "__main__":
     main()
