@@ -2,7 +2,11 @@
 {% block body %}
 <div id="table">
 	<div id="results">
-		<img src="http://media.tumblr.com/tumblr_lv0u82arJO1qhyqty.png">
+		<ul> Results 
+		{%for key, value in skill_dict.iteritems() %}
+			<li>{{ key }}: {{ value }}</li>
+		{% endfor %}	
+		</ul>
 	</div>
 	<div id="search">
 		<form action="/skill_angelList_call" method="POST">
@@ -14,16 +18,5 @@
 	        </SELECT></label>
 	        <label><input type="submit">Submit</input></label>
 		</form>
-		<br>
-		<!---<form action="/jobtitle_angelList_call" >
-	        Select Job Title:
-	        <label><SELECT name="select_jobtitle">
-	            {% for i in jobtitles %}
-	            <label><option value={{ i.id }}>{{ i.tagdisplay }}</option></label>
-	            {% endfor %}
-	        </SELECT></label>
-	        <label><input type="submit">Submit</input></label>
-       </form>
-       -->
 	</div>
 {% endblock %}

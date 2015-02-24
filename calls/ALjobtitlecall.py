@@ -25,8 +25,4 @@ def ALjobtitlecall(id):
 				for tup in tag_tups:
 					if "RoleTag" in tup:
 						jobtitle_dict[normalize('NFKD', tup[1]).encode('ascii', 'ignore')] = jobtitle_dict.get(normalize('NFKD', tup[1]).encode('ascii', 'ignore'), 0) + 1
-	print jobtitle_dict
 	return jobtitle_dict 
-
-
-fun = ALjobtitlecall(14775)

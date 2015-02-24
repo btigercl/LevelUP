@@ -1,9 +1,10 @@
 from flask import Flask, render_template, redirect, request, session, flash, g, url_for
 from careerbuilder import CareerBuilder 
-# import model
 import jinja2
 import os
 from db import slimmodel
+from calls import ALskillcall, ALjobtitlecall
+
 
 app = Flask(__name__)
 app.secret_key = 'kittens'
@@ -22,13 +23,14 @@ def skill_sets():
 	jobtitles = slimmodel.get_jobtitles_list()
 	return render_template("clusters.html", skills=skills, jobtitles=jobtitles)
 
-@app.route("/skill_angelList_call", methods=["GET"])
+@app.route("/skill_angelList_call", methods=["POST"])
 def skill_angelList_call():
-	#skill_id = request.form.get("skill")
-	#make a call to AngleList in seperate file 
-	#return scrubed info. convert to json object
-	#send to D3 script 
-	pass 
+	skill_id = request.form.get("selected_skill")
+	print skill_id
+	skills = slimmodel.get_skills_list() 
+	AL_skills_dict = ALskillcall.ALskillcall(skill_id)
+	return render_template("skill_response.html", skill_dict =AL_skills_dict, skills=skills)
+	 
 
 @app.route("/jobtitle_angelList_call", methods=["GET"])
 def jobtitle_angelList_call():
