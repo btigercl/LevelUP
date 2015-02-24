@@ -3,7 +3,7 @@ from careerbuilder import CareerBuilder
 import jinja2
 import os
 from db import slimmodel
-from calls import ALskillcall, ALjobtitlecall
+from calls import ALskillcall, ALjobtitlecall, CBskillcall
 
 
 app = Flask(__name__)
@@ -26,19 +26,12 @@ def skill_sets():
 @app.route("/skill_angelList_call", methods=["POST"])
 def skill_angelList_call():
 	skill_id = request.form.get("selected_skill")
-	print skill_id
 	skills = slimmodel.get_skills_list() 
 	AL_skills_dict = ALskillcall.ALskillcall(skill_id)
+	#jsonify 
+	#pass to D3
 	return render_template("skill_response.html", skill_dict =AL_skills_dict, skills=skills)
-	 
-
-@app.route("/jobtitle_angelList_call", methods=["GET"])
-def jobtitle_angelList_call():
-	#jobtitle_id = request.form.get("jobtitle")
-	#make a call to AngleList in seperate file 
-	#return scrubed info. convert to json object
-	#send to D3 script 
-	pass 	
+	 	
 
 @app.route("/trends")
 def trends():
@@ -59,23 +52,18 @@ def db_call_trend_lanuage():
 @app.route("/geographic_demand")
 def geographic_demand():
 	"""Render jinja insert for geographic_demands. Map of geographic demand for skill set""" 
-	return render_template("geo.html")
+	skills = slimmodel.get_skills_list()
+	return render_template("geo.html", skills = skills)
 
-@app.route("/geographic_demand_skill", methods=["GET"])
+@app.route("/geographic_demand_skill", methods=["POSt"])
 def geographic_demand_skill():
-	#skill = request.form.get("skill")
-	#make careerbuilder api call with skill name
-	#get back dict of lat and long of job listings with this skill
-	#pass lat and long to D3 file
-	pass
-
-@app.route("/geographic_demand_jobtitle", methods=["GET"])
-def geographic_demand_jobtitle():
-	#jobtitle = request.form.get("jobtitle")
-	#make careerbuilder api call with jobtitle name
-	#get back dict of lat and long of job listings with this skill
-	#pass lat and long to D3 file
-	pass 
+	skill = request.form.get("selected_skill")
+	print skill
+	lat_long_tups = CBskillcall.cbskill(skill)
+	skills = slimmodel.get_skills_list()
+	#jsonify 
+	#pass to D3
+	return render_template("geo_response.html", geo_tups=lat_long_tups, skills = skills)
 
 # @app.route("/new_data_requests")
 # def new_data_requests():
