@@ -1,18 +1,21 @@
+// <script type=text/javascript>
+function updateGeo(evt){
+  evt.preventDefault();
 
-
-// $('#myTab a').click(function (e) {
-//  	e.preventDefault();
-// 	$(this).tab('show');
-// })
-
-// window.onload(){
-// 	function onclick
-// 	var name = clickevent
-// 	change to active 
-// 	toogle active = true to false...
-// }
-
-// event listner 
+  $.post("/geographic_demand_skill",
+        $('#geo_skill').serialize(), 
+        function(result) {
+        console.log(result);
+        // var sum = "";
+        //   for(var i = 0; i < result.length; i++) {
+        //       // tup = result[i];
+        //       sum += "Job Location: " + result[i][0] + " Latitude : " + result[i][1] + "<br>";
+        //   }
+        $("#geo_results").html(result); 
+        }
+    );	
+}
+$('#geo_skill_button').on('click', updateGeo);
 
 
 

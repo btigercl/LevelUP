@@ -1,9 +1,10 @@
-from flask import Flask, render_template, redirect, request, session, flash, g, url_for
+from flask import Flask, render_template, redirect, request, session, flash, g, url_for, jsonify
 from careerbuilder import CareerBuilder 
 import jinja2
 import os
 from db import slimmodel
 from calls import ALskillcall, ALjobtitlecall, CBskillcall
+import json
 
 
 app = Flask(__name__)
@@ -25,6 +26,7 @@ def skill_sets():
 
 @app.route("/skill_angelList_call", methods=["POST"])
 def skill_angelList_call():
+	"""This makes a dynamic call to AngleList for related skills to the user selected skill"""
 	skill_id = request.form.get("selected_skill")
 	skills = slimmodel.get_skills_list() 
 	AL_skills_dict = ALskillcall.ALskillcall(skill_id)
@@ -55,15 +57,17 @@ def geographic_demand():
 	skills = slimmodel.get_skills_list()
 	return render_template("geo.html", skills = skills)
 
-@app.route("/geographic_demand_skill", methods=["POSt"])
+@app.route("/geographic_demand_skill", methods=["POST"])
 def geographic_demand_skill():
+	"""This makes a dynamic call to CareerBuilder to return lat/long/location of demand for a skill set"""
 	skill = request.form.get("selected_skill")
-	print skill
 	lat_long_tups = CBskillcall.cbskill(skill)
-	skills = slimmodel.get_skills_list()
+	print lat_long_tups
+	return json.dumps(lat_long_tups)
+	# skills = slimmodel.get_skills_list()
 	#jsonify 
 	#pass to D3
-	return render_template("geo_response.html", geo_tups=lat_long_tups, skills = skills)
+	# return render_template("geo_response.html", geo_tups=lat_long_tups, skills = skills)
 
 # @app.route("/new_data_requests")
 # def new_data_requests():
