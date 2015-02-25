@@ -23,20 +23,15 @@ def tag_count_by_day(tag, tag_id, fromyearmonthday, toyearmonthday, DEV_KEY):
 
 	list = []
 	backoff = 1
-	response = requests.get("http://api.stackexchange.com/2.2/tags?fromdate=" + str(fromyearmonthday) + "&todate=" + str(toyearmonthday) + "&order=desc&sort=popular&inname=" + tag + "&site=stackoverflow&key=" + DEV_KEY) 
+	response = requests.get("http://api.stackexchange.com/2.2/questions?fromdate=" + str(fromyearmonthday) + "&todate=" + str(toyearmonthday) + "&order=desc&sort=activity&tagged=" + tag + "&site=stackoverflow&filter=!9YdnSQVoS&key=" + DEV_KEY) 
 	if "backoff" in response.headers:
 		backoff = int(response.headers["backoff"])
-	total = 0
-	parse = response.json()["items"]
-	for sub in parse:
-		count = sub["count"]
-		total = total + count
+	count = response.json()["total"]
 	date = datetime.datetime.fromtimestamp(fromyearmonthday)
 	trend_id = fromyearmonthday + tag_id
-	trends = slimmodel.Stack_Overflow_Trends(id=trend_id, skill_id = tag_id, skill = tag, date_epoc = date, question_count = total)
-	slimmodel.Session.add(trends)
+	trends = slimmodel.Stack_Overflow_Trends(id=trend_id, skill_id = tag_id, skill = tag, date_epoc = date, question_count = count)
+	slimmodel.Session.merge(trends)
 	slimmodel.Session.commit()
-	print backoff
 	return backoff
 
 # def question_count_by_day(fromyearmonthday, toyearmonthday, DEV_KEY):
@@ -60,11 +55,11 @@ def main():
 	"""this should make calls to stackexchange every .1 to retreive the number of questions per day since stack
 	overflow's founding until present"""  
 
-	start_date_from = date_converstion("2008-09-15")
-	start_date_to = date_converstion("2008-09-16") 
+	start_date_from = date_converstion("2009-02-26")
+	start_date_to = date_converstion("2009-02-27") 
 	current = (time.time())
 	while start_date_to <= current:
-		time.sleep(tag_count_by_day("Java", 14780, start_date_from, start_date_to, DEV_KEY))    
+		time.sleep(tag_count_by_day("javascript", 14781, start_date_from, start_date_to, DEV_KEY))    
 		start_date_from = start_date_from + 86400
 		start_date_to = start_date_to + 86400 
 

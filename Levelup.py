@@ -30,9 +30,9 @@ def skill_angelList_call():
 	skill_id = request.form.get("selected_skill")
 	skills = slimmodel.get_skills_list() 
 	AL_skills_dict = ALskillcall.ALskillcall(skill_id)
-	#jsonify 
+	return jsonify(AL_skills_dict) 
 	#pass to D3
-	return render_template("skill_response.html", skill_dict =AL_skills_dict, skills=skills)
+	# return render_template("skill_response.html", skill_dict =AL_skills_dict, skills=skills)
 	 	
 
 @app.route("/trends")
@@ -62,10 +62,7 @@ def geographic_demand_skill():
 	"""This makes a dynamic call to CareerBuilder to return lat/long/location of demand for a skill set"""
 	skill = request.form.get("selected_skill")
 	lat_long_tups = CBskillcall.cbskill(skill)
-	print lat_long_tups
 	return json.dumps(lat_long_tups)
-	# skills = slimmodel.get_skills_list()
-	#jsonify 
 	#pass to D3
 	# return render_template("geo_response.html", geo_tups=lat_long_tups, skills = skills)
 

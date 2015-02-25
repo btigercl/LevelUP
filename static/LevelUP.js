@@ -6,17 +6,24 @@ function updateGeo(evt){
         $('#geo_skill').serialize(), 
         function(result) {
         console.log(result);
-        // var sum = "";
-        //   for(var i = 0; i < result.length; i++) {
-        //       // tup = result[i];
-        //       sum += "Job Location: " + result[i][0] + " Latitude : " + result[i][1] + "<br>";
-        //   }
         $("#geo_results").html(result); 
         }
     );	
 }
 $('#geo_skill_button').on('click', updateGeo);
 
+function updateCluster(evt){
+  evt.preventDefault();
+
+  $.post("/skill_angelList_call",
+        $('#skill_cluster').serialize(), 
+        function(result) {
+        console.log(result);
+        $("#cluster_results").html(result); 
+        }
+    );	
+}
+$('#skill_cluster_button').on('click', updateCluster);
 
 
 $('a[data-nexttab]').on('click', function () {
