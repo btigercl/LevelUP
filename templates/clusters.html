@@ -7,9 +7,9 @@
 	<div id="search">
 		<form action="/skill_angelList_call" method="POST">
 			 Select Technology: 
-	        <label><SELECT name="selected_skill">
+	        <label><SELECT name="selected_skill" id="skill_dropdown">
 	            {% for i in skills %}
-	            <label><option value={{ i.id }}>{{ i.tagdisplayname }}</option></label>
+	            <label><option value="{{ i.id }}">{{ i.tagdisplayname }}</option></label>
 	            {% endfor %}
 	        </SELECT></label>
 	        <label><input type="submit" id="skill_cluster_button">Submit</input></label>

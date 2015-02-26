@@ -57,12 +57,15 @@ class Stack_Overflow_Trends(Base):
 		return "Key_word: %s, Month_Year: %r, Monthly_Occurances: %d" % (keyword, mon_year, monthly_occurances)
 
 def get_jobtitles_list():
-		jobtitles_list = Session.query(JobTitle).all()
-		return jobtitles_list
+	jobtitles_list = Session.query(JobTitle).all()
+	return jobtitles_list
 
 def get_skills_list():
-		skill_list = Session.query(Skills).all()
-		return skill_list
+	skill_list = Session.query(Skills).all()
+	return skill_list
+
+def get_skill_by_id(passed_id):
+	skill_name = Session.query(Skills).filter_by(id=passed_id).first()
 
 # def connect():
 #     global ENGINE

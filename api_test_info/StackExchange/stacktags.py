@@ -51,20 +51,40 @@ def tag_count_by_day(tag, tag_id, fromyearmonthday, toyearmonthday, DEV_KEY):
 # 	slimmodel.Session.commit()
 # 	return backoff
 
-def main():
+def stackexchange_call(name, skill_id):
 	"""this should make calls to stackexchange every .1 to retreive the number of questions per day since stack
 	overflow's founding until present"""  
 
-	start_date_from = date_converstion("2009-02-26")
-	start_date_to = date_converstion("2009-02-27") 
+	start_date_from = date_converstion("2008-08-15")
+	start_date_to = date_converstion("2008-08-16") 
 	current = (time.time())
 	while start_date_to <= current:
-		time.sleep(tag_count_by_day("javascript", 14781, start_date_from, start_date_to, DEV_KEY))    
+		time.sleep(tag_count_by_day(name, skill_id, start_date_from, start_date_to, DEV_KEY))    
 		start_date_from = start_date_from + 86400
 		start_date_to = start_date_to + 86400 
+
+def main():
+	seeds =	[("html", 15592), ("android", 16680), ("iphone", 21253), ("c#", 16020),]
+
+	for seed in seeds:
+		name = seed[0]
+		skill_id = seed[1] 
+		stackexchange_call(name, skill_id)
+		print "done" 
+
 
 if __name__ == "__main__":
 	main()
 
+#To Seed
+# ("c++", ), (".net", ), ("php", ), ("c", )
+#('jquery', ), ("css", ), ('ajax'), ('json', )
+#("angularjs", ), ("ruby-on-rails"), ("django", ), 
+#
+
+
+
+#Seeded
+# "java", 14780), ("ruby", 17184), ("perl", 25893), (javascript, ), (python, )
 
 	# 16+zlib.MAX_WBITS

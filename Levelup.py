@@ -21,16 +21,18 @@ def landing():
 def skill_sets():
 	"""This should render the jinja insert for the graphical representation of skill clusters"""
 	skills = slimmodel.get_skills_list() 
-	jobtitles = slimmodel.get_jobtitles_list()
-	return render_template("clusters.html", skills=skills, jobtitles=jobtitles)
+	return render_template("clusters.html", skills=skills)
 
 @app.route("/skill_angelList_call", methods=["POST"])
 def skill_angelList_call():
 	"""This makes a dynamic call to AngleList for related skills to the user selected skill"""
 	skill_id = request.form.get("selected_skill")
-	skills = slimmodel.get_skills_list() 
-	AL_skills_dict = ALskillcall.ALskillcall(skill_id)
-	return jsonify(AL_skills_dict) 
+	skills = slimmodel.get_skills_list()
+	skill_name = "python"
+	# slimmodel.get_skill_by_id(skill_id)
+	AL_skills_dict = ALskillcall.ALskillcall(skill_id, skill_name)
+	jsoned = jsonify(AL_skills_dict) 
+	return jsoned
 	#pass to D3
 	# return render_template("skill_response.html", skill_dict =AL_skills_dict, skills=skills)
 	 	
