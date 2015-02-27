@@ -18,81 +18,63 @@ function updateCluster(evt){
   $.post("/skill_angelList_call",
         $('#skill_dropdown').serialize(), 
         function(results) {
-        console.log(results);
         // pass this to d3
-        visualizeCluster(results); 
+          visualizeCluster(results); 
         }
     );	
 }
 $('#skill_cluster_button').on('click', updateCluster);
 
 
-
-function visualizeCluster(link){  
-            debugger;
-            console.log(links)
-
-            // var mainSkill = links.main_skill
-            // var nodes = {};
-    var width = 960,
-        height = 500;
-
-    var force = d3.layout.force()
-        .nodes(d3.values(nodes))
-        .links(links)
-        .size([width, height])
-        .linkDistance(60)
-        .charge(-300)
-        .on("tick", tick)
-        .start();
-
-    var svg = d3.select("#cluster_results").append("svg")
-        .attr("width", width)
-        .attr("height", height);  
-
-
-
-
-  function update(link) {
-      var nodes = flatten(link),
-      links = d3.layout.tree().links(nodes);
-                // Restart the force layout.
-      force
-          .nodes(nodes)
-          .links(links)
-          .start();
-
-      // Update links.
-      link = link.data(links, function(d) { return d.target.id; });
-
-      link.exit().remove();
-
-      link.enter().insert("line", ".node")
-          .attr("class", "link");
-
-        // Update nodes.
-      node = node.data(nodes, function(d) { return d.id; });
-
-      node.exit().remove();
-
-      var nodeEnter = node.enter().append("g")
-          .attr("class", "node")
-          .on("click", click)
-          .call(force.drag);
-
-      nodeEnter.append("circle")
-          .attr("r", function(d) { return Math.sqrt(d.size) / 10 || 4.5; });
-
-      nodeEnter.append("text")
-          .attr("dy", ".35em")
-          .text(function(d) { return d.name; });
-
-      node.select("circle")
-          .style("fill", color);
+function makeNodes(links){
+      var nodes = {};
+      var mainSkill = links.main_skill
+      nodes[mainSkill] = {source:mainSkill}
+      for (idx in links.children) {
+                var link = links.children[idx];
+                // sourceNode = nodes[link.name] || 
+                //     (nodes[link.name] = {source: mainSkill, count: link.count});
+                link.targetNode = nodes[link.name] || 
+                    (nodes[link.name] = {source: mainSkill, name: link.name, count: link.count});
+                link.value = +link.value;
+            }
+        console.log(nodes)
+        return nodes
 }
 
+function visualizeCluster(links){  
 
-          
+            var links;
+            var nodes = makeNodes(links);
+            
+            // Compute the distinct nodes from the links.
+            // for (var i; i < links.children.length; i++) {
+            //     var link = links.children[i];
+            //     console.log(i);
+            //     console.log(link);
+            //     // sourceNode = nodes[link.name] || 
+            //     //     (nodes[link.name] = {source: mainSkill, count: link.count});
+            //     link.targetNode = nodes[link.name] || 
+            //         (nodes[link.name] = {source: mainSkill, name: link.name, count: link.count});
+            //     link.value = +link.value;
+            // }
+            // console.log(nodes)
+
+            var width = 960,
+                height = 500;
+
+            var force = d3.layout.force()
+                .nodes(d3.values(nodes))
+                .links(links)
+                .size([width, height])
+                .linkDistance(60)
+                .charge(-300)
+                .on("tick", tick)
+                .start();
+
+            var svg = d3.select("#cluster_results").append("svg")
+                .attr("width", width)
+                .attr("height", height);            
 
             // add the links and the arrows
             var path = svg.append("svg:g").selectAll("path")
@@ -146,22 +128,3 @@ $('a[data-nexttab]').on('click', function () {
     var id = $(this).data('nexttab');
     $('.nav-tabs li:eq(' + id + ') a').tab('show');   
 });
-
-
-
-//code bone yard 
-            // nodes[mainSkill] = {source:mainSkill, count: links.total}
-            // Compute the distinct nodes from the links.
-            
-            // $.each()
-            // links.forEach(function(link) {
-            //     // sourceNode = nodes[link.name] || 
-            //     //     (nodes[link.name] = {source: mainSkill, count: link.count});
-            //     link.targetNode = nodes[link.name] || 
-            //         (nodes[link.name] = {source: mainSkill, count: link.count});
-            //     link.value = +link.value;;
-            // });
-
-
-            // console.log(links);
-            // console.log(nodes);
