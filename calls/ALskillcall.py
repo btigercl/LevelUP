@@ -33,7 +33,7 @@ def ALskillcall(id, skill_name):
 	
 	dict_list = []                                                                                                                      
 	for skill in skill_dict:
-		dict_list.append({"name": skill, "count": skill_dict.get(skill)})
+		dict_list.append({"source": skill_name, "name": skill, "count": skill_dict.get(skill)})
 	final = {"main_skill": skill_name, "children": dict_list}   	 				
 	return final
 

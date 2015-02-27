@@ -10,27 +10,43 @@ function updateGeo(evt){
         }
     );	
 }
-$('#geo_skill_button').on('click', updateGeo);
+// $('#geo_skill_button').on('click', updateGeo);
+
+// function updateCluster(evt){
+//   evt.preventDefault();
+
+//   $.post("/skill_angelList_call",
+//         $('#skill_dropdown').serialize(), 
+//         function(results) {
+//         // pass this to d3
+//           visualizeCluster(results); 
+//         }
+//     );	
+// }
+// $('#skill_cluster_button').on('click', updateCluster);
+
+
 
 function updateCluster(evt){
   evt.preventDefault();
 
-  $.post("/skill_angelList_call",
-        $('#skill_dropdown').serialize(), 
-        function(results) {
-        // pass this to d3
-          visualizeCluster(results); 
-        }
-    );	
+  var links;
+  var skill_id= $( "select[name='selected_skill']" ).val();
+  console.log(skill_id)
+
+  d3.json( "/skill_angelList_call?selected_skill=" + skill_id, function(error, json) {
+      links = json;
+      visualizeCluster(links);
+    });  
 }
 $('#skill_cluster_button').on('click', updateCluster);
 
 
 function makeNodes(links){
       var nodes = {};
-      var mainSkill = links.main_skill
+      var mainSkill = links.main_skill;
       nodes[mainSkill] = {source:mainSkill}
-      for (idx in links.children) {
+        for (idx in links.children) {
                 var link = links.children[idx];
                 // sourceNode = nodes[link.name] || 
                 //     (nodes[link.name] = {source: mainSkill, count: link.count});
@@ -38,34 +54,49 @@ function makeNodes(links){
                     (nodes[link.name] = {source: mainSkill, name: link.name, count: link.count});
                 link.value = +link.value;
             }
-        console.log(nodes)
+        // console.log(nodes);
         return nodes
+}
+
+function processDataIntoLinks(links){
+    var hold = {};
+        for (idx in links.children) {
+            var link = links.children[idx];
+                // link.source = hold[link.name] || 
+                //      (hold[link.name] = {name: mainSkill, source: mainSkill });
+                link.target = hold[link.name] || 
+                    (hold[link.name] = {target: idx, source: 0, weight: link.count});
+                link.value = +link.value;
+            }
+    // console.log(hold);
+    return hold
 }
 
 function visualizeCluster(links){  
 
-            var links;
-            var nodes = makeNodes(links);
-            
-            // Compute the distinct nodes from the links.
-            // for (var i; i < links.children.length; i++) {
-            //     var link = links.children[i];
-            //     console.log(i);
-            //     console.log(link);
-            //     // sourceNode = nodes[link.name] || 
-            //     //     (nodes[link.name] = {source: mainSkill, count: link.count});
-            //     link.targetNode = nodes[link.name] || 
-            //         (nodes[link.name] = {source: mainSkill, name: link.name, count: link.count});
-            //     link.value = +link.value;
-            // }
-            // console.log(nodes)
+    var links;
+    console.log(links);
 
-            var width = 960,
+    // links.forEach(function(link) {
+    //     link.source = nodes[link.source] || 
+    //         (nodes[link.source] = {name: link.source, source: link.source});
+    //     link.target = nodes[link.target] || 
+    //         (nodes[link.name] = {name: link.name, source: link.source.name});
+    //     link.count = +link.count;
+    // });
+
+            var nodes = makeNodes(links);
+            var link = processDataIntoLinks(links);
+
+            // var links = d3.layout().links(nodes);
+            // console.log(links);
+           
+            var width = 1000,
                 height = 500;
 
             var force = d3.layout.force()
+                .links(link)
                 .nodes(d3.values(nodes))
-                .links(links)
                 .size([width, height])
                 .linkDistance(60)
                 .charge(-300)
@@ -77,9 +108,9 @@ function visualizeCluster(links){
                 .attr("height", height);            
 
             // add the links and the arrows
-            var path = svg.append("svg:g").selectAll("path")
-                .data(force.links())
-                .enter().append("svg:path")
+            var link = svg.selectAll(".link")
+                .data(links)
+                .enter().append("line")
                 .attr("class", "link");
                 
             // define the nodes
@@ -101,8 +132,11 @@ function visualizeCluster(links){
                 .attr("dy", ".35em")
                 .text(function(d) { return d.name; });
 
+
+
+
             function tick() {
-                path.attr("d", function(d) {
+                link.attr("d", function(d) {
                     var dx = d.target.x - d.source.x,
                         dy = d.target.y - d.source.y,
                         dr = Math.sqrt(dx * dx + dy * dy);
@@ -117,10 +151,10 @@ function visualizeCluster(links){
                 node
                     .attr("transform", function(d) { 
                     return "translate(" + d.x + "," + d.y + ")"; });
-            }
+        force.start();
+    }
 }
 
-$('#skill_cluster_button').on('click', updateCluster);
 
 
 

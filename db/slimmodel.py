@@ -24,7 +24,7 @@ class JobTitle(Base):
 	jobtitle = Column(String(64), nullable=False)
 
 	def __repr__(self):
-		return "Job Title: %d, Tag Name: %s, Tag Display: %s, Job_id: %s" % (id, angellist_tagdisplay, key_word, job_id)
+		return "Job Title: %d, Tag Name: %s, Tag Display: %s, Job_id: %s" % (self.id, self.tagdisplay, self.tagname, self.jobtitle)
 	
 
 class Skills(Base):
@@ -36,7 +36,7 @@ class Skills(Base):
 	tagname = Column(String(64), nullable=False)
 		
 	def __repr__(self):
-		return "Skills ID: %d, Skill: %s, Skill Displaytag: %s" % (id, angellist_tag_name, angellist_tagdisplay)
+		return "Skills ID: %d, Skill: %s, Skill Displaytag: %s" % (self.id, self.tagdisplayname, self.tagname)
 
 	
 
@@ -66,7 +66,7 @@ def get_skills_list():
 
 def get_skill_by_id(passed_id):
 	skill_name = Session.query(Skills).filter_by(id=passed_id).first()
-
+	return skill_name
 # def connect():
 #     global ENGINE
 #     global Session

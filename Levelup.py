@@ -23,13 +23,15 @@ def skill_sets():
 	skills = slimmodel.get_skills_list() 
 	return render_template("clusters.html", skills=skills)
 
-@app.route("/skill_angelList_call", methods=["POST"])
+@app.route("/skill_angelList_call", methods=["GET"])
 def skill_angelList_call():
 	"""This makes a dynamic call to AngleList for related skills to the user selected skill"""
-	skill_id = request.form.get("selected_skill")
+	skill_id = request.args.get("selected_skill")
+	print skill_id
 	skills = slimmodel.get_skills_list()
-	skill_name = "python"
-	# slimmodel.get_skill_by_id(skill_id)
+	skill_obj = slimmodel.get_skill_by_id(int(skill_id))
+	print skill_obj
+	skill_name = skill_obj.tagdisplayname
 	AL_skills_dict = ALskillcall.ALskillcall(skill_id, skill_name)
 	jsoned = jsonify(AL_skills_dict) 
 	return jsoned
