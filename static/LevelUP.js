@@ -35,47 +35,57 @@ function updateCluster(evt){
   console.log(skill_id)
 
   d3.json( "/skill_angelList_call?selected_skill=" + skill_id, function(error, json) {
-      links = json;
-      visualizeCluster(links);
+      data = json;
+      visualizeCluster(data);
     });  
 }
 $('#skill_cluster_button').on('click', updateCluster);
 
 
-function makeNodes(links){
+function makeNodes(data){
       var nodes = {};
-      var mainSkill = links.main_skill;
-      nodes[mainSkill] = {source:mainSkill}
-        for (idx in links.children) {
-                var link = links.children[idx];
+      var mainSkill = data.name;
+      nodes[mainSkill] = {source:mainSkill, count: data.total}
+        for (idx in data.children) {
+                var link = data.children[idx];
                 // sourceNode = nodes[link.name] || 
                 //     (nodes[link.name] = {source: mainSkill, count: link.count});
-                link.targetNode = nodes[link.name] || 
+                link.name = nodes[link.name] || 
                     (nodes[link.name] = {source: mainSkill, name: link.name, count: link.count});
-                link.value = +link.value;
             }
-        // console.log(nodes);
-        return nodes
+      return nodes
 }
 
-function processDataIntoLinks(links){
-    var hold = {};
-        for (idx in links.children) {
-            var link = links.children[idx];
-                // link.source = hold[link.name] || 
-                //      (hold[link.name] = {name: mainSkill, source: mainSkill });
-                link.target = hold[link.name] || 
-                    (hold[link.name] = {target: idx, source: 0, weight: link.count});
-                link.value = +link.value;
+function processDataIntoLinks(linkdata){
+    var hold = [];
+    var data;
+    var mainSkill = linkdata.name;
+    console.log(mainSkill)
+    for (idx in linkdata.children) {
+        var link = linkdata.children[idx];
+            // link.source = hold[link.name] || 
+            //      (hold[link.name] = {name: mainSkill, source: mainSkill });
+        var targetNode = link.name;
+        // console.log(targetNode);
+        var sourceNode = mainSkill;
+        // console.log(sourceNode);
+        // var nodeWeight = link.name.weight;
+        // console.log(nodeWeight);
+
+        hold.push({target: targetNode, source: sourceNode});
             }
     // console.log(hold);
     return hold
 }
 
-function visualizeCluster(links){  
+function visualizeCluster(datapassed){  
 
-    var links;
-    console.log(links);
+    debugger;
+
+    var nodes = makeNodes(datapassed);
+    var link = processDataIntoLinks(datapassed);
+
+    debugger;
 
     // links.forEach(function(link) {
     //     link.source = nodes[link.source] || 
@@ -94,8 +104,8 @@ function visualizeCluster(links){
                 height = 500;
 
             var force = d3.layout.force()
-                .links(link)
                 .nodes(d3.values(nodes))
+                .links(link)
                 .size([width, height])
                 .linkDistance(60)
                 .charge(-300)
@@ -121,12 +131,11 @@ function visualizeCluster(links){
                 .attr("class", "node")
                 .call(force.drag);
 
-            var nodes = makeNodes(links);
-            var link =
-                svg.select("links".selectAll(".link")
-                    .data(links, function(d); )
 
-                    processDataIntoLinks(links);
+                // svg.select("links".selectAll(".link")
+                //     .data(links, function())
+
+                    // processDataIntoLinks(links);
             
             var color = d3.scale.category20();
 
