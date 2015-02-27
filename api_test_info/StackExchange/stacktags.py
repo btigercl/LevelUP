@@ -64,7 +64,7 @@ def stackexchange_call(name, skill_id):
 		start_date_to = start_date_to + 86400 
 
 def main():
-	seeds =	[("html", 15592), ("android", 16680), ("iphone", 21253), ("c#", 16020),]
+	seeds =	[("angularjs", 87663), ("django", 16135)]
 
 	for seed in seeds:
 		name = seed[0]
@@ -83,8 +83,8 @@ if __name__ == "__main__":
 #
 
 
-
+# ("android", 16680)("c#", 16020),
 #Seeded
-# "java", 14780), ("ruby", 17184), ("perl", 25893), (javascript, ), (python, )
+# "java", 14780), ("ruby", 17184), ("perl", 25893), (javascript, ), (python, )("html", 15592),("iphone", 21253),
 
-	# 16+zlib.MAX_WBITS
+	# 16+zlib.MAX_WBITS 

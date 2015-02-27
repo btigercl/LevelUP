@@ -85,8 +85,7 @@ function visualizeCluster(links){
     //     link.count = +link.count;
     // });
 
-            var nodes = makeNodes(links);
-            var link = processDataIntoLinks(links);
+            
 
             // var links = d3.layout().links(nodes);
             // console.log(links);
@@ -105,12 +104,14 @@ function visualizeCluster(links){
 
             var svg = d3.select("#cluster_results").append("svg")
                 .attr("width", width)
-                .attr("height", height);            
+                .attr("height", height);  
+ 
+
 
             // add the links and the arrows
-            var link = svg.selectAll(".link")
-                .data(links)
-                .enter().append("line")
+            var path = svg.append("svg:g").selectAll("path")
+                .data(force.links())
+                .enter().append("svg:path")
                 .attr("class", "link");
                 
             // define the nodes
@@ -119,6 +120,13 @@ function visualizeCluster(links){
                 .enter().append("g")
                 .attr("class", "node")
                 .call(force.drag);
+
+            var nodes = makeNodes(links);
+            var link =
+                svg.select("links".selectAll(".link")
+                    .data(links, function(d); )
+
+                    processDataIntoLinks(links);
             
             var color = d3.scale.category20();
 
@@ -132,11 +140,8 @@ function visualizeCluster(links){
                 .attr("dy", ".35em")
                 .text(function(d) { return d.name; });
 
-
-
-
             function tick() {
-                link.attr("d", function(d) {
+                path.attr("d", function(d) {
                     var dx = d.target.x - d.source.x,
                         dy = d.target.y - d.source.y,
                         dr = Math.sqrt(dx * dx + dy * dy);
@@ -151,8 +156,8 @@ function visualizeCluster(links){
                 node
                     .attr("transform", function(d) { 
                     return "translate(" + d.x + "," + d.y + ")"; });
-        force.start();
-    }
+    force.start();
+            }
 }
 
 
