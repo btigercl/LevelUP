@@ -26,11 +26,11 @@ function updateGeo(evt){
 // $('#skill_cluster_button').on('click', updateCluster);
 
 
-
+var data;
 function updateCluster(evt){
   evt.preventDefault();
 
-  var links;
+
   var skill_id= $( "select[name='selected_skill']" ).val();
   console.log(skill_id)
 
@@ -43,29 +43,41 @@ $('#skill_cluster_button').on('click', updateCluster);
 
 
 function makeNodes(data){
-      var nodes = {};
-      var mainSkill = data.name;
-      nodes[mainSkill] = {source:mainSkill, count: data.total}
-        for (idx in data.children) {
-                var link = data.children[idx];
-                // sourceNode = nodes[link.name] || 
-                //     (nodes[link.name] = {source: mainSkill, count: link.count});
-                link.name = nodes[link.name] || 
-                    (nodes[link.name] = {source: mainSkill, name: link.name, count: link.count});
-            }
-      return nodes
+      // var nodes = {};
+      // var mainSkill = data.name;
+      // nodes[mainSkill] = {source:mainSkill, count: data.total}
+      //   for (idx in data.children.length) {
+      //           var link = data.children[idx];
+      //           // sourceNode = nodes[link.name] || 
+      //           //     (nodes[link.name] = {source: mainSkill, count: link.count});
+      //           link.name = nodes[link.name] || 
+      //               (nodes[link.name] = {
+      //                   source: mainSkill,
+      //                   name: link.name,
+      //                   count: link.count
+      //               });
+      //   }
+      // return nodes
+
+      var nodes = [{name: data.name, weight: data.children.length}];
+      _.each(data.children, function(item, index){
+        nodes.push({name: item.name, count: item.count, weight: 1});
+      });
+      return nodes;
+
 }
 
-function processDataIntoLinks(linkdata){
-    var hold = [];
+function processDataIntoLinks(nodes){
+/*    var hold = [];
     var data;
     var mainSkill = linkdata.name;
     console.log(mainSkill)
-    for (idx in linkdata.children) {
-        var link = linkdata.children[idx];
+    var index = 0;
+    for (index = 0; index < linkdata.children.length; index ++) {
+        var link = linkdata.children[index];
             // link.source = hold[link.name] || 
             //      (hold[link.name] = {name: mainSkill, source: mainSkill });
-        var targetNode = link.name;
+        var targetNode = link.name.name;
         // console.log(targetNode);
         var sourceNode = mainSkill;
         // console.log(sourceNode);
@@ -73,19 +85,25 @@ function processDataIntoLinks(linkdata){
         // console.log(nodeWeight);
 
         hold.push({target: targetNode, source: sourceNode});
-            }
+    }
     // console.log(hold);
     return hold
+    */
+    var result = [];
+    for (var index = 0; index < _.size(nodes); index++){
+        result.push({ source: 0, target: index });
+    }
+    return result;
 }
 
 function visualizeCluster(datapassed){  
 
-    debugger;
+
 
     var nodes = makeNodes(datapassed);
-    var link = processDataIntoLinks(datapassed);
+    var link = processDataIntoLinks(nodes);
 
-    debugger;
+
 
     // links.forEach(function(link) {
     //     link.source = nodes[link.source] || 
@@ -100,14 +118,16 @@ function visualizeCluster(datapassed){
             // var links = d3.layout().links(nodes);
             // console.log(links);
            
-            var width = 1000,
-                height = 500;
+            var width = 800,
+                height = 700,
+                nodesValues = d3.values(nodes);
 
             var force = d3.layout.force()
-                .nodes(d3.values(nodes))
+                .nodes(nodes)
                 .links(link)
                 .size([width, height])
-                .linkDistance(60)
+                .linkDistance(125)
+                .linkStrength(0.1)
                 .charge(-300)
                 .on("tick", tick)
                 .start();
@@ -140,12 +160,12 @@ function visualizeCluster(datapassed){
             var color = d3.scale.category20();
 
             node.append("circle")
-                .attr("r", 5);
+                .attr("r", function(d) { return d.count/6});;
                 // .style("fill", function(d) { return color(d.source); });
                 
             // add the text 
             node.append("text")
-                .attr("x", 12)
+                .attr("x", 35)
                 .attr("dy", ".35em")
                 .text(function(d) { return d.name; });
 
@@ -165,7 +185,6 @@ function visualizeCluster(datapassed){
                 node
                     .attr("transform", function(d) { 
                     return "translate(" + d.x + "," + d.y + ")"; });
-    force.start();
             }
 }
 

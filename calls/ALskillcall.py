@@ -10,7 +10,7 @@ def urlmaker(id, token):
 
 def ALskillcall(id, skill_name):
 	#The main function seeds the job listing table. It needs to check the job ID against id's in the job listing table to avoid dups
-	token = os.environ.get("AngelList_Token")
+	token = os.environ.get("AngelList_Token2")
 	req = requests.get(urlmaker(str(id), token)).json()
 	num_pages = req['last_page']
 	
@@ -22,7 +22,7 @@ def ALskillcall(id, skill_name):
 		req = requests.get(urlmaker(str(id), token), params={'page' : page}).json()		 
 		
 		intial_dict = req["jobs"]
-
+		print intial_dict
 		for subdict in intial_dict:
 			tag_tups = []
 			skill_tup = []
@@ -31,7 +31,7 @@ def ALskillcall(id, skill_name):
 				tag_tups.append((tag["id"], tag["display_name"], tag["name"], tag["tag_type"]))
 				skill_tup = []
 				for tup in tag_tups:
-					if "SkillTag" in tup:
+					if "SkillTag" in tup and skill_name not in tup:
 						skill_dict[normalize('NFKD', tup[1]).encode('ascii', 'ignore')] = skill_dict.get(normalize('NFKD', tup[1]).encode('ascii', 'ignore'), 0) + 1
 						skill_tup.append(normalize('NFKD', tup[1]).encode('ascii', 'ignore'))
 			skills_tups.append((skill_tup))
@@ -42,7 +42,8 @@ def ALskillcall(id, skill_name):
 
 	dict_list = []                                                                                                                      
 	for skill in skill_dict:
-		dict_list.append({"name": skill, "count": skill_dict.get(skill)})
+		if skill_dict.get(skill) >= 10:
+			dict_list.append({"name": skill, "count": skill_dict.get(skill)})
 	final = {"name": skill_name, total: total, "children": dict_list} 
 	return final   	 				
 	# print final
