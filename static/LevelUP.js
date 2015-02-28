@@ -10,21 +10,6 @@ function updateGeo(evt){
         }
     );	
 }
-// $('#geo_skill_button').on('click', updateGeo);
-
-// function updateCluster(evt){
-//   evt.preventDefault();
-
-//   $.post("/skill_angelList_call",
-//         $('#skill_dropdown').serialize(), 
-//         function(results) {
-//         // pass this to d3
-//           visualizeCluster(results); 
-//         }
-//     );	
-// }
-// $('#skill_cluster_button').on('click', updateCluster);
-
 
 var data;
 function updateCluster(evt){
@@ -43,22 +28,6 @@ $('#skill_cluster_button').on('click', updateCluster);
 
 
 function makeNodes(data){
-      // var nodes = {};
-      // var mainSkill = data.name;
-      // nodes[mainSkill] = {source:mainSkill, count: data.total}
-      //   for (idx in data.children.length) {
-      //           var link = data.children[idx];
-      //           // sourceNode = nodes[link.name] || 
-      //           //     (nodes[link.name] = {source: mainSkill, count: link.count});
-      //           link.name = nodes[link.name] || 
-      //               (nodes[link.name] = {
-      //                   source: mainSkill,
-      //                   name: link.name,
-      //                   count: link.count
-      //               });
-      //   }
-      // return nodes
-
       var nodes = [{name: data.name, weight: data.children.length}];
       _.each(data.children, function(item, index){
         nodes.push({name: item.name, count: item.count, weight: 1});
@@ -68,27 +37,6 @@ function makeNodes(data){
 }
 
 function processDataIntoLinks(nodes){
-/*    var hold = [];
-    var data;
-    var mainSkill = linkdata.name;
-    console.log(mainSkill)
-    var index = 0;
-    for (index = 0; index < linkdata.children.length; index ++) {
-        var link = linkdata.children[index];
-            // link.source = hold[link.name] || 
-            //      (hold[link.name] = {name: mainSkill, source: mainSkill });
-        var targetNode = link.name.name;
-        // console.log(targetNode);
-        var sourceNode = mainSkill;
-        // console.log(sourceNode);
-        // var nodeWeight = link.name.weight;
-        // console.log(nodeWeight);
-
-        hold.push({target: targetNode, source: sourceNode});
-    }
-    // console.log(hold);
-    return hold
-    */
     var result = [];
     for (var index = 0; index < _.size(nodes); index++){
         result.push({ source: 0, target: index });
@@ -102,17 +50,6 @@ function visualizeCluster(datapassed){
 
     var nodes = makeNodes(datapassed);
     var link = processDataIntoLinks(nodes);
-
-
-
-    // links.forEach(function(link) {
-    //     link.source = nodes[link.source] || 
-    //         (nodes[link.source] = {name: link.source, source: link.source});
-    //     link.target = nodes[link.target] || 
-    //         (nodes[link.name] = {name: link.name, source: link.source.name});
-    //     link.count = +link.count;
-    // });
-
             
 
             // var links = d3.layout().links(nodes);
@@ -150,12 +87,6 @@ function visualizeCluster(datapassed){
                 .enter().append("g")
                 .attr("class", "node")
                 .call(force.drag);
-
-
-                // svg.select("links".selectAll(".link")
-                //     .data(links, function())
-
-                    // processDataIntoLinks(links);
             
             var color = d3.scale.category20();
 

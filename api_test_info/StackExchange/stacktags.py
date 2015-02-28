@@ -55,8 +55,8 @@ def stackexchange_call(name, skill_id):
 	"""this should make calls to stackexchange every .1 to retreive the number of questions per day since stack
 	overflow's founding until present"""  
 
-	start_date_from = date_converstion("2011-08-15")
-	start_date_to = date_converstion("2011-08-16") 
+	start_date_from = date_converstion("2008-08-15")
+	start_date_to = date_converstion("2008-08-16") 
 	current = (time.time())
 	while start_date_to <= current:
 		time.sleep(tag_count_by_day(name, skill_id, start_date_from, start_date_to, DEV_KEY))    
@@ -64,7 +64,7 @@ def stackexchange_call(name, skill_id):
 		start_date_to = start_date_to + 86400 
 
 def main():
-	seeds =	[("android", 16680)]
+	seeds =	[('jquery', 15594), ("css", 15593), ('ajax', 16022), ('json', 44410)]
 
 	for seed in seeds:
 		name = seed[0]
@@ -78,13 +78,13 @@ if __name__ == "__main__":
 
 #To Seed
 # ("c++", ), (".net", ), ("php", ), ("c", )
-#('jquery', ), ("css", ), ('ajax'), ('json', )
-#("angularjs", ), ("ruby-on-rails"), ("django", ), 
+
+#("angularjs", ), ("ruby-on-rails"), ("django", ), ("c#", 16020),
 #
 
 
-# ("android", 16680)("c#", 16020),
+# 
 #Seeded
 # "java", 14780), ("ruby", 17184), ("perl", 25893), (javascript, ), (python, )("html", 15592),("iphone", 21253),
-#("angularjs", 87663), ("django", 16135)
+#("angularjs", 87663), ("django", 16135), ("android", 16680)
 	# 16+zlib.MAX_WBITS 
