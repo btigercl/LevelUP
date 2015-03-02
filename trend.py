@@ -1,20 +1,25 @@
 from db import slimmodel
 from datetime import date
 
-def cal_trend_by_precent(name):
-	tup_list = []
+def cal_trend_precent_by_day(name):
+	trend_dict_list = []
 	trend_obj_list = slimmodel.get_trend_by_name(name)
 	question_list = slimmodel.get_trend_by_name("question")
+	question_dict = {}
+	
+	for question in question_list:
+		q_date = str(question.date_epoc)
+		q_date_slice = q_date[8:10] + '-' + q_date[5:7] + "-" + q_date[0:4]
+		print
+		question_dict[q_date_slice]= question.question_count
+
 	for day in trend_obj_list:
 		count = day.question_count 
 		returned_date = str(day.date_epoc) 
-		date_slice = returned_date[0:9]
-		for question in question_list:
-			q_date = str(question.date_epoc)
-			if date_slice in q_date:
-				precent = float(count)/float(question.question_count) * 100
-				tup_list.append((date_slice, int(precent))) 
-	return tup_list
+		date_slice = returned_date[8:10] + '-' + returned_date[5:7] + "-" + returned_date[0:4]
+		if question_dict.get(date_slice):
+			precent = float(count)/float(question_dict.get(date_slice)) * 100
+			trend_dict_list.append(({"trend": name, "date": date_slice, "precent": int(precent)})) 
+	return trend_dict_list
 
-
-# cal_trend_by_precent("python")
+# cal_trend_precent_by_day("python")

@@ -10,7 +10,7 @@ function startCluster(evt){
 
   d3.json( "/skill_angelList_call?selected_skill=" + skill_id, function(error, json) {
       clusterData = json;
-      visualizeCluster(data);
+      visualizeCluster(clusterData);
     });  
 }
 $('#skill_cluster_button').on('click', startCluster);
@@ -163,96 +163,102 @@ function visualizeCluster(datapassed){
 // }
 
 //Trends Tab Javascript 
+function get_graph_data(evt){
+  evt.preventDefault();
 
+  var trend1= $( "select[name='selected_trend1']" ).val();
+        
+  d3.json( "/db_call_trend?selected_trend1=" + trend1, function(error, json) {
+    lineGraphdata = json;
+    visualizeLines(lineGraphdata);
+  });
+}
+$('#trend_button').on('click', get_graph_data);
 
-//Add lines to Trend graph
-// $( document ).ready(function trends_graph() {  
-// var margin = {top: 20, right: 20, bottom: 30, left: 50},
-//     width = 960 - margin.left - margin.right,
-//     height = 500 - margin.top - margin.bottom;
+// Create line graph  
+function visualizeLines(linedata) {
 
-// var parseDate = d3.time.format("%d-%b-%y").parse;
+var xy = parse_line(linedata)
 
-// var x = d3.time.scale()
-//     .range([0, width]);
+var margin = {top: 20, right: 20, bottom: 30, left: 50},
+    width = 960 - margin.left - margin.right,
+    height = 500 - margin.top - margin.bottom;
 
-// var y = d3.scale.linear()
-//     .range([height, 0]);
+var parseDate = d3.time.format("%d-%b-%y").parse;
 
-// var xAxis = d3.svg.axis()
-//     .scale(x)
-//     .orient("bottom");
+var x = d3.time.scale()
+    .range([0, width]);
 
-// var yAxis = d3.svg.axis()
-//     .scale(y)
-//     .orient("left");
+var y = d3.scale.linear()
+    .range([height, 0]);
 
-// var line = d3.svg.line()
-//     .x(function(d) { return x(d.date); })
-//     .y(function(d) { return y(d.close); });
+var xAxis = d3.svg.axis()
+    .scale(x)
+    .orient("bottom");
 
-// var svg = d3.select("trends_results").append("svg")
-//     .attr("width", width + margin.left + margin.right)
-//     .attr("height", height + margin.top + margin.bottom)
-//   .append("g")
-//     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+var yAxis = d3.svg.axis()
+    .scale(y)
+    .orient("left");
+
+var line = d3.svg.line()
+    .x(function(d) { return x(d.date); })
+    .y(function(d) { return y(d.precent); });
+
+var svg = d3.select("trends_results").append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 // });
 
+  x.domain(d3.extent(data, function(d) { return d.date; }));
+  y.domain(d3.extent(data, function(d) { return d.precent; }));
 
+  svg.append("g")
+      .attr("class", "x axis")
+      .attr("transform", "translate(0," + height + ")")
+      .call(xAxis);
 
-// function add_data_to_graph(){
-// d3.json("data.tsv", function(error, data) {
-//   data.forEach(function(d) {
-//     d.date = parseDate(d.date);
-//     d.close = +d.close;
-//   });
+  svg.append("g")
+      .attr("class", "y axis")
+      .call(yAxis)
+    .append("text")
+      .attr("transform", "rotate(-90)")
+      .attr("y", 6)
+      .attr("dy", ".71em")
+      .style("text-anchor", "end")
+      .text("Precent (%)");
 
-//   x.domain(d3.extent(data, function(d) { return d.date; }));
-//   y.domain(d3.extent(data, function(d) { return d.close; }));
+  svg.append("path")
+      .datum(data)
+      .attr("class", "line")
+      .attr("d", line);
+    });
+}
 
-//   svg.append("g")
-//       .attr("class", "x axis")
-//       .attr("transform", "translate(0," + height + ")")
-//       .call(xAxis);
-
-//   svg.append("g")
-//       .attr("class", "y axis")
-//       .call(yAxis)
-//     .append("text")
-//       .attr("transform", "rotate(-90)")
-//       .attr("y", 6)
-//       .attr("dy", ".71em")
-//       .style("text-anchor", "end")
-//       .text("Price ($)");
-
-//   svg.append("path")
-//       .datum(data)
-//       .attr("class", "line")
-//       .attr("d", line);
-//     }
-// });
+//Parse out the line graph data 
+function parse_line(xydata):
+    var xy = [];
+          _.each(xydata, function(item, index){
+            nodes.push({Trend: xydata.trend date: item.date, precent: xydata.precent, weight: 1});
+          });
+          return nodes;
 
 // Trend get data on click 
-// var trendData;
-// function startTrends(evt){
-//   evt.preventDefault();
+// var trendData
+// function get_graph_data(evt){
+//     evt.preventDefault();
 
-function add_data_to_graph(){
-    var trend1= $( "select[name='selected_trend1']" ).val();
-    console.log(trend1);
-//   var trend2= $( ).val();
-//   var trend3= $( ).val();
- 
-  // d3.json( "/db_call_trend?selected_trend1=" + trend1 + "?selected_trend2" + trend2 + "?selected_trend3" + trend3, function(error, json) {
-    d3.json( "/db_call_trend?selected_trend1=" + trend1, function(error, json) {
-        trendData = json;
-        visualizeCluster(data);
-    });  
-}
-$('#trend_button').on('click', add_data_to_graph);
-
-
-
+//     var trend1= $( "select[name='selected_trend1']" ).val();
+//     console.log(trend1);
+// //   var trend2= $( ).val();
+// //   var trend3= $( ).val(); 
+//   // d3.json( "/db_call_trend?selected_trend1=" + trend1 + "?selected_trend2" + trend2 + "?selected_trend3" + trend3, function(error, json) {
+//     d3.json( "/db_call_trend?selected_trend1=" + trend1, function(error, json) {
+//         trendData = json;
+//         add_data_to_graph(data);
+//     });  
+// }
 
 
 //Geographic Demand Tab Javascript 
