@@ -1,14 +1,34 @@
 {% extends 'main.html' %}
 {% block body %}
 <div id="table">
-	<div id="trendsresults">
-		<img src="http://i.stack.imgur.com/gRcXL.jpgng">
+	<div id="trends_results">
+	
 	</div>
 	<div id="search">
-		<form action="">
-			<label><input type="search">Search</input></label>
+		<form action="/db_call_trend" method="get">
+			 Select Skill: 
+			 <br>
+			<label><SELECT name="selected_trend1">
+				{% for name in trends %}
+				<label><option value={{ name }}>{{ name }}</option></label>
+				{% endfor %}
+			</SELECT></label>
 			<br>
-			<label><input type="submit"></label>
+<!-- 			Select Second Skill:
+			<label><SELECT name="selected_trend2">
+				{% for i in trends %}
+				<label><option value={{ i }}>{{ i }}</option></label>
+				{% endfor %}
+			</SELECT></label>
+			<br>
+			Select Third Skill:
+			<label><SELECT name="selected_trend3">
+				{% for i in trends %}
+				<label><option value={{ i }}>{{ i }}</option></label>
+				{% endfor %}
+			</SELECT></label> -->
+			<label><input type="submit" id="trend_button">Submit</input></label>
 		</form>
 	</div>
+</div>
 {% endblock %}

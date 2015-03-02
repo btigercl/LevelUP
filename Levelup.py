@@ -6,7 +6,8 @@ from db import slimmodel
 from calls import ALskillcall, ALjobtitlecall, CBskillcall
 import json
 import pprint
-
+from unicodedata import normalize  
+import trend
 
 app = Flask(__name__)
 app.secret_key = 'kittens'
@@ -36,25 +37,28 @@ def skill_angelList_call():
 	pp.pprint(AL_skills_dict)
 	jsoned = jsonify(AL_skills_dict) 
 	return jsoned
-	#pass to D3
 	# return render_template("skill_response.html", skill_dict =AL_skills_dict, skills=skills)
-	 	
 
 @app.route("/trends")
 def trends():
 	"""This should render the jinja insert for the trends. This should hold the alorythm 
 	for line graphs"""
-	return render_template("trends.html")
+	trend_skill_list = slimmodel.get_trend_skill_name() 
+	skill_list = []
+	for skill in trend_skill_list:
+		if skill[0] not in skill_list and skill[0] != "question":
+			skill_list.append(skill[0])
+	return render_template("trends.html", trends=skill_list)
 
-@app.route("/db_call_trend_lanuage", methods=["GET"])
+@app.route("/db_call_trend", methods=["GET"])
 def db_call_trend_lanuage():
-	#language1 = request.form.get("language1")
-	#language2 = request.form.get("language2")
-	#language3 = request.form.get("language3")
-	#makes database call based on values
-	#returns info
-	#pass info to D3 file 
-	pass
+	trend1 = request.form.get("selected_trend1")
+	print trend1, "hello"
+	# trend2 = request.form.get("selected_trend2")
+	# trend3 = request.form.get("selected_trend3")
+	number_crunch = trend.cal_trend_by_precent(trend1)
+	jsoned_trends = jsonify(number_crunch)
+	return jsonify(jsoned_trends)
 
 @app.route("/geographic_demand")
 def geographic_demand():
@@ -70,12 +74,6 @@ def geographic_demand_skill():
 	return json.dumps(lat_long_tups)
 	#pass to D3
 	# return render_template("geo_response.html", geo_tups=lat_long_tups, skills = skills)
-
-# @app.route("/new_data_requests")
-# def new_data_requests():
-# 	"""this is where users can request representation of new data sets. Should be a 
-# 	alogrithm that can process this request with APIs and return new data automatically"""
-# 	pass
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))

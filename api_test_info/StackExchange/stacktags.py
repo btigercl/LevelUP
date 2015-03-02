@@ -18,12 +18,12 @@ def date_converstion(date):
 	converted_date = time.mktime(cleandate.timetuple())
 	return int(converted_date)
 
-def tag_count_by_day(tag, tag_id, fromyearmonthday, toyearmonthday, DEV_KEY):
+def tag_count_by_day(tag, tagurl, tag_id, fromyearmonthday, toyearmonthday, DEV_KEY):
 	#this adds number of questions per day about a specific tag to the database 
 
 	list = []
 	backoff = 1
-	response = requests.get("http://api.stackexchange.com/2.2/questions?fromdate=" + str(fromyearmonthday) + "&todate=" + str(toyearmonthday) + "&order=desc&sort=activity&tagged=" + tag + "&site=stackoverflow&filter=!9YdnSQVoS&key=" + DEV_KEY) 
+	response = requests.get("http://api.stackexchange.com/2.2/questions?fromdate=" + str(fromyearmonthday) + "&todate=" + str(toyearmonthday) + "&order=desc&sort=activity&tagged=" + tagurl + "&site=stackoverflow&filter=!9YdnSQVoS&key=" + DEV_KEY) 
 	if "backoff" in response.headers:
 		backoff = int(response.headers["backoff"])
 	count = response.json()["total"]
@@ -51,7 +51,7 @@ def tag_count_by_day(tag, tag_id, fromyearmonthday, toyearmonthday, DEV_KEY):
 # 	slimmodel.Session.commit()
 # 	return backoff
 
-def stackexchange_call(name, skill_id):
+def stackexchange_call(name, tagurl, skill_id):
 	"""this should make calls to stackexchange every .1 to retreive the number of questions per day since stack
 	overflow's founding until present"""  
 
@@ -59,17 +59,18 @@ def stackexchange_call(name, skill_id):
 	start_date_to = date_converstion("2008-08-16") 
 	current = (time.time())
 	while start_date_to <= current:
-		time.sleep(tag_count_by_day(name, skill_id, start_date_from, start_date_to, DEV_KEY))    
+		time.sleep(tag_count_by_day(name, tagurl, skill_id, start_date_from, start_date_to, DEV_KEY))    
 		start_date_from = start_date_from + 86400
 		start_date_to = start_date_to + 86400 
 
 def main():
-	seeds =	[('jquery', 15594), ("css", 15593), ('ajax', 16022), ('json', 44410)]
+	seeds =	[("c++", "c%2B%2B", 14779), (".net", "text=.net", 14782), ("php", "php", 14776), ("c", "c", 23388)]
 
 	for seed in seeds:
 		name = seed[0]
-		skill_id = seed[1] 
-		stackexchange_call(name, skill_id)
+		tagurl = seed[1]
+		skill_id = seed[2] 
+		stackexchange_call(name, tagurl, skill_id)
 		print "done" 
 
 
@@ -77,14 +78,15 @@ if __name__ == "__main__":
 	main()
 
 #To Seed
-# ("c++", ), (".net", ), ("php", ), ("c", )
+# ("c%2B%2B", 14779), ("text=.net", 14782), ("php", 14776), ("c", 23388)
 
-#("angularjs", ), ("ruby-on-rails"), ("django", ), ("c#", 16020),
-#
+# ("ruby-on-rails", 169726s), ("c#", 16020),
+# ("sql")objective-c, mysql, asp.net, arrays, bash, node.js
 
 
 # 
 #Seeded
 # "java", 14780), ("ruby", 17184), ("perl", 25893), (javascript, ), (python, )("html", 15592),("iphone", 21253),
-#("angularjs", 87663), ("django", 16135), ("android", 16680)
+#("angularjs", 87663), ("django", 16135), ("android", 16680) ('jquery', 15594), ("css", 15593), ('ajax', 16022), 
+#('json', 44410)
 	# 16+zlib.MAX_WBITS 

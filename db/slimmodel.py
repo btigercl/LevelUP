@@ -50,11 +50,8 @@ class Stack_Overflow_Trends(Base):
 	date_epoc = Column(DateTime(timezone=False), nullable=False)
 	question_count = Column(Integer, nullable=False)
 
-	# skills = relationship("Skills",
-	# 	backref=backref("trends", order_by=id))
-
 	def __repr__(self):
-		return "Key_word: %s, Month_Year: %r, Monthly_Occurances: %d" % (keyword, mon_year, monthly_occurances)
+		return "Main ID: %r, Skill ID: %r, Skill: %s, Date of Occurance: %r, Question Count: %r" % (self.id, self.skill_id, self.skill, self.date_epoc, self.question_count)
 
 def get_jobtitles_list():
 	jobtitles_list = Session.query(JobTitle).all()
@@ -64,9 +61,26 @@ def get_skills_list():
 	skill_list = Session.query(Skills).all()
 	return skill_list
 
+def get_trend_list():
+	trend_list = Session.query(Stack_Overflow_Trends).all()
+	return trend_list
+
 def get_skill_by_id(passed_id):
 	skill_name = Session.query(Skills).filter_by(id=passed_id).first()
 	return skill_name
+
+def get_trend_skill_name():
+	skill_name_list = Session.query(Stack_Overflow_Trends.skill).all()
+	return skill_name_list
+
+def get_trend_by_name(name):
+	single_entry = Session.query(Stack_Overflow_Trends).filter_by(skill=name).all()
+	return single_entry
+
+def get_question_count_by_date(date):
+	single_entry = Session.query(Stack_Overflow_Trends.question_count).filter_by(skill="question", date_epoc=date).first()
+	return single_entry
+
 # def connect():
 #     global ENGINE
 #     global Session
