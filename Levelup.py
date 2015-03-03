@@ -53,7 +53,6 @@ def trends():
 @app.route("/db_call_trend", methods=["GET"])
 def db_call_trend_lanuage():
 	trend1 = request.args.get("selected_trend1")
-	print trend1, "hello"
 	# trend2 = request.form.get("selected_trend2")
 	# trend3 = request.form.get("selected_trend3")
 	number_crunch = trend.cal_trend_precent_by_day(trend1)

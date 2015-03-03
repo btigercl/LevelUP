@@ -169,83 +169,88 @@ function get_graph_data(evt){
   var trend1= $( "select[name='selected_trend1']" ).val();
         
   d3.json( "/db_call_trend?selected_trend1=" + trend1, function(error, json) {
-    lineGraphdata = json;
+    var lineGraphdata = json;
+    
     visualizeLines(lineGraphdata);
   });
 }
 $('#trend_button').on('click', get_graph_data);
 
 // Create line graph  
-function visualizeLines(linedata) {
+function visualizeLines(ldata){
 
-var xy = parse_line(linedata)
+    var margin = {top: 20, right: 20, bottom: 30, left: 50},
+        width = 960 - margin.left - margin.right,
+        height = 500 - margin.top - margin.bottom;
 
-var margin = {top: 20, right: 20, bottom: 30, left: 50},
-    width = 960 - margin.left - margin.right,
-    height = 500 - margin.top - margin.bottom;
+    var parseDate = d3.time.format("%d-%m-%Y").parse;
 
-var parseDate = d3.time.format("%d-%b-%y").parse;
+    var x = d3.time.scale()
+        .range([0, width]);
 
-var x = d3.time.scale()
-    .range([0, width]);
+    var y = d3.scale.linear()
+        .range([height, 0]);
 
-var y = d3.scale.linear()
-    .range([height, 0]);
+    var xAxis = d3.svg.axis()
+        .scale(x)
+        .orient("bottom");
 
-var xAxis = d3.svg.axis()
-    .scale(x)
-    .orient("bottom");
+    var yAxis = d3.svg.axis()
+        .scale(y)
+        .orient("left");
 
-var yAxis = d3.svg.axis()
-    .scale(y)
-    .orient("left");
+    var line = d3.svg.line()
+        .x(function(d) { return x(d.date); })
+        .y(function(d) { return y(d.percent); });
 
-var line = d3.svg.line()
-    .x(function(d) { return x(d.date); })
-    .y(function(d) { return y(d.precent); });
+    var svg = d3.select("#trends_results").append("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+      .append("g")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-var svg = d3.select("trends_results").append("svg")
-    .attr("width", width + margin.left + margin.right)
-    .attr("height", height + margin.top + margin.bottom)
-  .append("g")
-    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-// });
+    var linedata = parse_line(ldata);
 
-  x.domain(d3.extent(data, function(d) { return d.date; }));
-  y.domain(d3.extent(data, function(d) { return d.precent; }));
-
-  svg.append("g")
-      .attr("class", "x axis")
-      .attr("transform", "translate(0," + height + ")")
-      .call(xAxis);
-
-  svg.append("g")
-      .attr("class", "y axis")
-      .call(yAxis)
-    .append("text")
-      .attr("transform", "rotate(-90)")
-      .attr("y", 6)
-      .attr("dy", ".71em")
-      .style("text-anchor", "end")
-      .text("Precent (%)");
-
-  svg.append("path")
-      .datum(data)
-      .attr("class", "line")
-      .attr("d", line);
+    linedata.forEach(function(d) {
+        d.date = parseDate(d.date);
     });
+
+      x.domain(d3.extent(linedata, function(d) { return d.date; }));
+      y.domain(d3.extent(linedata, function(d) { return d.percent; }));
+
+      svg.append("g")
+          .attr("class", "x axis")
+          .attr("transform", "translate(0," + height + ")")
+          .call(xAxis);
+
+      svg.append("g")
+          .attr("class", "y axis")
+          .call(yAxis)
+        .append("text")
+          .attr("transform", "rotate(-90)")
+          .attr("y", 6)
+          .attr("dy", ".71em")
+          .style("text-anchor", "end")
+          .text("Percent (%)");
+
+      svg.append("path")
+          .datum(linedata)
+          .attr("class", "line")
+          .attr("d", line);
 }
 
-//Parse out the line graph data 
-function parse_line(xydata):
-    var xy = [];
-          _.each(xydata, function(item, index){
-            nodes.push({Trend: xydata.trend date: item.date, precent: xydata.precent, weight: 1});
-          });
-          return nodes;
 
-// Trend get data on click 
-// var trendData
+// Parse out the line graph data 
+function parse_line(xydata){
+    var xy = [];
+    var parseDate = d3.time.format("%d-%b-%y").parse;
+    _.each(xydata.dataPoints, function(item, index){
+        xy.push({date: item.date, percent: item.percent});
+        });
+    return xy;
+}
+
+
 // function get_graph_data(evt){
 //     evt.preventDefault();
 
@@ -268,7 +273,6 @@ function updateGeo(evt){
   $.post("/geographic_demand_skill",
         $('#geo_skill_button').serialize(), 
         function(result) {
-        console.log(result);
         $("#geo_results").html(result); 
         }
     );  

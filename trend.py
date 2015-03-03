@@ -10,7 +10,6 @@ def cal_trend_precent_by_day(name):
 	for question in question_list:
 		q_date = str(question.date_epoc)
 		q_date_slice = q_date[8:10] + '-' + q_date[5:7] + "-" + q_date[0:4]
-		print
 		question_dict[q_date_slice]= question.question_count
 
 	for day in trend_obj_list:
@@ -19,7 +18,7 @@ def cal_trend_precent_by_day(name):
 		date_slice = returned_date[8:10] + '-' + returned_date[5:7] + "-" + returned_date[0:4]
 		if question_dict.get(date_slice):
 			precent = float(count)/float(question_dict.get(date_slice)) * 100
-			trend_dict_list.append(({"trend": name, "date": date_slice, "precent": int(precent)})) 
-	return trend_dict_list
-
+			trend_dict_list.append(({"date": date_slice, "percent": precent})) 
+	final_dict = {"trend":name, "dataPoints":trend_dict_list}
+	return final_dict
 # cal_trend_precent_by_day("python")
