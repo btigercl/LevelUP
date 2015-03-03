@@ -1,10 +1,14 @@
 {% extends 'main.html' %}
 {% block body %}
 <div id="table">
+	<div id = "trend_write_up"> 		
+		<p>We can learn about a skill's popularity today, but what about a skills popularity over time? Check out how many people are asking about a skill on Stack Overflow since 2008 to today.
+		</p>
+	</div>
 	<div id="trends_results">
 	</div>
 	<div id="search">
-		<form action="/db_call_trend" method="get">
+		<form id="trends_form" action="/db_call_trend" method="get">
 			 Select Skill: 
 			 <br>
 			<label><SELECT name="selected_trend1">
@@ -13,7 +17,7 @@
 				{% endfor %}
 			</SELECT></label>
 			<br>
-<!-- 			Select Second Skill:
+			Select Second Skill:
 			<label><SELECT name="selected_trend2">
 				{% for i in trends %}
 				<label><option value={{ i }}>{{ i }}</option></label>
@@ -25,9 +29,12 @@
 				{% for i in trends %}
 				<label><option value={{ i }}>{{ i }}</option></label>
 				{% endfor %}
-			</SELECT></label> -->
-			<label><input type="submit" id="trend_button">Submit</input></label>
+			</SELECT></label>
+			<label><input type="submit" id="trend_button"></input></label>
 		</form>
+		<br>
+		<span id="fade_in_trend_text"></span>
 	</div>
 </div>
 {% endblock %}
+

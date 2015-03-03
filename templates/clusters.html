@@ -3,9 +3,10 @@
 <div id="table">
 	<script src="http://d3js.org/d3.v3.min.js"></script>
 	<div id="cluster_results">
+		<p>Find out what other skills frequently show up with in the same joblistings on Angel List Want to know what other skills employers are looking for on AngelList.</p>
 	</div>
 	<div id="search">
-		<form action="/skill_angelList_call" method="GET">
+		<form action="/skill_angelList_call" id="cluster_form" method="GET">
 			 Select Technology: 
 	        <label><SELECT name="selected_skill" id="skill_dropdown">
 	            {% for i in skills %}

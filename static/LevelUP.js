@@ -1,6 +1,10 @@
 //Skill Set Tab Event Listener  
+function emptyClusterdiv(evt){
+  $('#cluster_results').empty()
+}
 
 var clusterData;
+$()
 function startCluster(evt){
   evt.preventDefault();
 
@@ -14,6 +18,7 @@ function startCluster(evt){
     });  
 }
 $('#skill_cluster_button').on('click', startCluster);
+$('#skill_cluster_button').on('click', emptyClusterdiv);
 
 //Skill Set D3 code 
 
@@ -25,6 +30,7 @@ function makeNodes(data){
       return nodes;
 
 }
+
 
 function processDataIntoLinks(nodes){
     var result = [];
@@ -161,112 +167,131 @@ function visualizeCluster(datapassed){
 //   }
 //   update();
 // }
-
-//Trends Tab Javascript 
-function get_graph_data(evt){
-  evt.preventDefault();
-
-  var trend1= $( "select[name='selected_trend1']" ).val();
-        
-  d3.json( "/db_call_trend?selected_trend1=" + trend1, function(error, json) {
-    var lineGraphdata = json;
-    
-    visualizeLines(lineGraphdata);
+// 
+//Trends Tab Javascript
+$('#trend_button').click(function() {
+  $( "#trend_write_up" ).fadeOut( "slow", function() {
+    $('#trend_write_up').empty()
   });
-}
-$('#trend_button').on('click', get_graph_data);
+});
 
-// Create line graph  
-function visualizeLines(ldata){
-
-    var margin = {top: 20, right: 20, bottom: 30, left: 50},
-        width = 960 - margin.left - margin.right,
-        height = 500 - margin.top - margin.bottom;
-
-    var parseDate = d3.time.format("%d-%m-%Y").parse;
-
-    var x = d3.time.scale()
-        .range([0, width]);
-
-    var y = d3.scale.linear()
-        .range([height, 0]);
-
-    var xAxis = d3.svg.axis()
-        .scale(x)
-        .orient("bottom");
-
-    var yAxis = d3.svg.axis()
-        .scale(y)
-        .orient("left");
-
-    var line = d3.svg.line()
-        .x(function(d) { return x(d.date); })
-        .y(function(d) { return y(d.percent); });
-
-    var svg = d3.select("#trends_results").append("svg")
-        .attr("width", width + margin.left + margin.right)
-        .attr("height", height + margin.top + margin.bottom)
-      .append("g")
-        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-    var linedata = parse_line(ldata);
-
-    linedata.forEach(function(d) {
-        d.date = parseDate(d.date);
-    });
-
-      x.domain(d3.extent(linedata, function(d) { return d.date; }));
-      y.domain(d3.extent(linedata, function(d) { return d.percent; }));
-
-      svg.append("g")
-          .attr("class", "x axis")
-          .attr("transform", "translate(0," + height + ")")
-          .call(xAxis);
-
-      svg.append("g")
-          .attr("class", "y axis")
-          .call(yAxis)
-        .append("text")
-          .attr("transform", "rotate(-90)")
-          .attr("y", 6)
-          .attr("dy", ".71em")
-          .style("text-anchor", "end")
-          .text("Percent (%)");
-
-      svg.append("path")
-          .datum(linedata)
-          .attr("class", "line")
-          .attr("d", line);
-}
-
-
-// Parse out the line graph data 
-function parse_line(xydata){
-    var xy = [];
-    var parseDate = d3.time.format("%d-%b-%y").parse;
-    _.each(xydata.dataPoints, function(item, index){
-        xy.push({date: item.date, percent: item.percent});
-        });
-    return xy;
-}
-
+$('#trend_button').click(function() {
+  $( "#fade_in_trend_text" ).fadeIn( "slow", function() {
+    $("#fade_in_trend_text" ).html("<p>We can learn about a skill's popularity today, but what about a skills popularity over time? Check out how many people are asking about a skill on Stack Overflow since 2008 to today.</p>");
+  });
+});
 
 // function get_graph_data(evt){
-//     evt.preventDefault();
+//   evt.preventDefault();
 
-//     var trend1= $( "select[name='selected_trend1']" ).val();
-//     console.log(trend1);
-// //   var trend2= $( ).val();
-// //   var trend3= $( ).val(); 
-//   // d3.json( "/db_call_trend?selected_trend1=" + trend1 + "?selected_trend2" + trend2 + "?selected_trend3" + trend3, function(error, json) {
-//     d3.json( "/db_call_trend?selected_trend1=" + trend1, function(error, json) {
-//         trendData = json;
-//         add_data_to_graph(data);
-//     });  
+//   var trend1= $( "select[name='selected_trend1']" ).val();
+        
+//   d3.json( "/db_call_trend?selected_trend1=" + trend1, function(error, json) {
+//     var lineGraphdata = json;
+    
+//     visualizeLines(lineGraphdata);
+//   });
+// }
+// $('#trend_button').on('click', get_graph_data);
+
+
+// // Create line graph  
+// function visualizeLines(ldata){
+
+//     var margin = {top: 20, right: 20, bottom: 30, left: 50},
+//         width = 960 - margin.left - margin.right,
+//         height = 500 - margin.top - margin.bottom;
+
+//     var parseDate = d3.time.format("%d-%m-%Y").parse;
+
+//     var x = d3.time.scale()
+//         .range([0, width]);
+
+//     var y = d3.scale.linear()
+//         .range([height, 0]);
+
+//     var xAxis = d3.svg.axis()
+//         .scale(x)
+//         .orient("bottom");
+
+//     var yAxis = d3.svg.axis()
+//         .scale(y)
+//         .orient("left");
+
+//     var line = d3.svg.line()
+//         .x(function(d) { return x(d.date); })
+//         .y(function(d) { return y(d.percent); });
+
+//     var svg = d3.select("#trends_results").append("svg")
+//         .attr("width", width + margin.left + margin.right)
+//         .attr("height", height + margin.top + margin.bottom)
+//       .append("g")
+//         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+//     var linedata = parse_line(ldata);
+
+//     linedata.forEach(function(d) {
+//         d.date = parseDate(d.date);
+//     });
+
+//       x.domain(d3.extent(linedata, function(d) { return d.date; }));
+//       y.domain(d3.extent(linedata, function(d) { return d.percent; }));
+
+//       svg.append("g")
+//           .attr("class", "x axis")
+//           .attr("transform", "translate(0," + height + ")")
+//           .call(xAxis);
+
+//       svg.append("g")
+//           .attr("class", "y axis")
+//           .call(yAxis)
+//         .append("text")
+//           .attr("transform", "rotate(-90)")
+//           .attr("y", 6)
+//           .attr("dy", ".71em")
+//           .style("text-anchor", "end")
+//           .text("Percent (%)");
+
+//       svg.append("path")
+//           .datum(linedata)
+//           .attr("class", "line")
+//           .attr("d", line);
 // }
 
 
-//Geographic Demand Tab Javascript 
+// // Parse out the line graph data 
+
+// function parse_line(xydata){
+//     var xy = [];
+//     var parseDate = d3.time.format("%d-%b-%y").parse;
+//     _.each(xydata.dataPoints, function(item, index){
+//         xy.push({date: item.date, percent: item.percent});
+//         });
+//     return xy;
+}
+
+
+function get_graph_data(evt){
+    evt.preventDefault();
+
+    var trend1= $( "select[name='selected_trend1']" ).val();
+    console.log(trend1);
+    var trend2= $( "select[name='selected_trend2']" ).val();
+    console.log(trend2);
+    var trend3= $( "select[name='selected_trend3']" ).val();
+    console.log(trend3);
+    d3.json( "/db_call_trend?selected_trend1=" + trend1 + "?selected_trend2" + trend2 + "?selected_trend3" + trend3, 
+        function(error, json)  {
+        trendData = json;
+        add_data_to_graph(data);
+    });  
+}
+$('#trend_button').on('click', get_graph_data);
+
+function emptyGeodiv(evt){
+  $('#geo_results').empty()
+}
+// //Geographic Demand Tab Javascript 
 function updateGeo(evt){
   evt.preventDefault();
 
@@ -279,6 +304,9 @@ function updateGeo(evt){
 }
 
 $('#geo_skill_button').on('click', updateGeo);
+$('#geo_skill_button').on('click', emptyGeodiv);
+
+
 
 //MapBox Javascript
 

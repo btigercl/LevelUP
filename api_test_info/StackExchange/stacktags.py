@@ -64,7 +64,7 @@ def stackexchange_call(name, tagurl, skill_id):
 		start_date_to = start_date_to + 86400 
 
 def main():
-	seeds =	[("ruby-on-rails", "ruby-on-rails", 169726), ("c#", "c%23", 16020)]
+	seeds =	[("mysql", "mysql", 16309), ("bash", "bash", 32749), ("asp.net", "asp.net", 17240), ("node.js", "node.js", 17000)]
 
 	for seed in seeds:
 		name = seed[0]
@@ -77,10 +77,9 @@ def main():
 if __name__ == "__main__":
 	main()
 
-#To Seed ("ruby-on-rails", "ruby-on-rails", 169726), ("c#", "c%23", 16020), 
-
-# ("ruby-on-rails", 169726s), ("c#", 16020), ("sql", 15850), (objectivec, objective-c, 82326)
- #mysql, asp.net, arrays, bash, node.js
+#To Seed 
+#linux, sql-server, xml, wpf, r, eclipse, vb.net, xcode, wordpress, facebook, spring, 
+ #(mysql, mysql, 16309) (bash, bash, 32749) (asp.net, asp.net, 17240) (node.js, node.js, 17000)
 
 
 # 
@@ -88,4 +87,5 @@ if __name__ == "__main__":
 # "java", 14780), ("ruby", 17184), ("perl", 25893), (javascript, ), (python, )("html", 15592),("iphone", 21253),
 #("angularjs", 87663), ("django", 16135), ("android", 16680) ('jquery', 15594), ("css", 15593), ('ajax', 16022), 
 #('json', 44410), ("c++", "c%2B%2B", 14779), (".net", "text=.net", 14782), ("php", "php", 14776), ("c", "c", 23388)
+#("ruby-on-rails", "ruby-on-rails", 169726), ("c#", "c%23", 16020)
 	# 16+zlib.MAX_WBITS 

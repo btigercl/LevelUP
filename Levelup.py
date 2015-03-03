@@ -53,10 +53,16 @@ def trends():
 @app.route("/db_call_trend", methods=["GET"])
 def db_call_trend_lanuage():
 	trend1 = request.args.get("selected_trend1")
-	# trend2 = request.form.get("selected_trend2")
-	# trend3 = request.form.get("selected_trend3")
-	number_crunch = trend.cal_trend_precent_by_day(trend1)
-	jsoned_trends = jsonify(number_crunch)
+	trend2 = request.args.get("selected_trend2")
+	trend3 = request.args.get("selected_trend3")
+	# print trend1, trend2, trend3
+	number_crunch = trend.cal_trend_precent_by_year(trend1)
+	number_crunch2 = trend.cal_trend_precent_by_year(trend2)
+	number_crunch3 = trend.cal_trend_precent_by_year(trend3)
+	# print number_crunch3, number_crunch2, number_crunch
+	trends_dict = {number_crunch, number_crunch2, number_crunch3}
+	print trends_dict
+	jsoned_trends = jsonify(trends_dict)
 	return jsoned_trends
 
 @app.route("/geographic_demand")

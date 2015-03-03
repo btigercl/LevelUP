@@ -20,12 +20,13 @@
           stroke: #666;
           stroke-width: 1.5px;
         }
-        body {
-        
-        font: 10px sans-serif;
-        }
 
-        .axis path,
+        .axis path {
+          fill: none;
+          stroke: #000;
+          shape-rendering: crispEdges;
+        }
+        
         .axis line {
           fill: none;
           stroke: #000;
@@ -57,15 +58,6 @@
 	</div>
 </nav>
     <div class="container">
-        {% with messages = get_flashed_messages() %}
-        	{% if messages %}
-        		{% for message in messages %}
-            		<ul class="flashes">
-            			<li>{{ message }}</li>
-           			</ul>
-        		{% endfor %}
-        	{% endif %}
-        {% endwith %}
         {% block body %}{% endblock %}
     </div>
 <script src="/static/LevelUp.js"></script>
