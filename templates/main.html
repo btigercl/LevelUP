@@ -10,6 +10,7 @@
     <script src="http://underscorejs.org/underscore-min.js"></script>
     <script src='https://api.tiles.mapbox.com/mapbox.js/v2.1.5/mapbox.js'></script>
     <link href='https://api.tiles.mapbox.com/mapbox.js/v2.1.5/mapbox.css' rel='stylesheet' />
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
     <!-- // <script src="../d3.min.js"></script> -->
     <script src="http://d3js.org/d3.v3.js"></script>
       <link rel="stylesheet" type="text/css" href="static/LevelUp.css">
@@ -21,21 +22,16 @@
           stroke-width: 1.5px;
         }
 
-        .axis path {
-          fill: none;
-          stroke: #000;
-          shape-rendering: crispEdges;
-        }
-        
+        .axis path,
         .axis line {
           fill: none;
           stroke: #000;
           shape-rendering: crispEdges;
         }
 
-        .x.axis path {
+/*        .x.axis path {
           display: none;
-        }
+        }*/
 
         .line {
           fill: none;

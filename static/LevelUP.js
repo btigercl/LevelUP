@@ -228,7 +228,7 @@ $('#trend_button').click(function() {
 //       .append("g")
 //         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-//     var linedata = parse_line(ldata);
+//     var linedata = parseData(ldata);
 
 //     linedata.forEach(function(d) {
 //         d.date = parseDate(d.date);
@@ -259,74 +259,219 @@ $('#trend_button').click(function() {
 // }
 
 
-// // Parse out the line graph data 
+// Parse out the line graph data 
 
-// function parse_line(xydata){
-//     var xy = [];
-//     var parseDate = d3.time.format("%d-%b-%y").parse;
-//     _.each(xydata.dataPoints, function(item, index){
-//         xy.push({date: item.date, percent: item.percent});
-//         });
-//     return xy;
+function parseData(xydata){
+    var xy = [];
+          // parseDate = d3.time.format("%y").parse()
+    _.each(xydata.dataPoints, function(item, index){
+        xy.push({date: item.date, percent: item.percent});
+        });
+    return xy;
 }
+
+//trend: xydata.trend
 
 
 function get_graph_data(evt){
     evt.preventDefault();
 
     var trend1= $( "select[name='selected_trend1']" ).val();
-    console.log(trend1);
     var trend2= $( "select[name='selected_trend2']" ).val();
-    console.log(trend2);
     var trend3= $( "select[name='selected_trend3']" ).val();
-    console.log(trend3);
-    d3.json( "/db_call_trend?selected_trend1=" + trend1 + "?selected_trend2" + trend2 + "?selected_trend3" + trend3, 
-        function(error, json)  {
+    
+    d3.json( "/db_call_trend?selected_trend1=" + trend1 + "&selected_trend2=" + trend2 + "&selected_trend3=" + trend3, function(error, json)  {
         trendData = json;
-        add_data_to_graph(data);
+        multiLinegraph(trendData);
     });  
 }
 $('#trend_button').on('click', get_graph_data);
 
-function emptyGeodiv(evt){
-  $('#geo_results').empty()
+function multiLinegraph(multiLinedata) { 
+
+    var data1 = parseData(multiLinedata.trendData1);
+    var data2 = parseData(multiLinedata.trendData2);
+    var data3 = parseData(multiLinedata.trendData3);
+
+    var margin = {top: 20, right: 20, bottom: 30, left: 50},
+      width = 960 - margin.left - margin.right,
+      height = 500 - margin.top - margin.bottom;
+
+    var parseDate = d3.time.format("%Y").parse;
+
+    var x = d3.time.scale()
+        .range([0, width]);
+
+    var y = d3.scale.linear()
+        .range([height, 0]);
+
+    var xAxis = d3.svg.axis()
+        .scale(x)
+        .orient("bottom");
+
+    var yAxis = d3.svg.axis()
+        .scale(y)
+        .orient("left");
+
+    var line = d3.svg.line()
+        .interpolate("basis")
+        .x(function(d) { return x(d.date); })
+        .y(function(d) { return y(d.percent); });
+
+
+    var svg = d3.select("#trends_results").append("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+      .append("g")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+    // var data1 = parseData(multiLinedata.trendData1);
+    // var data2 = parseData(multiLinedata.trendData2);
+    // var data3 = parseData(multiLinedata.trendData3);
+
+
+    data1.forEach(function(d) {
+        d.date = parseDate(d.date);
+    });
+
+    data2.forEach(function(d) {
+        d.date = parseDate(d.date);
+    });
+
+    data3.forEach(function(d) {
+        d.date = parseDate(d.date);
+    });
+
+    var fullData = data1.concat(data2).concat(data3)
+      x.domain(d3.extent(data1, function(d) { return d.date; }));
+      y.domain(d3.extent(fullData, function(d) { return d.percent; }));
+
+      svg.append("g")
+          .attr("class", "x axis")
+          .attr("transform", "translate(0," + height + ")")
+          .call(xAxis);
+
+      svg.append("g")
+          .attr("class", "y axis")
+          .call(yAxis)
+        .append("text")
+          .attr("transform", "rotate(-90)")
+          .attr("y", 6)
+          .attr("dy", ".71em")
+          .style("text-anchor", "end")
+          .text("Percent (%)");
+
+      svg.append("path")
+          .datum(data1)
+          .attr("class", "line")
+          .attr("d", line);
+
+      svg.append("path")
+          .datum(data2)
+          .attr("class", "line")
+          .attr("d", line);
+
+      svg.append("path")
+          .datum(data3)
+          .attr("class", "line")
+          .attr("d", line);
 }
+
+
+//Geo tab javascript
+// function emptyGeodiv(evt){
+//   $('#geo_results').empty()
+// }
 // //Geographic Demand Tab Javascript 
 function updateGeo(evt){
   evt.preventDefault();
-
-  $.post("/geographic_demand_skill",
-        $('#geo_skill_button').serialize(), 
-        function(result) {
-        $("#geo_results").html(result); 
-        }
-    );  
+  var url = "/geographic_demand_skill" + $( "select[name='selected_geo_skill']" ).val();
+  $.get(url, function(result) {
+     var geoResults= results
+     console.log(geo_results);
+     geoMap(geoResults);
+   });  
 }
 
 $('#geo_skill_button').on('click', updateGeo);
-$('#geo_skill_button').on('click', emptyGeodiv);
+// $('#geo_skill_button').on('click', emptyGeodiv);
 
 
 
 //MapBox Javascript
+function geoMap(geoResults){
+    L.mapbox.accessToken = '';
+    var map = L.mapbox.map('mapdiv', 'btigercl.lb66g6k0')
+        .setView([38, -95], 5);
+
+//     map.on('style.load', function() {
+//       map.addSource(geoResults);
+//     }
+
+//      map.addLayer({
+//       "id": "markers",
+//       "type": "symbol",
+//       "source": "markers",
+//       "layout": {
+//         // "icon-image": "{marker-symbol}-12",
+//         "text-field": "{name}",
+//         "text-font": "Open Sans Semibold, Arial Unicode MS Bold",
+//         "text-offset": [0, 0.6],
+//         "text-anchor": "top"
+//       },
+//       "paint": {
+//         "text-size": 12
+//       }
+//     });
+// });
+
+
+  style.layers.push({
+    "id": "markers",
+    "type": "symbol",
+    "source": "markers",
+    "layout": {
+      "icon-image": "{marker-symbol}-12",
+      "text-field": "{title}",
+      "text-font": "Open Sans Semibold, Arial Unicode MS Bold",
+      "text-offset": [0, 0.6],
+      "text-anchor": "top"
+    },
+    "paint": {
+      "text-size": 12
+    }
+  });
+
+  // var map = new mapboxgl.Map({
+  //   container: 'map',
+  //   style: btigercl.f364ce14,
+  //   center: ([38, -95],
+  //   zoom: 5
+  // });
+
+  var geoJSON = geoResults;
+  var markers = new mapboxgl.GeoJSONSource({ data: geoJSON });
+    map.addSource('markers', markers);
+  }
 
 
 
+// 
 // var iDiv = document.createElement('div');
 // iDiv.id = 'geo_results';
 // document.getElementsByTagName('geo_table').appendChild(iDiv);
-function renderMap(evt){
-    var mapContainerParent = geo_results.parentNode;
-    mapContainerParent.removeChild(geo_results);
+// function renderMap(evt){
+//     var mapContainerParent = geo_results.parentNode;
+//     mapContainerParent.removeChild(geo_results);
 
-    var newMapContainer = document.createElement('div'); newMapContainer.setAttribute("id", "geo_results")
+//     var newMapContainer = document.createElement('div'); newMapContainer.setAttribute("id", "geo_results")
 
-    mapContainerParent.appendChild(newMapContainer);
+//     mapContainerParent.appendChild(newMapContainer);
 
-    L.mapbox.accessToken = '';
-    var map = L.mapbox.map('geo_results', 'btigercl.lb66g6k0')
-        .setView([40, -74.50], 9);
-}
+//     L.mapbox.accessToken = '';
+//     var map = L.mapbox.map('geo_results', 'btigercl.lb66g6k0')
+//         .setView([40, -74.50], 9);
+// }
 
 
 

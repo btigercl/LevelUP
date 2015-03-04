@@ -1,13 +1,15 @@
 {% extends 'main.html' %}
 {% block body %}
-<div id="table">
-	<div id="geo_results"> 
+<!-- <div id="table"> -->
+<!-- 	<div id="geo_results"> 
 		<p>Thinking of moving? See where your skills are in most demand, according to Careerbuilder's and AngelList's joblistings.</p>
-	</div>
+	</div> -->
+	<div id ="mapdiv" style= "height:900px;width:1400px;" >
+  	</div>
 	<div id="search">
-		<form action="/geographic_demand_skill" method="POST">
+		<form action="/geographic_demand_skill" method="GET">
 			 Select Technology: 
-			<label><SELECT name="selected_skill">
+			<label><SELECT name="selected_geo_skill">
 				{% for i in skills %}
 				<label><option value={{ i.tagdisplayname }}>{{ i.tagdisplayname }}</option></label>
 				{% endfor %}
@@ -17,3 +19,10 @@
 	</div>
 </div>
 {% endblock %}
+ <script>
+		// L.mapbox.accessToken = '';
+  // 		var map = L.mapbox.map('mapdiv', 'btigercl.lb66g6k0')
+  // 			.setView([38, -95], 5);
+
+
+  </script>

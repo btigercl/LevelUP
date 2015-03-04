@@ -27,7 +27,7 @@ def cal_trend_precent_by_day(name):
 
 def cal_trend_precent_by_year(name):
 	trend_year_info = []
-	year_list = ["2008", "2009", "2010", "2011", "2012", "2013", "2014", "2015"]
+	year_list = ["2008", "2009", "2010", "2011", "2012", "2013", "2014"]
 	trend_obj_list = slimmodel.get_trend_by_name(name)
 	question_list = slimmodel.get_trend_by_name("question")
 	question_count_dict = {}
@@ -45,19 +45,16 @@ def cal_trend_precent_by_year(name):
 		returned_date = str(day.date_epoc) 
 		tyear = returned_date[0:4]
 		trend_count_dict[tyear] = trend_count_dict.get(tyear, 0) + day.question_count
-	print trend_count_dict
+
 	
 	for year in year_list:
 		num = trend_count_dict.get(year)
-
 		den = question_count_dict.get(year)
-		if num != 0:
-			precent = float(num)/float(den) * 100
-			trend_year_info.append(({"date": year, "percent": precent})) 
-		else:
-			
-	
-	final_dict = {"trend":name, "dataPoints":trend_year_info}
-	print final_dict
+		percent = float(num)/float(den) * 100
+		trend_year_info.append(({"date": year, "percent": percent})) 
+  
 
-# cal_trend_precent_by_year("sql")
+	# print trend_year_info
+	final_dict = {"trend":name, "dataPoints":trend_year_info}
+	return final_dict
+# cal_trend_precent_by_year("css")

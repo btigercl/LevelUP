@@ -22,7 +22,6 @@ def ALskillcall(id, skill_name):
 		req = requests.get(urlmaker(str(id), token), params={'page' : page}).json()		 
 		
 		intial_dict = req["jobs"]
-		print intial_dict
 		for subdict in intial_dict:
 			tag_tups = []
 			skill_tup = []

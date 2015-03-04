@@ -55,12 +55,12 @@ def db_call_trend_lanuage():
 	trend1 = request.args.get("selected_trend1")
 	trend2 = request.args.get("selected_trend2")
 	trend3 = request.args.get("selected_trend3")
-	# print trend1, trend2, trend3
+	print trend1, trend2, trend3
 	number_crunch = trend.cal_trend_precent_by_year(trend1)
 	number_crunch2 = trend.cal_trend_precent_by_year(trend2)
 	number_crunch3 = trend.cal_trend_precent_by_year(trend3)
 	# print number_crunch3, number_crunch2, number_crunch
-	trends_dict = {number_crunch, number_crunch2, number_crunch3}
+	trends_dict = {"trendData1": number_crunch, "trendData2": number_crunch2, "trendData3": number_crunch3}
 	print trends_dict
 	jsoned_trends = jsonify(trends_dict)
 	return jsoned_trends
@@ -71,12 +71,13 @@ def geographic_demand():
 	skills = slimmodel.get_skills_list()
 	return render_template("geo.html", skills = skills)
 
-@app.route("/geographic_demand_skill", methods=["POST"])
+@app.route("/geographic_demand_skill", methods=["GET"])
 def geographic_demand_skill():
 	"""This makes a dynamic call to CareerBuilder to return lat/long/location of demand for a skill set"""
-	skill = request.form.get("selected_skill")
-	lat_long_tups = CBskillcall.cbskill(skill)
-	return json.dumps(lat_long_tups)
+	skill = request.args.get("selected_skill")
+	geoJSON_dict = CBskillcall.cbskill(skill)
+	print geoJSON_dict
+	return jsonify(geoJSON_dict)
 	#pass to D3
 	# return render_template("geo_response.html", geo_tups=lat_long_tups, skills = skills)
 
