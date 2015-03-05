@@ -274,19 +274,21 @@ function parseData(xydata){
 function get_graph_data(evt){
     evt.preventDefault();
 
-    var trend1= $( "select[name='selected_trend1']" ).val();
-    var trend2= $( "select[name='selected_trend2']" ).val();
-    var trend3= $( "select[name='selected_trend3']" ).val();
-    
-    console.log(trend1);
-    console.log(trend2);
-    console.log(trend3);
 
-    d3.json( "/db_call_trend?selected_trend1=" + trend1 + "&selected_trend2=" + trend2 + "&selected_trend3=" + trend3, function(error, json)  {
-        trendData = json;
+        var trend1= $( "select[name='selected_trend1']" ).val();
+        var trend2= $( "select[name='selected_trend2']" ).val();
+        var trend3= $( "select[name='selected_trend3']" ).val();
+        var encoded1 = encodeURIComponent(trend1);
+        var encoded2 = encodeURIComponent(trend2);
+        var encoded3 = encodeURIComponent(trend3);
+
+      d3.json( "/db_call_trend?selected_trend1=" + encoded1 + "&selected_trend2=" + encoded2 + "&selected_trend3=" + encoded3, 
+      function(error, json)  {
+        var trendData = json;
         multiLinegraph(trendData);
     });  
 }
+
 $('#trend_button').on('click', get_graph_data);
 
 function multiLinegraph(multiLinedata) { 

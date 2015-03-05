@@ -46,31 +46,27 @@ def skill_angelList_call():
 def trends():
 	"""This should render the jinja insert for the trends. This should hold the alorythm 
 	for line graphs"""
-	trend_skill_list = slimmodel.get_trend_list()	
-	skill_list = [(skill.skill, skill.skill_id) for skill in trend_skill_list if skill.skill != "question"]
-	skill_set = set(skill_list)
-	skills_list_dd = list(skill_set)
-	skills_list_dd.sort()
+	trend_skill_list = slimmodel.get_trend_skill_name()	
+	# skill_list = [(skill.skill, skill.skill_id) for skill in trend_skill_list if skill.skill != "question"]
+	# skill_set = set(skill_list)
+	# skills_list_dd = list(skill_set)
+	# skills_list_dd.sort()
 
-	# skill_list = []
-	# for skill in trend_skill_list:
-	# 	if skill.skill not in skill_list and skill.skill != "question":
-	# 		skill_list.append(skill)
-	return render_template("trends.html", trends=skills_list_dd)
+	skill_list = []
+	for skill in trend_skill_list:
+		if skill[0] not in skill_list and skill[0] != "question":
+			skill_list.append(skill[0])
+	return render_template("trends.html", trends=skill_list)
 
 @app.route("/db_call_trend", methods=["GET"])
 def db_call_trend_lanuage():
-	trend_1_id = request.args.get("selected_trend1")
-	trend_2_id = request.args.get("selected_trend2")
-	trend_3_id = request.args.get("selected_trend3")
-	print trend_1_id, trend_2_id, trend_3_id
-	skill_1_name = slimmodel.get_trend_by_skill_id(int(trend_1_id))
-	skill_2_name = slimmodel.get_trend_by_skill_id(int(trend_2_id))
-	skill_3_name = slimmodel.get_trend_by_skill_id(int(trend_3_id))
-	print skill_1_name, skill_2_name, skill_3_name
-	number_crunch = trend.cal_trend_precent_by_year(skill_1_name)
-	number_crunch2 = trend.cal_trend_precent_by_year(skill_2_name)
-	number_crunch3 = trend.cal_trend_precent_by_year(skill_3_name)
+	trend1 = request.args.get("selected_trend1")
+	trend2 = request.args.get("selected_trend2")
+	trend3 = request.args.get("selected_trend3")
+	print trend1, trend2, trend3
+	number_crunch = trend.cal_trend_precent_by_year(trend1)
+	number_crunch2 = trend.cal_trend_precent_by_year(trend2)
+	number_crunch3 = trend.cal_trend_precent_by_year(trend3)
 	trends_dict = {"trendData1": number_crunch, "trendData2": number_crunch2, "trendData3": number_crunch3}
 	jsoned_trends = jsonify(trends_dict)
 	return jsoned_trends
