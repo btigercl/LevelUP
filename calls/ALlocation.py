@@ -8,7 +8,7 @@ import geocoder
 def urlmaker(id, token):
 	return "https://api.angel.co/1/tags/" + id  + "/jobs?access_token=" + token 
 
-def ALskillcall(id, skill_name):
+def ALlocationcall(id, skill_name):
 	token = os.environ.get("AngelList_Token")
 	req = requests.get(urlmaker(str(id), token)).json()
 	num_pages = req['last_page']
@@ -18,9 +18,10 @@ def ALskillcall(id, skill_name):
 		
 
 	intial_dict = req["jobs"]
+	location = []
+	tag_tup = []
+	geo_dict = []
 	for subdict in intial_dict:
-		location = []
-		tag_tup = []
 		# job_id = subdict["id"]
 		# date_job_posted = subdict["created_at"]
 		# company = subdict["startup"]["name"]
@@ -28,9 +29,21 @@ def ALskillcall(id, skill_name):
 		# job_title = subdict["title"]
 		for tag in subdict["tags"]:
 			tag_tup.append((tag["id"], tag["display_name"], tag["name"], tag["tag_type"]))
-		for tup in tag_tup:
-			if "LocationTag" in tup:
-				location.append(normalize('NFKD', tup[1]).encode('ascii', 'ignore'))
-		print location
+	
+	for tup in tag_tup:
+		if "LocationTag" in tup:
+			location.append(normalize('NFKD', tup[1]).encode('ascii', 'ignore'))
+	
+	for city in location:
+		if city != "Anywhere" or city != "None":
+			g = geocoder.google(city)
+			geo_dict.append(g.geojson)
+			# geo_dict.append({"type":"Feature", "geometry":{"type": "Point", "coordinates": lat_long}, "properties":{"name": city}})
 
-ALskillcall(16309, "mysql")
+	final_dict = {"type": "FeatureCollection", "features": geo_dict}
+	return final_dict
+
+
+
+
+# ALlocationcall(16309, "mysql")

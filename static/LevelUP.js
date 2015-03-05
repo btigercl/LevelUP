@@ -42,8 +42,6 @@ function processDataIntoLinks(nodes){
 
 function visualizeCluster(datapassed){  
 
-
-
     var nodes = makeNodes(datapassed);
     var link = processDataIntoLinks(nodes);
             
@@ -280,6 +278,10 @@ function get_graph_data(evt){
     var trend2= $( "select[name='selected_trend2']" ).val();
     var trend3= $( "select[name='selected_trend3']" ).val();
     
+    console.log(trend1);
+    console.log(trend2);
+    console.log(trend3);
+
     d3.json( "/db_call_trend?selected_trend1=" + trend1 + "&selected_trend2=" + trend2 + "&selected_trend3=" + trend3, function(error, json)  {
         trendData = json;
         multiLinegraph(trendData);
@@ -385,10 +387,12 @@ function multiLinegraph(multiLinedata) {
 // //Geographic Demand Tab Javascript 
 function updateGeo(evt){
   evt.preventDefault();
-  var url = "/geographic_demand_skill" + $( "select[name='selected_geo_skill']" ).val();
+  var skill_id = $( "select[name='selected_geo_skill']" ).val();
+  console.log(skill_id)
+  var url = "/geographic_demand_skill?selected_geo_skill=" + skill_id
   $.get(url, function(result) {
-     var geoResults= results
-     console.log(geo_results);
+     var geoResults= result;
+     console.log(geoResults);
      geoMap(geoResults);
    });  
 }
@@ -400,80 +404,14 @@ $('#geo_skill_button').on('click', updateGeo);
 
 //MapBox Javascript
 function geoMap(geoResults){
-    L.mapbox.accessToken = '';
+    L.mapbox.accessToken = 'pk.eyJ1IjoiYnRpZ2VyY2wiLCJhIjoiTnd3OWp5OCJ9.bSkS-vF6k8g_jeV25fC7sw';
     var map = L.mapbox.map('mapdiv', 'btigercl.lb66g6k0')
         .setView([38, -95], 5);
 
-//     map.on('style.load', function() {
-//       map.addSource(geoResults);
-//     }
+    var myLayer = L.mapbox.featureLayer().addTo(map);
 
-//      map.addLayer({
-//       "id": "markers",
-//       "type": "symbol",
-//       "source": "markers",
-//       "layout": {
-//         // "icon-image": "{marker-symbol}-12",
-//         "text-field": "{name}",
-//         "text-font": "Open Sans Semibold, Arial Unicode MS Bold",
-//         "text-offset": [0, 0.6],
-//         "text-anchor": "top"
-//       },
-//       "paint": {
-//         "text-size": 12
-//       }
-//     });
-// });
-
-
-  style.layers.push({
-    "id": "markers",
-    "type": "symbol",
-    "source": "markers",
-    "layout": {
-      "icon-image": "{marker-symbol}-12",
-      "text-field": "{title}",
-      "text-font": "Open Sans Semibold, Arial Unicode MS Bold",
-      "text-offset": [0, 0.6],
-      "text-anchor": "top"
-    },
-    "paint": {
-      "text-size": 12
-    }
-  });
-
-  // var map = new mapboxgl.Map({
-  //   container: 'map',
-  //   style: btigercl.f364ce14,
-  //   center: ([38, -95],
-  //   zoom: 5
-  // });
-
-  var geoJSON = geoResults;
-  var markers = new mapboxgl.GeoJSONSource({ data: geoJSON });
-    map.addSource('markers', markers);
-  }
-
-
-
-// 
-// var iDiv = document.createElement('div');
-// iDiv.id = 'geo_results';
-// document.getElementsByTagName('geo_table').appendChild(iDiv);
-// function renderMap(evt){
-//     var mapContainerParent = geo_results.parentNode;
-//     mapContainerParent.removeChild(geo_results);
-
-//     var newMapContainer = document.createElement('div'); newMapContainer.setAttribute("id", "geo_results")
-
-//     mapContainerParent.appendChild(newMapContainer);
-
-//     L.mapbox.accessToken = '';
-//     var map = L.mapbox.map('geo_results', 'btigercl.lb66g6k0')
-//         .setView([40, -74.50], 9);
-// }
-
-
+    myLayer.setGeoJSON(geoResults);
+}
 
 
 //Bootstrap Javascript 

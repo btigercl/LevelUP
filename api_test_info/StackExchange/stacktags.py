@@ -64,7 +64,7 @@ def stackexchange_call(name, tagurl, skill_id):
 		start_date_to = start_date_to + 86400 
 
 def main():
-	seeds =	[("xcode", "xcode", 74964), ("wordpress", "wordpress", 19006), ("spring", "spring", 45160), ("xml", "xml", 21232)]
+	seeds =	[("wordpress", "wordpress", 19006), ("spring", "spring", 45160), ("xml", "xml", 21232)]
 
 	for seed in seeds:
 		name = seed[0]
@@ -79,7 +79,7 @@ if __name__ == "__main__":
 
 #To Seed 
 #linux, sql-server, xml, wpf, r, eclipse, vb.net, xcode, wordpress, facebook, spring, 
- #(mysql, mysql, 16309) (bash, bash, 32749) (asp.net, asp.net, 17240) (node.js, node.js, 17000)
+ #(mysql, mysql, 16309) (bash, bash, 32749) (asp.net, asp.net, 17240) (node.js, node.js, 17000)("xcode", "xcode", 74964)
 
 
 # 

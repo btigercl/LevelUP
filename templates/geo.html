@@ -11,7 +11,7 @@
 			 Select Technology: 
 			<label><SELECT name="selected_geo_skill">
 				{% for i in skills %}
-				<label><option value={{ i.tagdisplayname }}>{{ i.tagdisplayname }}</option></label>
+				<label><option value={{ i.id }}>{{ i.tagdisplayname }}</option></label>
 				{% endfor %}
 			</SELECT></label>
 			<label><input type="submit" id="geo_skill_button">Submit</input></label>

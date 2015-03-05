@@ -77,6 +77,10 @@ def get_trend_by_name(name):
 	single_entry = Session.query(Stack_Overflow_Trends).filter_by(skill=name).all()
 	return single_entry
 
+def get_trend_by_skill_id(passed_id):
+	trend_name = Session.query(Stack_Overflow_Trends.skill).filter_by(skill_id=passed_id).first()
+	return trend_name[0]
+
 def get_question_count_by_date(date):
 	single_entry = Session.query(Stack_Overflow_Trends.question_count).filter_by(skill="question", date_epoc=date).first()
 	return single_entry

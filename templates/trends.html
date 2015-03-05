@@ -12,22 +12,22 @@
 			 Select Skill: 
 			 <br>
 			<label><SELECT name="selected_trend1">
-				{% for name in trends %}
-				<label><option value={{ name }}>{{ name }}</option></label>
+				{% for i in trends %}
+				<label><option value={{ i[1] }}>{{ i[0] }}</option></label>
 				{% endfor %}
 			</SELECT></label>
 			<br>
 			Select Second Skill:
 			<label><SELECT name="selected_trend2">
 				{% for i in trends %}
-				<label><option value={{ i }}>{{ i }}</option></label>
+				<label><option value={{ i[1] }}>{{ i[0] }}</option></label>
 				{% endfor %}
 			</SELECT></label>
 			<br>
 			Select Third Skill:
 			<label><SELECT name="selected_trend3">
 				{% for i in trends %}
-				<label><option value={{ i }}>{{ i }}</option></label>
+				<label><option value={{ i[1] }}>{{ i[0] }}</option></label>
 				{% endfor %}
 			</SELECT></label>
 			<label><input type="submit" id="trend_button"></input></label>
