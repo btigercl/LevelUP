@@ -64,7 +64,7 @@ def stackexchange_call(name, tagurl, skill_id):
 		start_date_to = start_date_to + 86400 
 
 def main():
-	seeds =	[("wordpress", "wordpress", 19006), ("spring", "spring", 45160), ("xml", "xml", 21232)]
+	seeds =	[("linux", "linux", 31586), ("sql server", "sql-server", 17241), ("xml", "xml", 21232), ("wpf", "wpf", 30552)]
 
 	for seed in seeds:
 		name = seed[0]
@@ -88,4 +88,5 @@ if __name__ == "__main__":
 #("angularjs", 87663), ("django", 16135), ("android", 16680) ('jquery', 15594), ("css", 15593), ('ajax', 16022), 
 #('json', 44410), ("c++", "c%2B%2B", 14779), (".net", "text=.net", 14782), ("php", "php", 14776), ("c", "c", 23388)
 #("ruby-on-rails", "ruby-on-rails", 169726), ("c#", "c%23", 16020)
-	# 16+zlib.MAX_WBITS ("mysql", "mysql", 16309), ("bash", "bash", 32749), ("asp.net", "asp.net", 17240), ("node.js", "node.js", 17000)
+	# 16+zlib.MAX_WBITS ("mysql", "mysql", 16309), ("bash", "bash", 32749), ("asp.net", "asp.net", 17240), 
+	#("node.js", "node.js", 17000), ("wordpress", "wordpress", 19006), ("spring", "spring", 45160), ("xml", "xml", 21232)

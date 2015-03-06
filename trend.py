@@ -51,7 +51,7 @@ def cal_trend_precent_by_year(name):
 		num = trend_count_dict.get(year)
 		den = question_count_dict.get(year)
 		percent = float(num)/float(den) * 100
-		trend_year_info.append(({"date": year, "percent": percent})) 
+		trend_year_info.append(({"trendName": name, "date": year, "percent": percent})) 
   
 
 	# print trend_year_info

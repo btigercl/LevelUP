@@ -37,8 +37,6 @@ def skill_angelList_call():
 	skill_obj = slimmodel.get_skill_by_id(int(skill_id))
 	skill_name = skill_obj.tagdisplayname
 	AL_skills_dict = ALskillcall.ALskillcall(skill_id, skill_name)
-	# pp = pprint.PrettyPrinter(indent = 4)
-	# pp.pprint(AL_skills_dict)
 	jsoned = jsonify(AL_skills_dict) 
 	return jsoned
 

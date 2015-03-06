@@ -111,6 +111,7 @@ function visualizeCluster(datapassed){
                     .attr("transform", function(d) { 
                     return "translate(" + d.x + "," + d.y + ")"; });
             }
+        
 }
 
 //Cluster Function to make a new call when node is clicked
@@ -179,83 +180,6 @@ $('#trend_button').click(function() {
   });
 });
 
-// function get_graph_data(evt){
-//   evt.preventDefault();
-
-//   var trend1= $( "select[name='selected_trend1']" ).val();
-        
-//   d3.json( "/db_call_trend?selected_trend1=" + trend1, function(error, json) {
-//     var lineGraphdata = json;
-    
-//     visualizeLines(lineGraphdata);
-//   });
-// }
-// $('#trend_button').on('click', get_graph_data);
-
-
-// // Create line graph  
-// function visualizeLines(ldata){
-
-//     var margin = {top: 20, right: 20, bottom: 30, left: 50},
-//         width = 960 - margin.left - margin.right,
-//         height = 500 - margin.top - margin.bottom;
-
-//     var parseDate = d3.time.format("%d-%m-%Y").parse;
-
-//     var x = d3.time.scale()
-//         .range([0, width]);
-
-//     var y = d3.scale.linear()
-//         .range([height, 0]);
-
-//     var xAxis = d3.svg.axis()
-//         .scale(x)
-//         .orient("bottom");
-
-//     var yAxis = d3.svg.axis()
-//         .scale(y)
-//         .orient("left");
-
-//     var line = d3.svg.line()
-//         .x(function(d) { return x(d.date); })
-//         .y(function(d) { return y(d.percent); });
-
-//     var svg = d3.select("#trends_results").append("svg")
-//         .attr("width", width + margin.left + margin.right)
-//         .attr("height", height + margin.top + margin.bottom)
-//       .append("g")
-//         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-//     var linedata = parseData(ldata);
-
-//     linedata.forEach(function(d) {
-//         d.date = parseDate(d.date);
-//     });
-
-//       x.domain(d3.extent(linedata, function(d) { return d.date; }));
-//       y.domain(d3.extent(linedata, function(d) { return d.percent; }));
-
-//       svg.append("g")
-//           .attr("class", "x axis")
-//           .attr("transform", "translate(0," + height + ")")
-//           .call(xAxis);
-
-//       svg.append("g")
-//           .attr("class", "y axis")
-//           .call(yAxis)
-//         .append("text")
-//           .attr("transform", "rotate(-90)")
-//           .attr("y", 6)
-//           .attr("dy", ".71em")
-//           .style("text-anchor", "end")
-//           .text("Percent (%)");
-
-//       svg.append("path")
-//           .datum(linedata)
-//           .attr("class", "line")
-//           .attr("d", line);
-// }
-
 
 // Parse out the line graph data 
 
@@ -263,7 +187,7 @@ function parseData(xydata){
     var xy = [];
           // parseDate = d3.time.format("%y").parse()
     _.each(xydata.dataPoints, function(item, index){
-        xy.push({date: item.date, percent: item.percent});
+        xy.push({trendName: item.trendName, date: item.date, percent: item.percent});
         });
     return xy;
 }
@@ -301,6 +225,9 @@ function multiLinegraph(multiLinedata) {
       width = 960 - margin.left - margin.right,
       height = 500 - margin.top - margin.bottom;
 
+    var bluescale4 = ["#8BA9D0", "#6A90C1", "#066CA9", "#004B8C"];
+    var color = d3.scale.ordinal().range(bluescale4);
+
     var parseDate = d3.time.format("%Y").parse;
 
     var x = d3.time.scale()
@@ -322,17 +249,17 @@ function multiLinegraph(multiLinedata) {
         .x(function(d) { return x(d.date); })
         .y(function(d) { return y(d.percent); });
 
-
     var svg = d3.select("#trends_results").append("svg")
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
-      .append("g")
+        .append("g")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+        
+        // .on("mousemove", mousemove)
 
     // var data1 = parseData(multiLinedata.trendData1);
     // var data2 = parseData(multiLinedata.trendData2);
     // var data3 = parseData(multiLinedata.trendData3);
-
 
     data1.forEach(function(d) {
         d.date = parseDate(d.date);
@@ -346,9 +273,14 @@ function multiLinegraph(multiLinedata) {
         d.date = parseDate(d.date);
     });
 
-    var fullData = data1.concat(data2).concat(data3)
+    var div = d3.select("body").append("div")   
+      .attr("class", "tooltip")               
+      .style("opacity", 0);
+
+    var fullData = data1.concat(data2).concat(data3);
       x.domain(d3.extent(data1, function(d) { return d.date; }));
       y.domain(d3.extent(fullData, function(d) { return d.percent; }));
+    console.log(fullData);
 
       svg.append("g")
           .attr("class", "x axis")
@@ -368,17 +300,54 @@ function multiLinegraph(multiLinedata) {
       svg.append("path")
           .datum(data1)
           .attr("class", "line")
-          .attr("d", line);
+          .attr("d", line)
+          .on("mouseover", mouseover)
+          .on("mouseout", mouseout)
+          .text(multiLinedata.trendData1);
 
       svg.append("path")
           .datum(data2)
           .attr("class", "line")
-          .attr("d", line);
+          .style("stroke", function() { 
+                return d.color = color(d.key); })
+          .attr("d", line)
+          .on("mouseover", mouseover)
+          .on("mouseout", mouseout)
+          .text(multiLinedata.trendData2);
 
       svg.append("path")
           .datum(data3)
           .attr("class", "line")
-          .attr("d", line);
+          .attr("d", line)
+          .on("mouseover", mouseover)
+          .on("mouseout", mouseout)          
+          .text(multiLinedata.trendData3);
+
+      console.log(multiLinedata);
+
+      function mouseover() {
+        // _.each(fullData, function(d, index) {
+          div.transition()
+              .duration(500)
+              .style("opacity", 1)
+          div. html(multiLinedata.trendName + "<br/>" + multiLinedata.date + "<br/>" + multiLinedata.percent)
+              .style("left", (d3.event.pagex) + "px")
+              .style("top", (d3.event.pageY - 28) + "px");
+          // });
+        }
+
+      function mousemove() {
+          div
+            .text(d3.event.pageX + ", " + d3.event.pageY)
+            .style("left", (d3.event.pageX - 34) + "px")
+            .style("top", (d3.event.pageY - 12) + "px");
+        }
+
+      function mouseout() {
+          div.transition()
+            .duration(500)
+            .style("opacity", 0);
+}
 }
 
 
@@ -404,11 +373,11 @@ $('#geo_skill_button').on('click', updateGeo);
 
 
 
-//MapBox Javascript
+// MapBox Javascript
 function geoMap(geoResults){
     L.mapbox.accessToken = 'pk.eyJ1IjoiYnRpZ2VyY2wiLCJhIjoiTnd3OWp5OCJ9.bSkS-vF6k8g_jeV25fC7sw';
     var map = L.mapbox.map('mapdiv', 'btigercl.lb66g6k0')
-        .setView([38, -95], 5);
+        .setView([38, -95], 4);
 
     var myLayer = L.mapbox.featureLayer().addTo(map);
 
