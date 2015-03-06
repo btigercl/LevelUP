@@ -62,10 +62,12 @@ def db_call_trend_lanuage():
 	trend2 = request.args.get("selected_trend2")
 	trend3 = request.args.get("selected_trend3")
 	print trend1, trend2, trend3
-	number_crunch = trend.cal_trend_precent_by_year(trend1)
-	number_crunch2 = trend.cal_trend_precent_by_year(trend2)
-	number_crunch3 = trend.cal_trend_precent_by_year(trend3)
-	trends_dict = {"trendData1": number_crunch, "trendData2": number_crunch2, "trendData3": number_crunch3}
+	number_crunch = trend.creating_multi_trend_dict(trend1, trend2, trend3)
+	print number_crunch
+	# number_crunch2 = trend.cal_trend_precent_by_year(trend2)
+	# number_crunch3 = trend.cal_trend_precent_by_year(trend3)
+	# trends_dict = {"trend": number_crunch, "trendData2": number_crunch2, "trendData3": number_crunch3
+	trends_dict= {"trends": number_crunch}
 	jsoned_trends = jsonify(trends_dict)
 	return jsoned_trends
 

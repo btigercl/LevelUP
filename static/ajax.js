@@ -1,3 +1,29 @@
+      svg.append("path")
+          .datum(data1)
+          .attr("class", "line")
+          .style("stroke", "#8BA9D0")
+          .attr("d", line)
+          .on("mouseover", mouseover)
+          .on("mouseout", mouseout);
+
+      svg.append("path")
+          .datum(data2)
+          .attr("class", "line")
+          .style("stroke", "#6A90C1")
+          .attr("d", line)
+          .on("mouseover", mouseover)
+          .on("mouseout", mouseout);
+
+      svg.append("path")
+          .datum(data3)
+          .attr("class", "line")
+          .style("stroke", "#066CA9")
+          .attr("d", line)
+          .on("mouseover", mouseover)
+          .on("mouseout", mouseout);         
+          // .text(function (d) { return d.trendName; });
+
+
 // function get_graph_data(evt){
 //   evt.preventDefault();
 

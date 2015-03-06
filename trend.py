@@ -34,7 +34,6 @@ def cal_trend_precent_by_year(name):
 	trend_count_dict = {}
 	
 	for question in question_list:
-
 		q_date = str(question.date_epoc)
 		qyear = q_date[0:4]
 		question_count_dict[qyear] = question_count_dict.get(qyear, 0) + question.question_count
@@ -55,6 +54,20 @@ def cal_trend_precent_by_year(name):
   
 
 	# print trend_year_info
-	final_dict = {"trend":name, "dataPoints":trend_year_info}
-	return final_dict
-# cal_trend_precent_by_year("css")
+	# final_dict = {"trend":name, "dataPoints":trend_year_info}
+	return trend_year_info
+
+def creating_multi_trend_dict(name1, name2, name3):
+	
+	input_list = [name1, name2, name3]
+	trends_dict_list = []
+
+	for name in input_list:
+		returned_dict = cal_trend_precent_by_year(name)
+		for i in range(len(returned_dict)):
+			trends_dict_list.append(returned_dict[i])
+
+	# print trends_dict_list
+	return trends_dict_list
+
+# creating_multi_trend_dict("css", "html", "javascript")

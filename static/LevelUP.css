@@ -15,6 +15,18 @@ body{
 	font color: white;
 }*/
 
+.legend-text {
+	display: inline-block;
+	margin-right: 5px;
+}
+
+.legend-box {
+	width: 18px;
+	height: 18px;
+	display: inline-block;
+	margin-right: 20px;
+}
+
 #table {
 	display: table;
 	margin: 0;
@@ -22,6 +34,9 @@ body{
 	width: 100%;
 }
 
+#trends_legend {
+	text-align: center;
+}
 
 #search {
 	display: table-cell;
@@ -41,3 +56,4 @@ body{
 	padding: 15px;
 	font-family: Electrolize;
 }
+
