@@ -3,6 +3,12 @@ function emptyClusterdiv(evt){
   $('#cluster_results').empty()
 }
 
+$('#skill_cluster_button').click(function() {
+  $( "#fade_in_cluster_text" ).fadeIn( "slow", function() {
+    $("#fade_in_cluster_text" ).html("<p>Find out what other skills frequently show up with in the same joblistings on Angel List Want to know what other skills employers are looking for on AngelList.</p>");
+  });
+});
+
 var clusterData;
 $()
 function startCluster(evt){
@@ -82,15 +88,15 @@ function visualizeCluster(datapassed){
                 .attr("class", "node")
                 .call(force.drag);
             
-            var color = d3.scale.category20();
+            var color = d3.scale.category20c();
 
             node.append("circle")
-                .attr("r", function(d) { return d.count/6});;
-                // .style("fill", function(d) { return color(d.source); });
+                .attr("r", function(d) { return d.count/6})
+                .style("fill", function(d) { return color(d.count); });
                 
             // add the text 
             node.append("text")
-                .attr("x", 35)
+                .attr("x", 25)
                 .attr("dy", ".35em")
                 .text(function(d) { return d.name; });
 
