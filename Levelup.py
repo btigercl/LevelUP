@@ -21,9 +21,10 @@ app.wsgi_app = ProfilerMiddleware(app.wsgi_app, restrictions=[30])
 @app.route("/")
 def landing():
 	"""Home page and lead into site. Basic html/css/bootstrap with a kind of overview of the site"""
-	return render_template("landing.html")
+	skills = slimmodel.get_skills_list() 
+	return render_template("landing.html", skills=skills)
 
-@app.route("/skill_sets")
+@app.route("/skill_sets", methods=["GET"])
 def skill_sets():
 	"""This should render the jinja insert for the graphical representation of skill clusters"""
 	skills = slimmodel.get_skills_list() 

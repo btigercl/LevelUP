@@ -43,14 +43,16 @@ def cal_trend_precent_by_year(name):
 		count = day.question_count 
 		returned_date = str(day.date_epoc) 
 		tyear = returned_date[0:4]
+		print tyear
 		trend_count_dict[tyear] = trend_count_dict.get(tyear, 0) + day.question_count
 
 	
 	for year in year_list:
 		num = trend_count_dict.get(year)
 		den = question_count_dict.get(year)
-		percent = float(num)/float(den) * 100
-		trend_year_info.append(({"trendName": name, "date": year, "percent": percent})) 
+		percent_long = float(num)/float(den) * 100
+		percent_round = round(percent_long, 2)
+		trend_year_info.append(({"trendName": name, "date": year, "percent": percent_round})) 
   
 
 	# print trend_year_info

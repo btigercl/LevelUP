@@ -9,7 +9,6 @@ def urlmaker(id, token):
 
 
 def ALskillcall(id, skill_name):
-	#The main function seeds the job listing table. It needs to check the job ID against id's in the job listing table to avoid dups
 	token = os.environ.get("AngelList_Token2")
 	req = requests.get(urlmaker(str(id), token)).json()
 	num_pages = req['last_page']

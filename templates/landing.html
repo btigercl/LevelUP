@@ -31,6 +31,16 @@
 	<div id="center">
 	<h1>Welcome to LevelUP</h1>
 	<p>Find out what skills you need to LevelUP in your field</p>
+		<form id="landing_form" action="/skill_sets" method="get">
+		What skill are you interested in?
+		<br>
+	    <label><SELECT name="selected_skill" id="skill_dropdown">
+	        {% for i in skills %}
+	        <label><option value="{{ i.id }}">{{ i.tagdisplayname }}</option></label>
+	        {% endfor %}
+	    	</SELECT></label>
+	    <label><input type="submit" id="landing_button">Submit</input></label>
+	</form>
 	<a href="/skill_sets" class="btn btn-info" role="button">Enter</a>
 	</div>
 </body>
