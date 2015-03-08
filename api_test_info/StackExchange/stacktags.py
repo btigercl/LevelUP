@@ -55,8 +55,8 @@ def stackexchange_call(name, tagurl, skill_id):
 	"""this should make calls to stackexchange every .1 to retreive the number of questions per day since stack
 	overflow's founding until present"""  
 
-	start_date_from = date_converstion("2014-03-01")
-	start_date_to = date_converstion("2014-03-02") 
+	start_date_from = date_converstion("2008-08-15")
+	start_date_to = date_converstion("2008-08-16") 
 	current = (time.time())
 	while start_date_to <= current:
 		time.sleep(tag_count_by_day(name, tagurl, skill_id, start_date_from, start_date_to, DEV_KEY))    
@@ -64,7 +64,7 @@ def stackexchange_call(name, tagurl, skill_id):
 		start_date_to = start_date_to + 86400 
 
 def main():
-	seeds =	[("r", "r", 21803), ("eclipse", "eclipse", 39991), ("vb.net", "vb.net", 16023), ("mongodb", "mongodb",16999)]
+	seeds =	[("regex", "regex", 76488), ("oracle", "oracle", 59776), ("git", "git", 21135), ("apache", "apache", 24754)]
 
 	for seed in seeds:
 		name = seed[0]
@@ -79,7 +79,7 @@ if __name__ == "__main__":
 
 #To Seed 
 
-
+#("r", "r", 21803), ("eclipse", "eclipse", 39991), ("vb.net", "vb.net", 16023), ("mongodb", "mongodb",16999)
 
 # 
 #Seeded

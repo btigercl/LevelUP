@@ -73,9 +73,10 @@
 <div class="container">
 	<div id="table">
 		<div id="cluster_results">
-			<p>Find out what other skills frequently show up with in the same joblistings on Angel List Want to know what other skills employers are looking for on AngelList.</p>
 		</div>
 		<div id="search">
+      <p>Find out what other skills frequently show up with in the same joblistings on Angel List Want to know what other skills employers are looking for on AngelList.</p>
+      <br>
 			<form action="/skill_angelList_call" id="cluster_form" method="GET">
 			 	Select Technology: 
 	        	<label><SELECT name="selected_skill" id="skill_dropdown">
@@ -84,6 +85,11 @@
 	            	{% endfor %}
 	        	</SELECT></label>
 	        	<label><input type="submit" id="skill_cluster_button">Submit</input></label>
+            <br>
+            <p>Top Job Roles Associated With This Skill</p>
+            <br id="insert_list">
+            <ol id='dynamic_list'>
+            </ol>
 			</form>
 			<br>
 			<span id="fade_in_cluster_text"></span>

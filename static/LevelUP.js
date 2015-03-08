@@ -31,25 +31,10 @@ $('#skill_cluster_button').on('click', emptyClusterdiv);
 
 //Skill Set D3 code 
 
-function makeNodes(data){
-  var nodes = [{name: data.name, weight: data.children.length}];
-    _.each(data.children, function(item, index){
-      nodes.push({name: item.name, count: item.count, weight: 1});
-    });
-  return nodes;
-}
-
-
-function processDataIntoLinks(nodes){
-  var result = [];
-  for (var index = 0; index < _.size(nodes); index++){
-     result.push({ source: 0, target: index });
-  }
-  return result;
-}
-
 function visualizeCluster(datapassed){  
 
+  console.log(datapassed);
+  var roleList = createRoletaglist(datapassed);
   var nodes = makeNodes(datapassed);
   var linkData = processDataIntoLinks(nodes);
                   
@@ -131,6 +116,7 @@ function visualizeCluster(datapassed){
       return "translate(" + d.x + "," + d.y + ")"; });
   }
   
+
   function click() {
     if (d3.event.defaultPrevented) return;
     var d = d3.select(this).node().__data__;
@@ -138,12 +124,42 @@ function visualizeCluster(datapassed){
     encodedNodeskill = encodeURIComponent(tagDisplayname);
     d3.json( "/skill_angelList_call?selected_skill=" + encodedNodeskill, function(error, json) {
     newData = json;
-      path.exit().remove();
-      node.exit().remove();
+      // path.exit().remove();
+      // node.exit().remove();
     visualizeCluster(newData);
     });
   }
 }
+
+function makeNodes(data){
+  var nodes = [{name: data.name, weight: data.children.length}];
+    _.each(data.children, function(item, index){
+      nodes.push({name: item.name, count: item.count, weight: 1});
+    });
+  return nodes;
+}
+
+
+function processDataIntoLinks(nodes){
+  var result = [];
+  for (var index = 0; index < _.size(nodes); index++){
+     result.push({ source: 0, target: index });
+  }
+  return result;
+}
+
+function createRoletaglist(dict){
+   _.each(dict.roletag_list, function(item, index){
+      var front = "<li>";
+      var middle = String(item) 
+      var back = "</li>";
+      var fullListiem = front.concat(middle, back);
+      // var fullListiem = front.concat(back);
+      $("#dynamic_list").append(fullListiem)
+    return
+  });
+}
+
 
 //Trends Tab Javascript
       $('#trend_button').click(function() {
@@ -195,7 +211,7 @@ $('#trend_button').on('click', get_graph_data);
 
 
 function draw_line_graph(multiLinedata) { 
-         
+  console.log(multiLinedata);
 
   var margin = {top: 20, right: 20, bottom: 30, left: 50},
     width = 960 - margin.left - margin.right,

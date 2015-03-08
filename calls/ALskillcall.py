@@ -15,6 +15,7 @@ def ALskillcall(id, skill_name):
 	
 	skill_dict = {}
 	skills_tups = []
+	roletag_dict = {}
 	total = 0
 
 	for page in range(2, 3):
@@ -27,35 +28,42 @@ def ALskillcall(id, skill_name):
 			total = total + 1 	
 			for tag in subdict["tags"]:
 				tag_tups.append((tag["id"], tag["display_name"], tag["name"], tag["tag_type"]))
-				skill_tup = []
+				# skill_tup = []
+				# roletag_dict = []
 				for tup in tag_tups:
 					if "SkillTag" in tup and skill_name not in tup:
 						skill_dict[normalize('NFKD', tup[1]).encode('ascii', 'ignore')] = skill_dict.get(normalize('NFKD', tup[1]).encode('ascii', 'ignore'), 0) + 1
 						skill_tup.append(normalize('NFKD', tup[1]).encode('ascii', 'ignore'))
+					if "RoleTag" in tup:
+						roletag_dict[normalize('NFKD', tup[1]).encode('ascii', 'ignore')] = roletag_dict.get(normalize('NFKD', tup[1]).encode('ascii', 'ignore'), 0) + 1			
 			skills_tups.append((skill_tup))
+		print tag_tups
 
-	# sorted_dict = sort_dicts_by_value(skill_dict, skill_name)
+	print roletag_dict 
+
+	sorted_role_list = sort_dicts_by_value(roletag_dict)
 	# sub_groups = creating_sub_groups(sorted_dict, skill_dict, skills_tups, skill_name)
 	# final_dict = format_dicts(sub_groups)
+
 
 	dict_list = []                                                                                                                      
 	for skill in skill_dict:
 		if skill_dict.get(skill) >= 10:
 			dict_list.append({"name": skill, "count": skill_dict.get(skill)})
-	final = {"name": skill_name, total: total, "children": dict_list} 
+	final = {"name": skill_name, total: total, "roletag_list": sorted_role_list, "children": dict_list} 
 	return final   	 				
 	# print final
 
-# def sort_dicts_by_value(skill_dict, skill_name):
-# 	#sort to see what skills are most closely associated with python 
-# 	ordered_skills_list = []
-# 	values = sorted(skill_dict.values(), reverse = True) 
-# 	for value in values:
-# 		for skill in skill_dict:
-# 			if skill_dict.get(skill) == value:
-# 				if skill not in ordered_skills_list:
-# 					ordered_skills_list.append(skill)
-# 	return ordered_skills_list 
+def sort_dicts_by_value(roletag_dict):
+	#sort to see what skills are most closely associated with python 
+	ordered_roletag_list = []
+	values = sorted(roletag_dict.values(), reverse = True) 
+	for value in values:
+		for role in roletag_dict:
+			if roletag_dict.get(role) == value:
+				if role not in ordered_roletag_list:
+					ordered_roletag_list.append(role)
+	return ordered_roletag_list 
 
 # def creating_sub_groups(sorted_dict, skill_dict, skills_tups, skill_name):
 
