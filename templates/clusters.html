@@ -1,21 +1,96 @@
-{% extends 'main.html' %}
-{% block body %}
-<div id="table">
-	<script src="http://d3js.org/d3.v3.min.js"></script>
-	<div id="cluster_results">
-		<p>Find out what other skills frequently show up with in the same joblistings on Angel List Want to know what other skills employers are looking for on AngelList.</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Level UP</title>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="http://underscorejs.org/underscore-min.js"></script>
+    <script src='https://api.tiles.mapbox.com/mapbox.js/v2.1.5/mapbox.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox.js/v2.1.5/mapbox.css' rel='stylesheet' />
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <script scr="https://raw.githubusercontent.com/Caged/d3-tip/master/index.js"></script> 
+    <!-- // <script src="../d3.min.js"></script> -->
+    <script src="http://d3js.org/d3.v3.js"></script>
+    <script type="text/javascript"></script>
+      <link rel="stylesheet" type="text/css" href="static/LevelUp.css">
+      <style>
+
+        path.link {
+          fill: none;
+          stroke: #666;
+          stroke-width: 1.5px;
+        }
+
+        .axis path,
+        .axis line {
+          fill: none;
+          stroke: #000;
+          shape-rendering: crispEdges;
+        }
+
+/*        .x.axis path {
+          display: none;
+        }*/
+
+        .line {
+          fill: none;
+          stroke: steelblue;
+          stroke-width: 1.5px;
+        }
+
+        div.tooltip {   
+/*          position: absolute; */          
+          text-align: center;
+          color: black;  
+          width: 60px;                  
+          height: 28px;                 
+          padding: 2px;             
+          font: 12px sans-serif;        
+          background: lightsteelblue;   
+          border: 0px;      
+          border-radius: 8px;           
+          pointer-events: none;         
+        }
+
+     </style>  
+</head>
+<body>
+<nav class="navbar navbar-default" role="navigation">
+	<div class="navbar-header">
+		<h1 style="color:white">Level UP</h1>
+		<div id="nav">
+		<ul class="nav nav-tabs navbar-right">
+  			<li role="presentation" class="active"><a href="/skill_sets" aria-controls="skills" role="tab" data-toggle="tabs">Skill Set Clusters</a></li>
+  			<li role="presentation"><a href="/trends" aria-controls="trends" role="tab" data-toggle="tabs">Trends</a></li>
+  			<li role="presentation"><a href="/geographic_demand" aria-controls="Skills" role="tab" data-toggle="tabs">Geographic Demand</a></li>
+		</ul>
+		</div>
 	</div>
-	<div id="search">
-		<form action="/skill_angelList_call" id="cluster_form" method="GET">
-			 Select Technology: 
-	        <label><SELECT name="selected_skill" id="skill_dropdown">
-	            {% for i in skills %}
-	            <label><option value="{{ i.id }}">{{ i.tagdisplayname }}</option></label>
-	            {% endfor %}
-	        </SELECT></label>
-	        <label><input type="submit" id="skill_cluster_button">Submit</input></label>
-		</form>
-		<br>
-		<span id="fade_in_cluster_text"></span>
+</nav>
+<div class="container">
+	<div id="table">
+		<div id="cluster_results">
+			<p>Find out what other skills frequently show up with in the same joblistings on Angel List Want to know what other skills employers are looking for on AngelList.</p>
+		</div>
+		<div id="search">
+			<form action="/skill_angelList_call" id="cluster_form" method="GET">
+			 	Select Technology: 
+	        	<label><SELECT name="selected_skill" id="skill_dropdown">
+	        	    {% for i in skills %}
+	            	<label><option value="{{ i.tagdisplayname }}">{{ i.tagdisplayname }}</option></label>
+	            	{% endfor %}
+	        	</SELECT></label>
+	        	<label><input type="submit" id="skill_cluster_button">Submit</input></label>
+			</form>
+			<br>
+			<span id="fade_in_cluster_text"></span>
+		</div>
 	</div>
-{% endblock %}
+</div>
+<script src="/static/LevelUp.js"></script>
+<script scr="/static/cluster.js"></script>
+</body>
+</html>

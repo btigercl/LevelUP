@@ -66,8 +66,12 @@ def get_trend_list():
 	return trend_list
 
 def get_skill_by_id(passed_id):
-	skill_name = Session.query(Skills).filter_by(id=passed_id).first()
-	return skill_name
+	skill_obj = Session.query(Skills).filter_by(id=passed_id).first()
+	return skill_obj
+
+def get_skill_by_name(passed_name):
+	skill_obj = Session.query(Skills).filter_by(tagdisplayname=passed_name).first()
+	return skill_obj
 
 def get_trend_skill_name():
 	skill_name_list = Session.query(Stack_Overflow_Trends.skill).all()

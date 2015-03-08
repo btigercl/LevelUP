@@ -33,10 +33,10 @@ def skill_sets():
 @app.route("/skill_angelList_call", methods=["GET"])
 def skill_angelList_call():
 	"""This makes a dynamic call to AngleList for related skills to the user selected skill"""
-	skill_id = request.args.get("selected_skill")
+	skill_name = request.args.get("selected_skill")
 	skills = slimmodel.get_skills_list()
-	skill_obj = slimmodel.get_skill_by_id(int(skill_id))
-	skill_name = skill_obj.tagdisplayname
+	skill_obj = slimmodel.get_skill_by_name(skill_name)
+	skill_id = skill_obj.id
 	AL_skills_dict = ALskillcall.ALskillcall(skill_id, skill_name)
 	jsoned = jsonify(AL_skills_dict) 
 	return jsoned
