@@ -4,58 +4,60 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Level UP</title>
-    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-    <script src="http://underscorejs.org/underscore-min.js"></script>
-    <script src='https://api.tiles.mapbox.com/mapbox.js/v2.1.5/mapbox.js'></script>
-    <link href='https://api.tiles.mapbox.com/mapbox.js/v2.1.5/mapbox.css' rel='stylesheet' />
-    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
-    <script scr="https://raw.githubusercontent.com/Caged/d3-tip/master/index.js"></script> 
-    <!-- // <script src="../d3.min.js"></script> -->
-    <script src="http://d3js.org/d3.v3.js"></script>
-    <script type="text/javascript"></script>
-      <link rel="stylesheet" type="text/css" href="static/LevelUp.css">
-      <style>
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+	<script src="http://underscorejs.org/underscore-min.js"></script>
+	<script src='https://api.tiles.mapbox.com/mapbox.js/v2.1.5/mapbox.js'></script>
+	<link href='https://api.tiles.mapbox.com/mapbox.js/v2.1.5/mapbox.css' rel='stylesheet' />
+	<meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+	<script scr="https://raw.githubusercontent.com/Caged/d3-tip/master/index.js"></script>
+	<script src="http://cdn.jsdelivr.net/typeahead.js/0.9.3/typeahead.min.js"></script> 
+	<!-- // <script src="../d3.min.js"></script> -->
+	<script src="http://d3js.org/d3.v3.js"></script>
+	<script type="text/javascript"></script>
+	<link rel="stylesheet" type="text/css" href="static/LevelUp.css">
+	  <style>
 
-        path.link {
-          fill: none;
-          stroke: #666;
-          stroke-width: 1.5px;
-        }
+		path.link {
+		  fill: none;
+		  stroke: #666;
+		  stroke-width: 1.5px;
+		}
 
-        .axis path,
-        .axis line {
-          fill: none;
-          stroke: #000;
-          shape-rendering: crispEdges;
-        }
+		.axis path,
+		.axis line {
+		  fill: none;
+		  stroke: #000;
+		  shape-rendering: crispEdges;
+		}
 
 /*        .x.axis path {
-          display: none;
-        }*/
+		  display: none;
+		}*/
 
-        .line {
-          fill: none;
-          stroke: steelblue;
-          stroke-width: 1.5px;
-        }
+		.line {
+		  fill: none;
+		  stroke: steelblue;
+		  stroke-width: 1.5px;
+		}
 
-        div.tooltip {   
+		div.tooltip {   
 /*          position: absolute; */          
-          text-align: center;
-          color: black;  
-          width: 60px;                  
-          height: 28px;                 
-          padding: 2px;             
-          font: 12px sans-serif;        
-          background: lightsteelblue;   
-          border: 0px;      
-          border-radius: 8px;           
-          pointer-events: none;         
-        }
+		  text-align: center;
+		  color: black;  
+		  width: 60px;                  
+		  height: 28px;                 
+		  padding: 2px;             
+		  font: 12px sans-serif;        
+		  background: lightsteelblue;   
+		  border: 0px;      
+		  border-radius: 8px;           
+		  pointer-events: none;         
+		}
 
-     </style>  
+	 </style>  
 </head>
 <body>
 <nav class="navbar navbar-default" role="navigation">
@@ -63,40 +65,39 @@
 		<h1 style="color:white">Level UP</h1>
 		<div id="nav">
 		<ul class="nav nav-tabs navbar-right">
-  			<li role="presentation" class="active"><a href="/skill_sets" aria-controls="skills" role="tab" data-toggle="tabs">Skill Set Clusters</a></li>
-  			<li role="presentation"><a href="/trends" aria-controls="trends" role="tab" data-toggle="tabs">Trends</a></li>
-  			<li role="presentation"><a href="/geographic_demand" aria-controls="Skills" role="tab" data-toggle="tabs">Geographic Demand</a></li>
+			<li role="presentation"><a href="/skill_sets" aria-controls="skills" role="tab" data-toggle="tabs">Skill Set Clusters</a></li>
+			<li role="presentation"><a href="/trends" aria-controls="trends" role="tab" data-toggle="tabs">Trends</a></li>
+			<li role="presentation" class="active"><a href="/geographic_demand" aria-controls="Skills" role="tab" data-toggle="tabs">Geographic Demand</a></li>
 		</ul>
 		</div>
 	</div>
 </nav>
-<div class="container">
+<div class="container-fluid">
 <!-- <div id="table"> -->
 <!-- 	<div id="geo_results"> 
 		<p>Thinking of moving? See where your skills are in most demand, according to Careerbuilder's and AngelList's joblistings.</p>
 	</div> -->
-	<div id ="mapdiv" style= "height:400px;width:800px;margin:0;padding:0;" >
-  	</div>
-	<div id="search">
-		<form action="/geographic_demand_skill" method="GET">
-			 Select Technology: 
-			<label><SELECT name="selected_geo_skill">
-				{% for i in skills %}
-				<label><option value={{ i.id }}>{{ i.tagdisplayname }}</option></label>
-				{% endfor %}
-			</SELECT></label>
-			<label><input type="submit" id="geo_skill_button">Submit</input></label>
-		</form>
+	<div class="row-fluid">
+		<div class="col-md-9" id ="mapdiv" style= "height:400px;width:800px;margin:0;padding:0;"></div>
+		<div class="col-md-6" id="search">
+			<form action="/geographic_demand_skill" method="GET">
+				<h3>Select Technology:</h3> 
+				<label><SELECT name="selected_geo_skill">
+					{% for i in skills %}
+					<label><option value={{ i.id }}>{{ i.tagdisplayname }}</option></label>
+					{% endfor %}
+					</SELECT></label>
+				<label><input type="submit" id="geo_skill_button">Submit</input></label>
+			</form>
+		</div>
 	</div>
 </div>
 <script src="/static/LevelUp.js"></script>
 <script src="/static/geo.js"></script>
 </body>
 <script>
-		// L.mapbox.accessToken = 'pk.eyJ1IjoiYnRpZ2VyY2wiLCJhIjoiTnd3OWp5OCJ9.bSkS-vF6k8g_jeV25fC7sw';
-  // 		var map = L.mapbox.map('mapdiv', 'btigercl.lb66g6k0')
-  // 			.setView([38, -95], 4);
+		L.mapbox.accessToken = 'pk.eyJ1IjoiYnRpZ2VyY2wiLCJhIjoiTnd3OWp5OCJ9.bSkS-vF6k8g_jeV25fC7sw';
+		var map = L.mapbox.map('mapdiv', 'btigercl.lb66g6k0')
+			.setView([38, -95], 4);
 </script>
-
-
 </html>

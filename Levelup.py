@@ -21,8 +21,7 @@ app.wsgi_app = ProfilerMiddleware(app.wsgi_app, restrictions=[30])
 @app.route("/")
 def landing():
 	"""Home page and lead into site. Basic html/css/bootstrap with a kind of overview of the site"""
-	skills = slimmodel.get_skills_list() 
-	return render_template("landing.html", skills=skills)
+	return render_template("landing.html")
 
 @app.route("/skill_sets", methods=["GET"])
 def skill_sets():
@@ -86,8 +85,11 @@ def geographic_demand_skill():
 	skill_name = skill_obj.tagdisplayname
 	geoJSON_dict = ALlocation.ALlocationcall(skill_id, skill_name)
 	return jsonify(geoJSON_dict)
-	#pass to D3
-	# return render_template("geo_response.html", geo_tups=lat_long_tups, skills = skills)
+
+@app.route("/search", methods=["GET"])
+def search():
+	skills = slimmodel.get_skill_display_name() 
+	return jsonify(skills)
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))

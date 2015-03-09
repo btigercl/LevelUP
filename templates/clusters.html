@@ -5,13 +5,15 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Level UP</title>
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
     <script src="http://underscorejs.org/underscore-min.js"></script>
     <script src='https://api.tiles.mapbox.com/mapbox.js/v2.1.5/mapbox.js'></script>
     <link href='https://api.tiles.mapbox.com/mapbox.js/v2.1.5/mapbox.css' rel='stylesheet' />
     <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
-    <script scr="https://raw.githubusercontent.com/Caged/d3-tip/master/index.js"></script> 
+    <script src="http://cdn.jsdelivr.net/typeahead.js/0.9.3/typeahead.min.js"></script>
+    <script src="https://raw.githubusercontent.com/Caged/d3-tip/master/index.js"></script> 
     <!-- // <script src="../d3.min.js"></script> -->
     <script src="http://d3js.org/d3.v3.js"></script>
     <script type="text/javascript"></script>
@@ -20,7 +22,7 @@
 
         path.link {
           fill: none;
-          stroke: #666;
+          stroke: #D3D3D3;
           stroke-width: 1.5px;
         }
 
@@ -70,15 +72,15 @@
 		</div>
 	</div>
 </nav>
-<div class="container">
-	<div id="table">
-		<div id="cluster_results">
-		</div>
-		<div id="search">
+<div class="container-fluid">
+<!-- 	<div id="table"> -->
+  <div class="row-fuil">
+		<div id="cluster_results" class="col-md-9" > </div>
+		<div class="col-md-6" id="search">
       <p>Find out what other skills frequently show up with in the same joblistings on Angel List Want to know what other skills employers are looking for on AngelList.</p>
       <br>
 			<form action="/skill_angelList_call" id="cluster_form" method="GET">
-			 	Select Technology: 
+			 	<h3>Select Technology:</h3> 
 	        	<label><SELECT name="selected_skill" id="skill_dropdown">
 	        	    {% for i in skills %}
 	            	<label><option value="{{ i.tagdisplayname }}">{{ i.tagdisplayname }}</option></label>
@@ -86,13 +88,11 @@
 	        	</SELECT></label>
 	        	<label><input type="submit" id="skill_cluster_button">Submit</input></label>
             <br>
-            <p>Top Job Roles Associated With This Skill</p>
+            <h3>Top Job Roles Associated With This Skill</h3>
             <br id="insert_list">
             <ol id='dynamic_list'>
             </ol>
 			</form>
-			<br>
-			<span id="fade_in_cluster_text"></span>
 		</div>
 	</div>
 </div>

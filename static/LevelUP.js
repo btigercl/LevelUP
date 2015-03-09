@@ -1,16 +1,41 @@
 //Landing page
 
+//issues. When to call. How to call. how to unpack 
+// $(document).ready()
+// var typeaheadList = $.get("/search", function(data){
+//   $("#skills-query").typeahead( {data);
+// }, 'json');
 
-// Skill Set Tab Event Listener  
-function emptyClusterdiv(evt){
-  $('#cluster_results').empty()
-}
-
-$('#skill_cluster_button').click(function() {
-  $( "#fade_in_cluster_text" ).fadeIn( "slow", function() {
-    $("#fade_in_cluster_text" ).html("<p>Find out what other skills frequently show up with in the same joblistings on Angel List Want to know what other skills employers are looking for on AngelList.</p>");
+var substringMatcher = function(strs) {
+  console.log("hi");
+  return function findMatches(q, cb) {
+    console.log("hello");
+    var matches, substrRegex;
+    matches = [];
+    substrRegex = new RegExp(q, 'i');
+    $.each(strs, function(i, str) {
+      if (substrRegex.test(str)) {
+        matches.push({ value: str });
+      }
     });
+ 
+    cb(matches);
+  };
+};
+var skills = ["java", "ruby", "perl", "javascript", "python", "html", "iphone", "angularjs", "django", "android", "jquery", "css", "ajax", "json", "c++", ".net", "php", "c", "c#", "linux", "ruby-on-rails", "sql server", "mysql", "bash", "asp.net", "xml", "node.js", "wordpress", "spring", "xml", "wpf", "r", "ecplice", "vb.net", "regex", "oracle", "git", "apache"];
+
+$('#skillQuery.typeahead').typeahead({
+  hint: true,
+  highlight: true,
+  minLength: 1
+},
+{
+  name: 'skills',
+  displayKey: 'value',
+  source: substringMatcher(skills)
 });
+
+// Skill Set Tab 
 
 var clusterData;
 
@@ -27,7 +52,8 @@ function startCluster(evt){
 }
 
 $('#skill_cluster_button').on('click', startCluster);
-$('#skill_cluster_button').on('click', emptyClusterdiv);
+$('#landing_button').on('click', startCluster);
+// $('#skill_cluster_button').on('click', emptyClusterdiv);
 
 //Skill Set D3 code 
 
@@ -42,7 +68,7 @@ function visualizeCluster(datapassed){
 // var links = d3.layout().links(nodes);
 // console.log(links);
                  
-  var width = 800,
+  var width = 1000,
     height = 700,
     nodesValues = d3.values(nodes);
 
@@ -124,6 +150,7 @@ function visualizeCluster(datapassed){
     encodedNodeskill = encodeURIComponent(tagDisplayname);
     d3.json( "/skill_angelList_call?selected_skill=" + encodedNodeskill, function(error, json) {
     newData = json;
+    $("#cluster_results").empty();
       // path.exit().remove();
       // node.exit().remove();
     visualizeCluster(newData);
@@ -149,6 +176,7 @@ function processDataIntoLinks(nodes){
 }
 
 function createRoletaglist(dict){
+  $("#dynamic_list").empty()
    _.each(dict.roletag_list, function(item, index){
       var front = "<li>";
       var middle = String(item) 
@@ -162,22 +190,6 @@ function createRoletaglist(dict){
 
 
 //Trends Tab Javascript
-      $('#trend_button').click(function() {
-        $( "#trend_write_up" ).fadeOut( "slow", function() {
-          $('#trend_write_up').empty()
-        });
-      });
-
-
-      $('#trend_button').click(function() {
-        $( "#fade_in_trend_text" ).fadeIn( "slow", function() {
-          $("#fade_in_trend_text" ).html("<p>We can learn about a skill's popularity today, but what about a skills popularity over time? Check out how many people are asking about a skill on Stack Overflow since 2008 to today.</p>");
-        });
-      });
-
-      // $('#trend_button').click(function () {
-      //   $("trends_results").replaceWith("<div id='trends_results'></div>");
-      // });
 
 // Loading trends tab
 // $( document ).ready(function() {(
@@ -192,7 +204,8 @@ function createRoletaglist(dict){
 
 function get_graph_data(evt){
   evt.preventDefault();
-
+  $("#trends_results").empty()
+  $("#trends_legend").empty()
   var trend1= $( "select[name='selected_trend1']" ).val();
   var trend2= $( "select[name='selected_trend2']" ).val();
   var trend3= $( "select[name='selected_trend3']" ).val();
@@ -213,11 +226,11 @@ $('#trend_button').on('click', get_graph_data);
 function draw_line_graph(multiLinedata) { 
   console.log(multiLinedata);
 
-  var margin = {top: 20, right: 20, bottom: 30, left: 50},
-    width = 960 - margin.left - margin.right,
-    height = 500 - margin.top - margin.bottom;
+  var margin = {top: 5, right: 5, bottom: 5, left: 5},
+    width = 1000 - margin.left - margin.right,
+    height = 600 - margin.top - margin.bottom;
 
-  var parseDate = d3.time.format("%Y").parse;
+  var parseDate = d3.time.format("%Y-%m").parse;
 
   var x = d3.time.scale()
               .range([0, width]);
@@ -318,6 +331,28 @@ function draw_line_graph(multiLinedata) {
   legendContainer.append(newLegendText, newLegendColor); 
 
   });
+
+  // if(svg.selectAll(".yAxis"))[0].length < 1){
+  //   sv.append("g")
+  //     .attr("class", "y axis")
+  //     .call(yAxis)
+  // } else {
+  //   svg.selectAll(".y.axis").transition()duration(1500).call(yAxis)
+  // }
+
+  // lines.transition().duration(1500)
+  //   .attr("d", line)
+  //   .style("stroke", function(){
+
+  //   })
+
+  // lines.enter()
+  //   .append("path")
+  //   .attr("class", "line")
+  //   .attr("d", line)
+  //   .style("stroke", function(){
+      
+  //   });
 }
 
 // Parse out the line graph data
@@ -332,13 +367,14 @@ function parseData(xydata){
 
 
 
+
       //Geo tab javascript
-      // function emptyGeodiv(evt){
       //   $('#geo_results').empty()
       // }
       // //Geographic Demand Tab Javascript 
       function updateGeo(evt){
         evt.preventDefault();
+        $('#geo_results').empty()
         var skill_id = $( "select[name='selected_geo_skill']" ).val();
         console.log(skill_id)
         var url = "/geographic_demand_skill?selected_geo_skill=" + skill_id
@@ -356,10 +392,13 @@ function parseData(xydata){
 
       // MapBox Javascript
       function geoMap(geoResults){
-          L.mapbox.accessToken = 'pk.eyJ1IjoiYnRpZ2VyY2wiLCJhIjoiTnd3OWp5OCJ9.bSkS-vF6k8g_jeV25fC7sw';
-          var map = L.mapbox.map('mapdiv', 'btigercl.lb66g6k0')
-              .setView([38, -95], 4);
-
+          // L.mapbox.accessToken = 'pk.eyJ1IjoiYnRpZ2VyY2wiLCJhIjoiTnd3OWp5OCJ9.bSkS-vF6k8g_jeV25fC7sw';
+          // var map = L.mapbox.map('mapdiv', 'btigercl.lb66g6k0')
+          //     .setView([38, -95], 4);
+          // if (myLayer !== undefined){ 
+          //   myLayer.clearLayers()
+          // }
+          // myLayer.clearLayers();
           var myLayer = L.mapbox.featureLayer().addTo(map);
 
           myLayer.setGeoJSON(geoResults);

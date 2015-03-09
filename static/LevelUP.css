@@ -3,6 +3,10 @@ body{
 	font-size: medium;
 }
 
+div{
+	margin: 0px;
+	padding: 0px;
+}
 .navbar {
 	font-family: Orbitron;
 	background: #000000;
@@ -14,6 +18,15 @@ body{
 /*#page-header {
 	font color: white;
 }*/
+
+.container-fluid {
+	margin: 0px;
+	padding: 0px
+}
+.row-fluid {
+	margin: 0px;
+	padding: 0px;
+}
 
 .legend-text {
 	display: inline-block;
