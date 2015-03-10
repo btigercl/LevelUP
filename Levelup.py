@@ -2,12 +2,16 @@ from flask import Flask, render_template, redirect, request, session, flash, g, 
 from careerbuilder import CareerBuilder 
 import jinja2
 import os
-from db import slimmodel
+from db import slimmodel, jsonmodel
 from calls import ALskillcall, ALlocation, CBskillcall
 import json
 import pprint
 from unicodedata import normalize  
 import trend
+import time
+import datetime
+import urllib
+import urlparse
 # from werkzeug.contrib.profiler import ProfilerMiddleware
 
 app = Flask(__name__)
@@ -41,18 +45,38 @@ def skill_sets():
 	for skill in skills:
 		if skill[0] not in skill_list and skill[0] != "question":
 			skill_list.append(skill[0]) 
-	print skill_list
 	return render_template("clusters.html", skills=skill_list)
 
 @app.route("/skill_angelList_call", methods=["GET"])
 def skill_angelList_call():
 	"""This makes a dynamic call to AngleList for related skills to the user selected skill"""
 	skill_name = request.args.get("selected_skill")
-	skill_obj = slimmodel.get_skill_by_tagname(skill_name.lower())
-	skill_id_to_send = skill_obj.id
-	AL_skills_dict = ALskillcall.ALskillcall(skill_id_to_send, skill_name)
-	jsoned = jsonify(AL_skills_dict) 
-	return jsoned
+	skill = normalize('NFKD', skill_name).encode('ascii', 'ignore') 
+	json_db_oject = jsonmodel.get_object_by_skill_name(skill_name)
+	current_time_epoch = time.time()
+	current_time = datetime.date.today()
+	expiration_date = current_time_epoch - 259200
+	if json_db_oject == None:
+		skill_obj = slimmodel.get_skill_by_tagname(skill_name.lower())
+		skill_id_to_send = skill_obj.id
+		AL_skills_dict = ALskillcall.ALskillcall(skill_id_to_send, skill_name)
+		json_translated = json.dumps(AL_skills_dict) 
+		jsonmodel.add_skill_object(skill_id_to_send, skill, json_translated, current_time)
+		jsoned = jsonify(AL_skills_dict) 
+
+		return jsoned
+	elif date_converstion(json_db_oject.date_stored) < expiration_date:
+		skill_id_to_send = skill_obj.id
+		AL_skills_dict = ALskillcall.ALskillcall(skill_id_to_send, skill_name)
+		json_translated = json.dumps(AL_skills_dict) 
+		jsonmodel.updating_skill_object(skill, json_translated, current_time)
+		jsoned = jsonify(AL_skills_dict) 
+		return jsoned
+	else:
+		json_dict = json.loads(json_db_oject.skill_obj)
+		print json_dict
+		json_to_send = jsonify(json_dict)
+		return json_to_send
 
 @app.route("/trends")
 def trends():
@@ -110,6 +134,14 @@ def geographic_demand_skill():
 def search():
 	skills = slimmodel.get_skill_display_name() 
 	return jsonify(skills)
+
+def date_converstion(date):
+	#changes reable dates to unix
+	date_string = str(date)
+	date_time = date_string[0:10]
+	cleandate = datetime.datetime.strptime(date_time, '%Y-%m-%d')
+	converted_date = time.mktime(cleandate.timetuple())
+	return int(converted_date)
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))

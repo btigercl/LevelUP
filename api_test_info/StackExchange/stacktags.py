@@ -57,7 +57,7 @@ def stackexchange_call(name, tagurl, skill_id):
 	overflow's founding until present"""  
 
 	start_date_from = date_converstion("2008-08-15")
-	start_date_to = date_converstion("2008-08-16") 
+	start_date_to = date_converstion("2008-08-16")
 	current = (time.time())
 	while start_date_to <= current:
 		# time.sleep(tag_count_by_day(start_date_from, start_date_to, DEV_KEY))

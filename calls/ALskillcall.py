@@ -37,9 +37,8 @@ def ALskillcall(id, skill_name):
 					if "RoleTag" in tup:
 						roletag_dict[normalize('NFKD', tup[1]).encode('ascii', 'ignore')] = roletag_dict.get(normalize('NFKD', tup[1]).encode('ascii', 'ignore'), 0) + 1			
 			skills_tups.append((skill_tup))
-		print tag_tups
 
-	print roletag_dict 
+
 
 	sorted_role_list = sort_dicts_by_value(roletag_dict)
 	# sub_groups = creating_sub_groups(sorted_dict, skill_dict, skills_tups, skill_name)
