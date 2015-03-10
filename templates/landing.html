@@ -7,7 +7,7 @@
 	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-	<script src="http://twitter.github.io/typeahead.js/releases/latest/typeahead.bundle.js"></script>
+	<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
 	<link rel="stylesheet" type="text/css" href="static/LevelUp.css">
 
 
@@ -37,21 +37,16 @@
 	<p>Find out what skills you need to LevelUP in your field</p>
 		<form id="landing_form" action="/skill_sets" method="get">
 		<h5>What skill are you interested in?</h5>
-			<span id="skillsQuery">
-				<input class="tw-typeahead" type="text" placeholder="Enter Skill">
-			</span>
-			<span class="typeahead-button">
-				<button type="submit">
-					<i class="search-icon"></i>
-				</button>
-			</span>
+			<label><SELECT name="selected_skill" id="skill_dropdown">
+	        	{% for i in skills %}
+	            <label><option value="{{ i }}">{{ i }}</option></label>
+	            {% endfor %}
+	        	</SELECT></label>
+            	<br>
+	        <label><input type="submit" id="landing_button"></input></label>
 		</form>
-<!-- 	<a href="/skill_sets" class="btn btn-info" role="button">Enter</a> -->
 	</div>
-<script type="javascript">
-	
-	
-</script>
+
 <script src="/static/LevelUp.js"></script>
 </body>
 </html>

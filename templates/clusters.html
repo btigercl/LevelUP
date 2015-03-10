@@ -12,13 +12,12 @@
     <script src='https://api.tiles.mapbox.com/mapbox.js/v2.1.5/mapbox.js'></script>
     <link href='https://api.tiles.mapbox.com/mapbox.js/v2.1.5/mapbox.css' rel='stylesheet' />
     <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
-    <script src="http://cdn.jsdelivr.net/typeahead.js/0.9.3/typeahead.min.js"></script>
-    <script src="https://raw.githubusercontent.com/Caged/d3-tip/master/index.js"></script> 
     <!-- // <script src="../d3.min.js"></script> -->
     <script src="http://d3js.org/d3.v3.js"></script>
-    <script type="text/javascript"></script>
+    <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
       <link rel="stylesheet" type="text/css" href="static/LevelUp.css">
       <style>
+
 
         path.link {
           fill: none;
@@ -77,16 +76,17 @@
   <div class="row-fuil">
 		<div id="cluster_results" class="col-md-9" > </div>
 		<div class="col-md-6" id="search">
-      <p>Find out what other skills frequently show up with in the same joblistings on Angel List Want to know what other skills employers are looking for on AngelList.</p>
+      <p>Find out what skills are frequently associated in joblistings on Angel List.</p>
       <br>
 			<form action="/skill_angelList_call" id="cluster_form" method="GET">
 			 	<h3>Select Technology:</h3> 
 	        	<label><SELECT name="selected_skill" id="skill_dropdown">
 	        	    {% for i in skills %}
-	            	<label><option value="{{ i.tagdisplayname }}">{{ i.tagdisplayname }}</option></label>
+	            	<label><option value="{{ i }}">{{ i }}</option></label>
 	            	{% endfor %}
 	        	</SELECT></label>
-	        	<label><input type="submit" id="skill_cluster_button">Submit</input></label>
+            <br>
+	        	<label><input type="submit" id="skill_cluster_button"></input></label>
             <br>
             <h3>Top Job Roles Associated With This Skill</h3>
             <br id="insert_list">
@@ -96,6 +96,19 @@
 		</div>
 	</div>
 </div>
+<script type="text/javascript">
+  //Landing page
+// (document).ready(function() {
+
+//   d3.json("/skill_sets?selected_skill=" + python function(error, json) {
+//     startData = json;
+//     visualizeCluster(startData)
+//   });
+// }
+// $("#landing_button").on('click', entryData);
+
+// Skill Set Tab 
+</script>
 <script src="/static/LevelUp.js"></script>
 <script scr="/static/cluster.js"></script>
 </body>

@@ -8,35 +8,49 @@ import json
 import pprint
 from unicodedata import normalize  
 import trend
-from werkzeug.contrib.profiler import ProfilerMiddleware
+# from werkzeug.contrib.profiler import ProfilerMiddleware
 
 app = Flask(__name__)
 app.secret_key = 'kittens'
 app.jinja_env.undefined = jinja2.StrictUndefined
 
-app.config['PROFILE'] = True
+# app.config['PROFILE'] = True
 
-app.wsgi_app = ProfilerMiddleware(app.wsgi_app, restrictions=[30])
+# app.wsgi_app = ProfilerMiddleware(app.wsgi_app, restrictions=[30])
 
 @app.route("/")
 def landing():
 	"""Home page and lead into site. Basic html/css/bootstrap with a kind of overview of the site"""
-	return render_template("landing.html")
+	skills = slimmodel.get_trend_skill_name()
+	skill_list = []
+	for skill in skills:
+		if skill[0] not in skill_list and skill[0] != "question":
+			skill_list.append(skill[0]) 
+	return render_template("landing.html", skills=skill_list)
 
 @app.route("/skill_sets", methods=["GET"])
 def skill_sets():
 	"""This should render the jinja insert for the graphical representation of skill clusters"""
-	skills = slimmodel.get_skills_list() 
-	return render_template("clusters.html", skills=skills)
+	# skill_name = request.args.get("selected_landing_skill")
+	# skill_obj = slimmodel.get_skill_by_tagname(skill_name.lower())
+	# skill_id_to_send = skill_obj.id
+	# AL_skills_dict = ALskillcall.ALskillcall(skill_id_to_send, skill_name)
+	# jsoned = jsonify(AL_skills_dict)
+	skills = slimmodel.get_trend_skill_name()
+	skill_list = []
+	for skill in skills:
+		if skill[0] not in skill_list and skill[0] != "question":
+			skill_list.append(skill[0]) 
+	print skill_list
+	return render_template("clusters.html", skills=skill_list)
 
 @app.route("/skill_angelList_call", methods=["GET"])
 def skill_angelList_call():
 	"""This makes a dynamic call to AngleList for related skills to the user selected skill"""
 	skill_name = request.args.get("selected_skill")
-	skills = slimmodel.get_skills_list()
-	skill_obj = slimmodel.get_skill_by_name(skill_name)
-	skill_id = skill_obj.id
-	AL_skills_dict = ALskillcall.ALskillcall(skill_id, skill_name)
+	skill_obj = slimmodel.get_skill_by_tagname(skill_name.lower())
+	skill_id_to_send = skill_obj.id
+	AL_skills_dict = ALskillcall.ALskillcall(skill_id_to_send, skill_name)
 	jsoned = jsonify(AL_skills_dict) 
 	return jsoned
 
@@ -74,15 +88,21 @@ def db_call_trend_lanuage():
 @app.route("/geographic_demand")
 def geographic_demand():
 	"""Render jinja insert for geographic_demands. Map of geographic demand for skill set""" 
-	skills = slimmodel.get_skills_list()
-	return render_template("geo.html", skills = skills)
+	skills = slimmodel.get_trend_skill_name()
+	skill_list = []
+	for skill in skills:
+		if skill[0] not in skill_list and skill[0] != "question":
+			skill_list.append(skill[0]) 
+	return render_template("geo.html", skills = skill_list)
 
 @app.route("/geographic_demand_skill", methods=["GET"])
 def geographic_demand_skill():
 	"""This makes a dynamic call to CareerBuilder to return lat/long/location of demand for a skill set"""
-	skill_id = request.args.get("selected_geo_skill")
-	skill_obj = slimmodel.get_skill_by_id(int(skill_id))
-	skill_name = skill_obj.tagdisplayname
+	skill_name = request.args.get("selected_geo_skill")
+	print skill_name
+	skill_obj = slimmodel.get_skill_by_tagname(skill_name)
+	skill_id = skill_obj.id
+	print skill_id
 	geoJSON_dict = ALlocation.ALlocationcall(skill_id, skill_name)
 	return jsonify(geoJSON_dict)
 

@@ -1,41 +1,22 @@
 //Landing page
 
-//issues. When to call. How to call. how to unpack 
-// $(document).ready()
-// var typeaheadList = $.get("/search", function(data){
-//   $("#skills-query").typeahead( {data);
-// }, 'json');
+// function entryData(evt){
+//   evt.preventDefault();
+//   var entrySkill= $("select[name='selected_landing_skill']" ).val();
+//   console.log("hi")
+//   var encodedEntryskill = encodeURIComponent(entrySkill);
 
-var substringMatcher = function(strs) {
-  console.log("hi");
-  return function findMatches(q, cb) {
-    console.log("hello");
-    var matches, substrRegex;
-    matches = [];
-    substrRegex = new RegExp(q, 'i');
-    $.each(strs, function(i, str) {
-      if (substrRegex.test(str)) {
-        matches.push({ value: str });
-      }
-    });
- 
-    cb(matches);
-  };
-};
-var skills = ["java", "ruby", "perl", "javascript", "python", "html", "iphone", "angularjs", "django", "android", "jquery", "css", "ajax", "json", "c++", ".net", "php", "c", "c#", "linux", "ruby-on-rails", "sql server", "mysql", "bash", "asp.net", "xml", "node.js", "wordpress", "spring", "xml", "wpf", "r", "ecplice", "vb.net", "regex", "oracle", "git", "apache"];
+//   d3.json("/skill_sets?selected_skill=" + encodedEntryskill function(error, json) {
+//     startData = json;
+//     visualizeCluster(startData)
+//   });
+// }
+// $("#landing_button").on('click', entryData);
 
-$('#skillQuery.typeahead').typeahead({
-  hint: true,
-  highlight: true,
-  minLength: 1
-},
-{
-  name: 'skills',
-  displayKey: 'value',
-  source: substringMatcher(skills)
-});
 
 // Skill Set Tab 
+
+
 
 var clusterData;
 
@@ -45,14 +26,14 @@ function startCluster(evt){
   console.log(skillName)
   var encodedSkill = encodeURIComponent(skillName);
 
-  d3.json( "/skill_angelList_call?selected_skill=" + skillName, function(error, json) {
+  d3.json( "/skill_angelList_call?selected_skill=" + encodedSkill, function(error, json) {
     clusterData = json;
     visualizeCluster(clusterData);
   });  
 }
 
 $('#skill_cluster_button').on('click', startCluster);
-$('#landing_button').on('click', startCluster);
+// $('#landing_button').on('click', startCluster);
 // $('#skill_cluster_button').on('click', emptyClusterdiv);
 
 //Skill Set D3 code 
@@ -217,6 +198,7 @@ function get_graph_data(evt){
     function(error, json)  {
     var trendData = json;
     draw_line_graph(trendData);
+    // update(trendData);
   });  
 }
 
@@ -226,9 +208,9 @@ $('#trend_button').on('click', get_graph_data);
 function draw_line_graph(multiLinedata) { 
   console.log(multiLinedata);
 
-  var margin = {top: 5, right: 5, bottom: 5, left: 5},
-    width = 1000 - margin.left - margin.right,
-    height = 600 - margin.top - margin.bottom;
+  var margin = {top: 30, right: 20, bottom: 25, left: 30},
+    width = 800 - margin.left - margin.right,
+    height = 500 - margin.top - margin.bottom;
 
   var parseDate = d3.time.format("%Y-%m").parse;
 
@@ -275,7 +257,7 @@ function draw_line_graph(multiLinedata) {
     .key(function(d) {return d.trendName;})
     .entries(data1);
 
-  var color = d3.scale.category20c()
+  var color = d3.scale.category10()
 
   svg.append("g")
     .attr("class", "x axis")
@@ -292,7 +274,7 @@ function draw_line_graph(multiLinedata) {
     .attr("y", 6)
     .attr("dy", ".71em")
     .style("text-anchor", "end")
-    .text("Percent (%)");
+    .text("Percent of Stackoverflow Activity (%)");
 
   dataNest.forEach(function(d) {
     svg.append("path")
@@ -357,27 +339,48 @@ function draw_line_graph(multiLinedata) {
 
 // Parse out the line graph data
 function parseData(xydata){
-          var xy = [];
-                // parseDate = d3.time.format("%y").parse()
-          _.each(xydata.trends, function(item, index){
-              xy.push({trendName: item.trendName, date: item.date, percent: item.percent});
-              });
-          return xy;
-      }
+  var xy = [];
+    // parseDate = d3.time.format("%y").parse()
+  _.each(xydata.trends, function(item, index){
+    xy.push({trendName: item.trendName, date: item.date, percent: item.percent});
+    });
+    return xy;
+  }
+
+function update(secondData){
+    console.log(secondData)
+    var parseDate = d3.time.format("%Y-%m").parse;
+    var data2 = parseData(secondData);
+
+    data2.forEach(function(d) {
+      d.date = parseDate(d.date);
+    });
+
+    x.domain(d3.extent(data2, function(d) { return d.date; }));
+    y.domain(d3.extent(data2, function(d) { return d.percent; }));
+
+    var svg =d3.select("#trends_results").transition();
+
+    svg.select(".line")
+      .duration(750)
+      .attr("d", path(data2));
+    svg.select(".x.axis")
+      .duration(750)
+      .call(xAxis);
+    svg.select(".y.axis")
+      .duration(750)
+      .call(yAxis);
+}
 
 
-
-
-      //Geo tab javascript
-      //   $('#geo_results').empty()
-      // }
-      // //Geographic Demand Tab Javascript 
-      function updateGeo(evt){
-        evt.preventDefault();
-        $('#geo_results').empty()
-        var skill_id = $( "select[name='selected_geo_skill']" ).val();
-        console.log(skill_id)
-        var url = "/geographic_demand_skill?selected_geo_skill=" + skill_id
+// //Geographic Demand Tab Javascript 
+function updateGeo(evt){
+  evt.preventDefault();
+  $('#geo_results').empty()
+        var geoSkill = $( "select[name='selected_geo_skill']" ).val();
+        var encodedGeoskill = encodeURIComponent(geoSkill);
+        console.log(encodedGeoskill)
+        var url = "/geographic_demand_skill?selected_geo_skill=" + encodedGeoskill
         $.get(url, function(result) {
            var geoResults= result;
            console.log(geoResults);

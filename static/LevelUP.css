@@ -7,6 +7,18 @@ div{
 	margin: 0px;
 	padding: 0px;
 }
+
+#search{
+    background-color: #8C9C9C;
+}
+
+#center {
+	background-color: white;
+	opacity: 0.7;
+	border: 2px solid;
+    border-radius: 25px;
+}
+
 .navbar {
 	font-family: Orbitron;
 	background: #000000;

@@ -53,6 +53,18 @@ class Stack_Overflow_Trends(Base):
 	def __repr__(self):
 		return "Main ID: %r, Skill ID: %r, Skill: %s, Date of Occurance: %r, Question Count: %r" % (self.id, self.skill_id, self.skill, self.date_epoc, self.question_count)
 
+class Stored_JSON_Objects(Base):
+	__tablename__ = "stored_objects"
+		#This table holds json objects in order to "cahce" api calls, and make the app faster. This cache should be updated everday programatically. 
+
+	id = Column(Integer, primary_key=True)
+	skill_name = Column(String(64), nullable= False)
+	skill_obj = Column(String(100000), nullable=False)
+	date_stored = Column(DateTime(timezone=False), nullable=False)
+
+	def __repr__(self):
+		return "Main ID: %r, Skill Name: %s, JSON Object: %r, Date Stored: %r" (self.id, self.skill_name, self.skill_obj, self.date_stored)
+
 def get_jobtitles_list():
 	jobtitles_list = Session.query(JobTitle).all()
 	return jobtitles_list
@@ -68,6 +80,10 @@ def get_trend_list():
 def get_skill_display_name():
 	display_name = Session.query(Skills.tagdisplayname).all()
 	return display_name
+
+def get_skill_by_tagname(tagname_passed):
+	obj = Session.query(Skills).filter_by(tagname=tagname_passed).first()
+	return obj
 
 def get_skill_by_id(passed_id):
 	skill_obj = Session.query(Skills).filter_by(id=passed_id).first()
