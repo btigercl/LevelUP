@@ -67,7 +67,7 @@ def stackexchange_call(name, tagurl, skill_id):
 
 
 def main():
-	seeds =	[("linux", "linux", 31586), ("xml", "xml", 21232), ("wordpress", "wordpress", 19006), ("spring", "spring", 45160)]
+	seeds =	[("python", "python", 14775), ("qt", "qt", 34130), ("matlab", "matlab", 28665), ("linq", "linq", 76132)]
 
 	for seed in seeds:
 		name = seed[0]
@@ -81,7 +81,7 @@ if __name__ == "__main__":
 	main()
 
 #To Seed 
-#(python, ), 
+#("python", "python", 14775), ("qt", "qt", 34130), ("matlab", "matlab", 28665), ("linq", "linq", 76132)
 
 #("r", "r", 21803), ("eclipse", "eclipse", 39991 12-9-29), ("vb.net", "vb.net", 16023), ("mongodb", "mongodb",16999)
 

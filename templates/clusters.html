@@ -9,52 +9,48 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
     <script src="http://underscorejs.org/underscore-min.js"></script>
-    <script src='https://api.tiles.mapbox.com/mapbox.js/v2.1.5/mapbox.js'></script>
-    <link href='https://api.tiles.mapbox.com/mapbox.js/v2.1.5/mapbox.css' rel='stylesheet' />
     <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
-    <!-- // <script src="../d3.min.js"></script> -->
     <script src="http://d3js.org/d3.v3.js"></script>
     <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
-      <link rel="stylesheet" type="text/css" href="static/LevelUp.css">
-      <style>
+    <link rel="stylesheet" type="text/css" href="static/LevelUp.css">
+    <style>
 
+      path.link {
+        fill: none;
+        stroke: #D3D3D3;
+        stroke-width: 1.5px;
+      }
 
-        path.link {
-          fill: none;
-          stroke: #D3D3D3;
-          stroke-width: 1.5px;
-        }
-
-        .axis path,
-        .axis line {
-          fill: none;
-          stroke: #000;
-          shape-rendering: crispEdges;
-        }
+      .axis path,
+      .axis line {
+        fill: none;
+        stroke: #000;
+        shape-rendering: crispEdges;
+      }
 
 /*        .x.axis path {
           display: none;
         }*/
 
-        .line {
-          fill: none;
-          stroke: steelblue;
-          stroke-width: 1.5px;
-        }
+      .line {
+        fill: none;
+        stroke: steelblue;
+        stroke-width: 1.5px;
+      }
 
-        div.tooltip {   
+      div.tooltip {   
 /*          position: absolute; */          
-          text-align: center;
-          color: black;  
-          width: 60px;                  
-          height: 28px;                 
-          padding: 2px;             
-          font: 12px sans-serif;        
-          background: lightsteelblue;   
-          border: 0px;      
-          border-radius: 8px;           
-          pointer-events: none;         
-        }
+        text-align: center;
+        color: black;  
+        width: 60px;                  
+        height: 28px;                 
+        padding: 2px;             
+        font: 12px sans-serif;        
+        background: lightsteelblue;   
+        border: 0px;      
+        border-radius: 8px;           
+        pointer-events: none;         
+      }
 
      </style>  
 </head>
@@ -75,7 +71,7 @@
 <!-- 	<div id="table"> -->
   <div class="row-fuil">
 		<div id="cluster_results" class="col-md-9" > </div>
-		<div class="col-md-6" id="search">
+		<div class="col-md-3" id="search">
       <p>Find out what skills are frequently associated in joblistings on Angel List.</p>
       <br>
 			<form action="/skill_angelList_call" id="cluster_form" method="GET">
@@ -96,20 +92,9 @@
 		</div>
 	</div>
 </div>
-<script type="text/javascript">
-  //Landing page
-// (document).ready(function() {
-
-//   d3.json("/skill_sets?selected_skill=" + python function(error, json) {
-//     startData = json;
-//     visualizeCluster(startData)
-//   });
-// }
-// $("#landing_button").on('click', entryData);
-
-// Skill Set Tab 
-</script>
-<script src="/static/LevelUp.js"></script>
 <script scr="/static/cluster.js"></script>
+<script src="/static/LevelUp.js"></script>
+<script type="text/javascript"> $(document).ready(loadCluster())
+</script>
 </body>
 </html>

@@ -82,8 +82,8 @@
 <!-- <div id="table"> -->
 <div class="container-fluid">
 	<div class="row-fluid">
-		<div class="col-md-9" id="trends_results"></div><div id="trends_legend"></div>	
-		<div class="col-md-6" id="search">
+		<div class="col-md-9" id="trends_results"></div>
+		<div class="col-md-3" id="search">
 				<p>We can learn about a skill's popularity today, but what about a skills popularity over time? Check out how many people are asking about a skill on Stack Overflow since 2008 to today.</p>
 				<br>
 				<form id="trends_form" name="trends_form" action="/db_call_trend" method="get">
@@ -109,11 +109,17 @@
 					<label><input type="submit" id="trend_button"></input></label>
 				</form>
 				<br>
+        <div id="trends_legend"></div> 
 		</div>
 	</div>
  </div>
 <script src="/static/trends.js"></script>
 <script src="/static/LevelUp.js"></script>
+<script>
+
+$(document).ready(startTrends())
+
+</script>
 </body>
 </html>
 

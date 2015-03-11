@@ -18,7 +18,7 @@ def ALskillcall(id, skill_name):
 	roletag_dict = {}
 	total = 0
 
-	for page in range(2, 3):
+	for page in range(1, 10):
 		req = requests.get(urlmaker(str(id), token), params={'page' : page}).json()		 
 		
 		intial_dict = req["jobs"]

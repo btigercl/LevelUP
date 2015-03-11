@@ -17,47 +17,7 @@
 	<!-- // <script src="../d3.min.js"></script> -->
 	<script src="http://d3js.org/d3.v3.js"></script>
 	<script type="text/javascript"></script>
-	<link rel="stylesheet" type="text/css" href="static/LevelUp.css">
-	  <style>
-
-		path.link {
-		  fill: none;
-		  stroke: #666;
-		  stroke-width: 1.5px;
-		}
-
-		.axis path,
-		.axis line {
-		  fill: none;
-		  stroke: #000;
-		  shape-rendering: crispEdges;
-		}
-
-/*        .x.axis path {
-		  display: none;
-		}*/
-
-		.line {
-		  fill: none;
-		  stroke: steelblue;
-		  stroke-width: 1.5px;
-		}
-
-		div.tooltip {   
-/*          position: absolute; */          
-		  text-align: center;
-		  color: black;  
-		  width: 60px;                  
-		  height: 28px;                 
-		  padding: 2px;             
-		  font: 12px sans-serif;        
-		  background: lightsteelblue;   
-		  border: 0px;      
-		  border-radius: 8px;           
-		  pointer-events: none;         
-		}
-
-	 </style>  
+	<link rel="stylesheet" type="text/css" href="static/LevelUp.css"> 
 </head>
 <body>
 <nav class="navbar navbar-default" role="navigation">
@@ -78,8 +38,8 @@
 		<p>Thinking of moving? See where your skills are in most demand, according to Careerbuilder's and AngelList's joblistings.</p>
 	</div> -->
 	<div class="row-fluid">
-		<div class="col-md-9" id ="mapdiv" style= "height:400px;width:800px;margin:0;padding:0;"></div>
-		<div class="col-md-6" id="search">
+		<div class="col-md-9" id ="mapdiv" style= "height:700px;width:1000px;"></div>
+		<div class="col-md-3" id="search">
 			<form action="/geographic_demand_skill" method="GET">
 				<h3>Select Technology:</h3> 
 				<label><SELECT name="selected_geo_skill">
@@ -95,7 +55,7 @@
 <script src="/static/geo.js"></script>
 <script src="/static/LevelUp.js"></script>
 <script>
-		L.mapbox.accessToken = 'pk.eyJ1IjoiYnRpZ2VyY2wiLCJhIjoiTnd3OWp5OCJ9.bSkS-vF6k8g_jeV25fC7sw';
+	L.mapbox.accessToken = 'pk.eyJ1IjoiYnRpZ2VyY2wiLCJhIjoiTnd3OWp5OCJ9.bSkS-vF6k8g_jeV25fC7sw';
 		var map = L.mapbox.map('mapdiv', 'btigercl.lb66g6k0')
 			.setView([38, -95], 4);
 

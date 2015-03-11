@@ -13,7 +13,7 @@ def ALlocationcall(id, skill_name):
 	req = requests.get(urlmaker(str(id), token)).json()
 	num_pages = req['last_page']
 
-	for page in range(2, 3):
+	for page in range(1, 10):
 		req = requests.get(urlmaker(str(id), token), params={'page' : page}).json()
 		
 

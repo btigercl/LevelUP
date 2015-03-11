@@ -33,11 +33,34 @@ div{
 
 .container-fluid {
 	margin: 0px;
-	padding: 0px
+	padding: 0px;
+	margin-right: auto;
+	margin-left: auto;
+	height: 100%;
+/*	background-color: E7E6EB;*/
 }
 .row-fluid {
-	margin: 0px;
-	padding: 0px;
+	display: table;
+	margin: -15px;
+	padding: -15px;
+	margin-top: 0px;
+	height: 100%;
+}
+
+.col-md-9{
+	display: table-cell;
+	float: none;
+	width: 75%;
+	height: 100%;
+	vertical-align: top;
+}
+
+.col-md-3{	
+	width: 25%;
+	height: 100%;
+	display: table-cell;
+	float: none;
+	vertical-align: top;
 }
 
 .legend-text {
@@ -48,35 +71,35 @@ div{
 .legend-box {
 	width: 18px;
 	height: 18px;
-	display: inline-block;
+/*	display: inline-block;*/
 	margin-right: 20px;
 }
 
-#table {
+/*#table {
 	display: table;
 	margin: 0;
 	padding: 0;
 	width: 100%;
 }
-
+*/
 #trends_legend {
 	text-align: center;
 }
 
 #search {
-	display: table-cell;
+/*	display: table-cell;*/
 	vertical-align: top;
 	font-family: Electrolize;
 	font-size: 100%;
-	padding: 15px;
+/*	padding: 15px;*/
 	border: solid;
 	border width: 2px;
 	border-color: #FAFAFA;
-	width: 20%;
+/*	width: 20%;*/
 }
 
 #result {
-	display: table-cell;
+/*	display: table-cell;*/
 	vertical-align: top;
 	padding: 15px;
 	font-family: Electrolize;
