@@ -51,8 +51,9 @@ def skill_sets():
 def skill_angelList_call():
 	"""This makes a dynamic call to AngleList for related skills to the user selected skill"""
 	skill_name = request.args.get("selected_skill")
-	skill = normalize('NFKD', skill_name).encode('ascii', 'ignore') 
-	json_db_oject = jsonmodel.get_object_by_skill_name(skill_name)
+	skill_normalize = normalize('NFKD', skill_name).encode('ascii', 'ignore') 
+	skill = skill_normalize.lower()
+	json_db_oject = jsonmodel.get_object_by_skill_name(skill)
 	current_time_epoch = time.time()
 	current_time = datetime.date.today()
 	expiration_date = current_time_epoch - 259200
@@ -63,7 +64,6 @@ def skill_angelList_call():
 		json_translated = json.dumps(AL_skills_dict) 
 		jsonmodel.add_skill_object(skill_id_to_send, skill, json_translated, current_time)
 		jsoned = jsonify(AL_skills_dict) 
-
 		return jsoned
 	elif date_converstion(json_db_oject.date_stored) < expiration_date:
 		skill_id_to_send = skill_obj.id
@@ -123,17 +123,33 @@ def geographic_demand():
 def geographic_demand_skill():
 	"""This makes a dynamic call to CareerBuilder to return lat/long/location of demand for a skill set"""
 	skill_name = request.args.get("selected_geo_skill")
-	print skill_name
 	skill_obj = slimmodel.get_skill_by_tagname(skill_name)
 	skill_id = skill_obj.id
-	print skill_id
-	geoJSON_dict = ALlocation.ALlocationcall(skill_id, skill_name)
-	return jsonify(geoJSON_dict)
-
-@app.route("/search", methods=["GET"])
-def search():
-	skills = slimmodel.get_skill_display_name() 
-	return jsonify(skills)
+	skill = normalize('NFKD', skill_name).encode('ascii', 'ignore') 
+	json_db_oject = jsonmodel.get_object_by_skill_name("geo" + skill_name)
+	current_time_epoch = time.time()
+	current_time = datetime.date.today()
+	expiration_date = current_time_epoch - 259200
+	if json_db_oject == None:
+		skill_obj = slimmodel.get_skill_by_tagname(skill_name.lower())
+		skill_id_to_send = skill_obj.id
+		AL_location_dict = ALlocation.ALlocationcall(skill_id, skill_name)
+		json_translated = json.dumps(AL_location_dict) 
+		jsonmodel.add_skill_object(2 + skill_id, "geo" + skill, json_translated, current_time)
+		jsoned = jsonify(AL_location_dict) 
+		return jsoned
+	elif date_converstion(json_db_oject.date_stored) < expiration_date:
+		skill_id_to_send = skill_obj.id
+		AL_location_dict= ALlocation.ALlocationcall(skill_id, skill_name)
+		json_translated = json.dumps(AL_location_dict) 
+		jsonmodel.updating_skill_object("geo" + skill, json_translated, current_time)
+		jsoned = jsonify(AL_location_dict) 
+		return jsoned
+	else:
+		json_dict = json.loads(json_db_oject.skill_obj)
+		print json_dict
+		json_to_send = jsonify(json_dict)
+		return json_to_send
 
 def date_converstion(date):
 	#changes reable dates to unix

@@ -22,6 +22,7 @@ var clusterData;
 
 function startCluster(evt){
   evt.preventDefault();
+  $("#cluster_results").empty()
   var skillName= $( "select[name='selected_skill']" ).val();
   console.log(skillName)
   var encodedSkill = encodeURIComponent(skillName);
