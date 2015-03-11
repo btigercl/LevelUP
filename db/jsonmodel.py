@@ -40,6 +40,9 @@ def updating_skill_object(skill_name_passed, new_json, new_date):
 	skill_object_stored.skill_object = new_json
 	skill_object_stored.date_stored = new_date
 
+def get_object_by_skill_id(skill_id_passed):
+	json_obj = Session.query(Stored_JSON_Objects).filter_by(id=skill_id_passed).first()
+	return json_obj
 
 def main():
     pass

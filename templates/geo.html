@@ -92,12 +92,15 @@
 		</div>
 	</div>
 </div>
-<script src="/static/LevelUp.js"></script>
 <script src="/static/geo.js"></script>
-</body>
+<script src="/static/LevelUp.js"></script>
 <script>
 		L.mapbox.accessToken = 'pk.eyJ1IjoiYnRpZ2VyY2wiLCJhIjoiTnd3OWp5OCJ9.bSkS-vF6k8g_jeV25fC7sw';
 		var map = L.mapbox.map('mapdiv', 'btigercl.lb66g6k0')
 			.setView([38, -95], 4);
+
+		var mapLayergroup = L.layerGroup().addTo(map);
+	$(document).ready(startGeo())
 </script>
+</body>
 </html>

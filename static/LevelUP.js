@@ -374,43 +374,9 @@ function update(secondData){
 }
 
 
-// //Geographic Demand Tab Javascript 
-function updateGeo(evt){
-  evt.preventDefault();
-  $('#geo_results').empty()
-        var geoSkill = $( "select[name='selected_geo_skill']" ).val();
-        var encodedGeoskill = encodeURIComponent(geoSkill);
-        console.log(encodedGeoskill)
-        var url = "/geographic_demand_skill?selected_geo_skill=" + encodedGeoskill
-        $.get(url, function(result) {
-           var geoResults= result;
-           console.log(geoResults);
-           geoMap(geoResults);
-         });  
-      }
 
-      $('#geo_skill_button').on('click', updateGeo);
-      // $('#geo_skill_button').on('click', emptyGeodiv);
-
-
-
-      // MapBox Javascript
-      function geoMap(geoResults){
-          // L.mapbox.accessToken = 'pk.eyJ1IjoiYnRpZ2VyY2wiLCJhIjoiTnd3OWp5OCJ9.bSkS-vF6k8g_jeV25fC7sw';
-          // var map = L.mapbox.map('mapdiv', 'btigercl.lb66g6k0')
-          //     .setView([38, -95], 4);
-          // if (myLayer !== undefined){ 
-          //   myLayer.clearLayers()
-          // }
-          // myLayer.clearLayers();
-          var myLayer = L.mapbox.featureLayer().addTo(map);
-
-          myLayer.setGeoJSON(geoResults);
-      }
-
-
-      //Bootstrap Javascript 
-      $('a[data-nexttab]').on('click', function () {
-          var id = $(this).data('nexttab');
-          $('.nav-tabs li:eq(' + id + ') a').tab('show');   
-      });
+//Bootstrap Javascript 
+$('a[data-nexttab]').on('click', function () {
+  var id = $(this).data('nexttab');
+    $('.nav-tabs li:eq(' + id + ') a').tab('show');   
+});
