@@ -13,7 +13,7 @@ def ALlocationcall(id, skill_name):
 	req = requests.get(urlmaker(str(id), token)).json()
 	num_pages = req['last_page']
 
-	for page in range(1, 10):
+	for page in range(1, 3):
 		req = requests.get(urlmaker(str(id), token), params={'page' : page}).json()
 		
 
@@ -41,7 +41,7 @@ def ALlocationcall(id, skill_name):
 			# geo_dict.append({"type":"Feature", "geometry":{"type": "Point", "coordinates": lat_long}, "properties":{"name": city}})
 
 	final_dict = {"type": "FeatureCollection", "features": geo_dict}
-	return final_dict
+	return final_dict 
 
 
 

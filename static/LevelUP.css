@@ -58,6 +58,7 @@ div{
 .col-md-3{	
 	width: 25%;
 	height: 100%;
+	padding-top: 15px;
 	display: table-cell;
 	float: none;
 	vertical-align: top;
@@ -71,7 +72,7 @@ div{
 .legend-box {
 	width: 18px;
 	height: 18px;
-/*	display: inline-block;*/
+	display: inline-block;
 	margin-right: 20px;
 }
 

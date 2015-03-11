@@ -16,6 +16,9 @@
 	<script src="http://cdn.jsdelivr.net/typeahead.js/0.9.3/typeahead.min.js"></script> 
 	<!-- // <script src="../d3.min.js"></script> -->
 	<script src="http://d3js.org/d3.v3.js"></script>
+	<script type="text/javascript"
+      src="https://maps.googleapis.com/maps/api/js?senor=false">
+    </script>
 	<script type="text/javascript"></script>
 	<link rel="stylesheet" type="text/css" href="static/LevelUp.css"> 
 </head>
@@ -38,7 +41,9 @@
 		<p>Thinking of moving? See where your skills are in most demand, according to Careerbuilder's and AngelList's joblistings.</p>
 	</div> -->
 	<div class="row-fluid">
-		<div class="col-md-9" id ="mapdiv" style= "height:700px;width:1000px;"></div>
+		<div class="col-md-9"> 
+			<div id ="mapdiv" style= "height:700px;width:1000px;"></div>
+		</div>
 		<div class="col-md-3" id="search">
 			<form action="/geographic_demand_skill" method="GET">
 				<h3>Select Technology:</h3> 
@@ -55,11 +60,42 @@
 <script src="/static/geo.js"></script>
 <script src="/static/LevelUp.js"></script>
 <script>
-	L.mapbox.accessToken = 'pk.eyJ1IjoiYnRpZ2VyY2wiLCJhIjoiTnd3OWp5OCJ9.bSkS-vF6k8g_jeV25fC7sw';
-		var map = L.mapbox.map('mapdiv', 'btigercl.lb66g6k0')
-			.setView([38, -95], 4);
+	var map;
+	var markersArray = [];
+	function clearOverlays () {
+	  for (var i = 0; i < markersArray.length; i++ ) {
+	    markersArray[i].setMap(null);
+	  }
+	  markersArray.length = 0;
+	}
+	var thedata;
+	function addToOverlay(mapObjects) {
+		_.each(mapObjects.features, function(feature){
+			var latlng = new google.maps.LatLng(feature.properties.lat, feature.properties.lng);
+			var marker = new google.maps.Marker({
+				position: latlng,
+				map: map
+			});
+			markersArray.push(marker);
+		});
+	}
+      function initialize() {
 
-		var mapLayergroup = L.layerGroup().addTo(map);
+        var mapOptions = {
+          center: { lat: 37.6, lng: -95.665},
+          zoom: 4
+        };
+        map = new google.maps.Map(document.getElementById('mapdiv'), mapOptions);
+        var marker = new google.maps.Marker({
+          // position: myLatlng,
+          map: map,
+          title: "Hello World"
+        })
+
+      }
+
+
+google.maps.event.addDomListener(window, 'load', initialize);
 	$(document).ready(startGeo())
 </script>
 </body>

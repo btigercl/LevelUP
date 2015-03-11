@@ -102,7 +102,7 @@ function visualizeCluster(datapassed){
 
   //adds nodes to canvas
   node.append("circle")
-    .attr("r", function(d) { return d.count/6})
+    .attr("r", function(d) { return d.count/15})
     .style("fill", function(d) { return color(d.count); });
                       
   // add the text 
