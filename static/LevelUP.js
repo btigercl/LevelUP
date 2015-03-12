@@ -15,13 +15,20 @@
 
 // Skill Set Tab 
 // $(document).ready(loadCluster())
-
 function loadCluster(){
-  d3.json( "/skill_angelList_call?selected_skill=" + "python", function(error, json) {
-  clusterData = json;
-  visualizeCluster(clusterData);
-  });  
+  $.ajax({
+    url: "/cookies"})
+    .done(function(data, error){
+      var jsonSkill = JSON.parse(data);
+      var skill = jsonSkill.skill;
+      console.log(skill);
+      d3.json( "/skill_angelList_call?selected_skill=" + skill , function(error, json) {
+        clusterData = json;
+        visualizeCluster(clusterData);
+    });  
+  });
 }
+
 
 var clusterData;
 
@@ -102,7 +109,7 @@ function visualizeCluster(datapassed){
 
   //adds nodes to canvas
   node.append("circle")
-    .attr("r", function(d) { return d.count/15})
+    .attr("r", function(d) { return d.count/10})
     .style("fill", function(d) { return color(d.count); });
                       
   // add the text 

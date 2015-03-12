@@ -1,5 +1,4 @@
-from flask import Flask, render_template, redirect, request, session, flash, g, url_for, jsonify
-from careerbuilder import CareerBuilder 
+from flask import Flask, render_template, redirect, request, session, flash, g, url_for, jsonify 
 import jinja2
 import os
 from db import slimmodel, jsonmodel
@@ -35,11 +34,8 @@ def landing():
 @app.route("/skill_sets", methods=["GET"])
 def skill_sets():
 	"""This should render the jinja insert for the graphical representation of skill clusters"""
-	# skill_name = request.args.get("selected_landing_skill")
-	# skill_obj = slimmodel.get_skill_by_tagname(skill_name.lower())
-	# skill_id_to_send = skill_obj.id
-	# AL_skills_dict = ALskillcall.ALskillcall(skill_id_to_send, skill_name)
-	# jsoned = jsonify(AL_skills_dict)
+	session['skill'] = request.args.get("selected_landing_skill")
+	print session 
 	skills = slimmodel.get_trend_skill_name()
 	skill_list = []
 	for skill in skills:
@@ -82,11 +78,6 @@ def trends():
 	"""This should render the jinja insert for the trends. This should hold the alorythm 
 	for line graphs"""
 	trend_skill_list = slimmodel.get_trend_skill_name()	
-	# skill_list = [(skill.skill, skill.skill_id) for skill in trend_skill_list if skill.skill != "question"]
-	# skill_set = set(skill_list)
-	# skills_list_dd = list(skill_set)
-	# skills_list_dd.sort()
-
 	skill_list = []
 	for skill in trend_skill_list:
 		if skill[0] not in skill_list and skill[0] != "question":
@@ -147,6 +138,14 @@ def geographic_demand_skill():
 		json_to_send = jsonify(json_dict)
 		return json_to_send
 
+@app.route("/cookies")
+def cookies_storage():
+	"""om-nom-nom"""
+	skill = session.get('skill')
+	print str(skill)
+	skill_to_send = json.dumps({"skill": skill})
+	return skill_to_send
+
 def date_converstion(date):
 	#changes reable dates to unix
 	date_string = str(date)
@@ -154,6 +153,7 @@ def date_converstion(date):
 	cleandate = datetime.datetime.strptime(date_time, '%Y-%m-%d')
 	converted_date = time.mktime(cleandate.timetuple())
 	return int(converted_date)
+
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))

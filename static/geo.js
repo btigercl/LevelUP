@@ -1,12 +1,19 @@
 //Geographic Demand Tab Javascript
 
 function startGeo(){
-  var url = ("/geographic_demand_skill?selected_geo_skill=python");
-  $.get(url, function(result) {
-      var geoResults= result;
-      console.log(geoResults);
-    addToOverlay(geoResults);
-  })
+  $.ajax({
+  url: "/cookies"})
+  .done(function(data, error){
+      var jsonSkill = JSON.parse(data);
+      var skill = jsonSkill.skill;
+      console.log(skill);
+      var url = ("/geographic_demand_skill?selected_geo_skill=" + skill);
+      $.get(url, function(result) {
+        var geoResults= result;
+        console.log(geoResults);
+        addToOverlay(geoResults);
+    });
+  });
 }
  
 function updateGeo(evt){

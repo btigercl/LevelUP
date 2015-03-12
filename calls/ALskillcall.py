@@ -18,7 +18,7 @@ def ALskillcall(id, skill_name):
 	roletag_dict = {}
 	total = 0
 
-	for page in range(1, 3):
+	for page in range(1, 2):
 		req = requests.get(urlmaker(str(id), token), params={'page' : page}).json()		 
 		
 		intial_dict = req["jobs"]
@@ -47,7 +47,7 @@ def ALskillcall(id, skill_name):
 
 	dict_list = []                                                                                                                      
 	for skill in skill_dict:
-		if skill_dict.get(skill) >= 10:
+		if skill_dict.get(skill) >= 20:
 			dict_list.append({"name": skill, "count": skill_dict.get(skill)})
 	final = {"name": skill_name, total: total, "roletag_list": sorted_role_list, "children": dict_list} 
 	return final   	 				
