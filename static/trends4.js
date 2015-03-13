@@ -198,28 +198,3 @@ function parseData(xydata){
     });
     return xy;
   }
-
-// function update(secondData){
-//     console.log(secondData)
-//     var parseDate = d3.time.format("%Y-%m").parse;
-//     var data2 = parseData(secondData);
-
-//     data2.forEach(function(d) {
-//       d.date = parseDate(d.date);
-//     });
-
-//     x.domain(d3.extent(data2, function(d) { return d.date; }));
-//     y.domain(d3.extent(data2, function(d) { return d.percent; }));
-
-//     var svg =d3.select("#trends_results").transition();
-
-//     svg.select(".line")
-//       .duration(750)
-//       .attr("d", path(data2));
-//     svg.select(".x.axis")
-//       .duration(750)
-//       .call(xAxis);
-//     svg.select(".y.axis")
-//       .duration(750)
-//       .call(yAxis);
-// }

@@ -83,7 +83,7 @@ function draw_line_graph(multiLinedata) {
   x.domain(d3.extent(data1, function(d) { return d.date; }));
   y.domain(d3.extent(data1, function(d) { return d.percent; }));
 
-  var div = d3.select("svg").append("div")   
+  var div = d3.select("#trends_results").append("div")   
     .attr("class", "tooltip")               
     .style("opacity", 0);
 
@@ -102,7 +102,6 @@ function draw_line_graph(multiLinedata) {
     .attr("class", "y axis")
     .call(yAxis)
               
-
   .append("text")
     .attr("transform", "rotate(-90)")
     .attr("y", 6)
@@ -117,29 +116,32 @@ function draw_line_graph(multiLinedata) {
         return d.color = color(d.key); })
       .attr("d", line(d.values))
       .on("mouseover", function() {
-      var x0 = x.invert(d3.mouse(this)[0]);
-      console.log("x" + x0)
-      var bisectDate = d3.bisector(function (d) {
-        return d.date;}).left;
-                      
-  var i = bisectDate(d.values, x0, 1),
-    entry0 = d.values[i - 1],
-    entry1 = d.values[i],
-    y = x0 - entry0.date > entry1.date - x0 ? entry1.percent : entry0.percent;
-    console.log("y" + y);
+        // debugger;
+        var x0 = x.invert(d3.mouse(this)[0]);
+        console.log("x" + x0)
+        var bisectDate = d3.bisector(function (d) {
+          return d.date;
+        }).left;
 
-  div.transition()
-    .duration(500)
-    .style("opacity", 1);
-  div.html("<br>" + d.key + "<br>" + y + "%")
-    .style("left", (d3.event.pagex) + "px")
-    .style("top", (d3.event.pageY - 28) + "px");
-  })
-  .on("mouseout", function(){
-    div.transition()
-      .duration(500)
-      .style("opacity", 0);
-  })
+                    
+        var i = bisectDate(d.values, x0, 1),
+          entry0 = d.values[i - 1],
+          entry1 = d.values[i],
+          y = x0 - entry0.date > entry1.date - x0 ? entry1.percent : entry0.percent;
+          console.log("y" + y);
+        div.transition()
+          .duration(500)
+          .style("opacity", 1);
+        div.html("<br>" + d.key + "<br>" + y + "%")
+          .attr('id', 'checking')
+          .style("left", (d3.event.pageX) + "px")
+          .style("top", (d3.event.pageY + 2) + "px");
+          })
+      .on("mouseout", function(){
+        div.transition()
+          .duration(500)
+          .style("opacity", 0);
+      })
   
   var legendName = d.key;
   var legendColor = d.color 
