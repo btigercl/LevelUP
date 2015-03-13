@@ -85,7 +85,7 @@ function draw_line_graph(multiLinedata) {
 
   var div = d3.select("#trends_results").append("div")   
     .attr("class", "tooltip")               
-    .style("opacity", 0);
+    .style("opacity", 0);                
 
   var dataNest = d3.nest()
     .key(function(d) {return d.trendName;})
@@ -102,12 +102,14 @@ function draw_line_graph(multiLinedata) {
     .attr("class", "y axis")
     .call(yAxis)
               
+
   .append("text")
     .attr("transform", "rotate(-90)")
     .attr("y", 6)
     .attr("dy", ".71em")
     .style("text-anchor", "end")
     .text("Percent of Stackoverflow Activity (%)");
+
 
   dataNest.forEach(function(d) {
     svg.append("path")
@@ -137,10 +139,11 @@ function draw_line_graph(multiLinedata) {
           .style("left", (d3.event.pageX) + "px")
           .style("top", (d3.event.pageY + 2) + "px");
           })
+  
       .on("mouseout", function(){
-        div.transition()
-          .duration(500)
-          .style("opacity", 0);
+        tooltip.transition()
+        .duration(500)
+        .style("opacity", 0);
       })
   
   var legendName = d.key;
@@ -152,27 +155,40 @@ function draw_line_graph(multiLinedata) {
 
   });
 
-  // if(svg.selectAll(".yAxis"))[0].length < 1){
-  //   sv.append("g")
-  //     .attr("class", "y axis")
-  //     .call(yAxis)
-  // } else {
-  //   svg.selectAll(".y.axis").transition()duration(1500).call(yAxis)
-  // }
+var curtain = svg.append('rect')
+    .attr('x', -1 * width)
+    .attr('y', -1 * height)
+    .attr('height', height)
+    .attr('width', width)
+    .attr('class', 'curtain')
+    .attr('transform', 'rotate(180)')
+    .style('fill', '#ffffff')
 
-  // lines.transition().duration(1500)
-  //   .attr("d", line)
-  //   .style("stroke", function(){
+  /* Optionally add a guideline */
+  var guideline = svg.append('line')
+    .attr('stroke', '#333')
+    .attr('stroke-width', 0)
+    .attr('class', 'guide')
+    .attr('x1', 1)
+    .attr('y1', 1)
+    .attr('x2', 1)
+    .attr('y2', height)
+  var t = svg.transition()
+    .delay(750)
+    .duration(3000)
+    .ease('linear')
+    .each('end', function() {
+      d3.select('line.guide')
+        .transition()
+        .style('opacity', 0)
+        .remove()
+    });
 
-  //   })
-
-  // lines.enter()
-  //   .append("path")
-  //   .attr("class", "line")
-  //   .attr("d", line)
-  //   .style("stroke", function(){
-      
-  //   });("sqlite", "sqlite", 72469), ("bootstrap", "twitter-bootstrap", 84038), ("scala", "scala", 37332), ("codeigniter", "codeigniter", 16749)
+  /* Create a shared transition for anything we're animating */
+  t.select('rect.curtain')
+    .attr('width', 0);
+  t.select('line.guide')
+    .attr('transform', 'translate(' + width + ', 0)')
 }
 
 // Parse out the line graph data
@@ -184,28 +200,3 @@ function parseData(xydata){
     });
     return xy;
   }
-
-function update(secondData){
-    console.log(secondData)
-    var parseDate = d3.time.format("%Y-%m").parse;
-    var data2 = parseData(secondData);
-
-    data2.forEach(function(d) {
-      d.date = parseDate(d.date);
-    });
-
-    x.domain(d3.extent(data2, function(d) { return d.date; }));
-    y.domain(d3.extent(data2, function(d) { return d.percent; }));
-
-    var svg =d3.select("#trends_results").transition();
-
-    svg.select(".line")
-      .duration(750)
-      .attr("d", path(data2));
-    svg.select(".x.axis")
-      .duration(750)
-      .call(xAxis);
-    svg.select(".y.axis")
-      .duration(750)
-      .call(yAxis);
-}

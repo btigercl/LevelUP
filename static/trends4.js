@@ -83,7 +83,7 @@ function draw_line_graph(multiLinedata) {
   x.domain(d3.extent(data1, function(d) { return d.date; }));
   y.domain(d3.extent(data1, function(d) { return d.percent; }));
 
-  var tooltip = d3.select("#trends_results").append("div")   
+  var div = d3.select("#trends_results").append("div")   
     .attr("class", "tooltip")               
     .style("opacity", 0);                
 
@@ -118,25 +118,27 @@ function draw_line_graph(multiLinedata) {
         return d.color = color(d.key); })
       .attr("d", line(d.values))
       .on("mouseover", function() {
+        // debugger;
         var x0 = x.invert(d3.mouse(this)[0]);
-        // var y0 = (d3.mouse(this)[1]);
-          console.log("x" + x0);
-          console.log("y" + y0);
+        console.log("x" + x0)
         var bisectDate = d3.bisector(function (d) {
-          return d.date;}).left;
-        var i = bisectDate(d.values, x0, 1),
-            entry0 = d.values[i - 1],
-            entry1 = d.values[i],
-            y = x0 - entry0.date > entry1.date - x0 ? entry1.percent : entry0.percent;
-            // x = y0 - entry0.date > entry1.date - x0 ? entry1.percent : entry0.percent;
+          return d.date;
+        }).left;
 
-      tooltip.transition()
-        .duration(500)
-        .style("opacity", 1);
-      tooltip.html("<br>" + d.key + "<br>" + d + "%")
-        .style("left", (d3.event.pagex) + "px")
-        .style("top", (d3.event.pageY - 28) + "px");
-        })
+                    
+        var i = bisectDate(d.values, x0, 1),
+          entry0 = d.values[i - 1],
+          entry1 = d.values[i],
+          y = x0 - entry0.date > entry1.date - x0 ? entry1.percent : entry0.percent;
+          console.log("y" + y);
+        div.transition()
+          .duration(500)
+          .style("opacity", 1);
+        div.html("<br>" + d.key + "<br>" + y + "%")
+          .attr('id', 'checking')
+          .style("left", (d3.event.pageX) + "px")
+          .style("top", (d3.event.pageY + 2) + "px");
+          })
   
       .on("mouseout", function(){
         tooltip.transition()
