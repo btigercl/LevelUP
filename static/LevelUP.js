@@ -22,7 +22,8 @@ function loadCluster(){
       var jsonSkill = JSON.parse(data);
       var skill = jsonSkill.skill;
       console.log(skill);
-      d3.json( "/skill_angelList_call?selected_skill=" + skill , function(error, json) {
+      encodedSkill =  encodeURIComponent(skill)
+      d3.json( "/skill_angelList_call?selected_skill=" + encodedSkill , function(error, json) {
         clusterData = json;
         visualizeCluster(clusterData);
     });  
@@ -109,7 +110,7 @@ function visualizeCluster(datapassed){
 
   //adds nodes to canvas
   node.append("circle")
-    .attr("r", function(d) { return d.count/10})
+    .attr("r", function(d) { return d.count/6})
     .style("fill", function(d) { return color(d.count); });
                       
   // add the text 

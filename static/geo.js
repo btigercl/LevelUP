@@ -7,7 +7,8 @@ function startGeo(){
       var jsonSkill = JSON.parse(data);
       var skill = jsonSkill.skill;
       console.log(skill);
-      var url = ("/geographic_demand_skill?selected_geo_skill=" + skill);
+      encodedSkill =  encodeURIComponent(skill)
+      var url = ("/geographic_demand_skill?selected_geo_skill=" + encodedSkill);
       $.get(url, function(result) {
         var geoResults= result;
         console.log(geoResults);

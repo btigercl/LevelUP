@@ -8,7 +8,8 @@ function startTrends(){
       var jsonSkill = JSON.parse(data);
       var skill = jsonSkill.skill;
       console.log(skill);
-      d3.json( "/db_call_trend?selected_trend1=" + skill, function(error, json) {
+      encodedSkill =  encodeURIComponent(skill)
+      d3.json( "/db_call_trend?selected_trend1=" + encodedSkill, function(error, json) {
         var trendData = json;
         console.log(trendData)
         draw_line_graph(trendData);
@@ -82,7 +83,7 @@ function draw_line_graph(multiLinedata) {
   x.domain(d3.extent(data1, function(d) { return d.date; }));
   y.domain(d3.extent(data1, function(d) { return d.percent; }));
 
-  var div = d3.select("#trends_results").append("div")   
+  var div = d3.select("svg").append("div")   
     .attr("class", "tooltip")               
     .style("opacity", 0);
 
@@ -117,6 +118,7 @@ function draw_line_graph(multiLinedata) {
       .attr("d", line(d.values))
       .on("mouseover", function() {
       var x0 = x.invert(d3.mouse(this)[0]);
+      console.log("x" + x0)
       var bisectDate = d3.bisector(function (d) {
         return d.date;}).left;
                       
@@ -124,6 +126,7 @@ function draw_line_graph(multiLinedata) {
     entry0 = d.values[i - 1],
     entry1 = d.values[i],
     y = x0 - entry0.date > entry1.date - x0 ? entry1.percent : entry0.percent;
+    console.log("y" + y);
 
   div.transition()
     .duration(500)
@@ -167,7 +170,7 @@ function draw_line_graph(multiLinedata) {
   //   .attr("d", line)
   //   .style("stroke", function(){
       
-  //   });
+  //   });("sqlite", "sqlite", 72469), ("bootstrap", "twitter-bootstrap", 84038), ("scala", "scala", 37332), ("codeigniter", "codeigniter", 16749)
 }
 
 // Parse out the line graph data

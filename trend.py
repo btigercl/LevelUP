@@ -106,4 +106,7 @@ def creating_multi_trend_dict(name1, name2, name3):
 	# print trends_dict_list
 	return trends_dict_list
 
+def creating_trend_dict(name1):
+	returned_dict = cal_trend_precent_by_month(name1)
+	return returned_dict
 # creating_multi_trend_dict("css", "html", "javascript")
