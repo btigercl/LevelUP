@@ -67,7 +67,7 @@ def stackexchange_call(name, tagurl, skill_id):
 
 
 def main():
-	seeds =	[("codeigniter", "codeigniter", 16749)]
+	seeds =	[("extjs", "extjs", 30785), ("jsf", "jsf", 36726), ("backbone.js", "backbone", 33096)]
 
 	for seed in seeds:
 		name = seed[0]
@@ -81,7 +81,7 @@ if __name__ == "__main__":
 	main()
 
 #To Seed 
-#("sqlite", "sqlite", 72469), ("bootstrap", "twitter-bootstrap", 84038), ("scala", "scala", 37332), ("codeigniter", "codeigniter", 16749)
+#("jsp", "jsp", 21249), ("extjs", "extjs", 30785), ("jsf", "jsf", 36726), ("backbone.js", "backbone", 33096)
 #("osx", "osx", 70730), ("hibernate", "hibernate", 35292), ("postgresql", "postgresql", 22286),("vba", "vba", 50304)
 
 #("python", "python", 14775), ("qt", "qt", 34130), ("matlab", "matlab", 28665), ("linq", "linq", 76132)
@@ -98,6 +98,8 @@ if __name__ == "__main__":
 #("wpf", "wpf", 30552)xcode, 
 # r, eclipse, vb.net, , wordpress, facebook, 
  #(mysql, mysql, 16309) ("regex", "regex", 76488), ("oracle", "oracle", 59776), ("git", "git", 21135), ("apache", "apache", 24754)]
+
+#("sqlite", "sqlite", 72469), ("bootstrap", "twitter-bootstrap", 84038), ("scala", "scala", 37332), ("codeigniter", "codeigniter", 16749)
 
 #["java", "ruby", "perl", "javascript", "python", "html", "iphone", "angularjs", "django", "android", "jquery", "css""ajax", "json", "c++", ".net", "php", "c", "c#", "linux", "ruby-on-rails", "sql server", "mysql", "bash", "asp.net", "xml", "node.js", "wordpress", "sring", "xml", "wpf", "r", "ecplice", "vb.net", "regex", "oracle", "git", "apache"]
 

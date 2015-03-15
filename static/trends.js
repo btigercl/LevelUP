@@ -42,7 +42,7 @@ $('#trend_button').on('click', get_graph_data);
 function draw_line_graph(multiLinedata) { 
   console.log(multiLinedata);
 
-  var margin = {top: 30, right: 20, bottom: 25, left: 30},
+  var margin = {top: 30, right: 20, bottom: 25, left: 40},
     width = 1000 - margin.left - margin.right,
     height = 600 - margin.top - margin.bottom;
 
