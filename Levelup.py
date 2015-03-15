@@ -34,7 +34,8 @@ def landing():
 @app.route("/skill_sets", methods=["GET"])
 def skill_sets():
 	"""This should render the jinja insert for the graphical representation of skill clusters"""
-	session['skill'] = request.args.get("selected_landing_skill")
+	if session.get('skill') == None:
+		session['skill'] = request.args.get("selected_landing_skill")
 	print session 
 	skills = slimmodel.get_trend_skill_name()
 	skill_list = []

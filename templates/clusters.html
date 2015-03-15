@@ -15,50 +15,35 @@
     <link rel="stylesheet" type="text/css" href="static/LevelUp.css">
     <style>
 
+      body{
+        /*background: #FFFFFF;*/
+        font-size: medium;
+        /*background-image: url(https://farm3.staticflickr.com/2927/14164315519_d78b0f50e8_b.jpg);*/
+        background-image: url(https://farm4.staticflickr.com/3904/14327833686_a89caa3cc3_b.jpg);
+        /*background-image: url(https://farm6.staticflickr.com/5154/14185447737_0aba637f46_b.jpg);*/
+        /*background-image: url(https://farm4.staticflickr.com/3849/14441908827_356a95bb20_b.jpg);*/
+        background-repeat: no-repeat;
+        background-size: cover;
+      }
       path.link {
         fill: none;
         stroke: #D3D3D3;
         stroke-width: 1.5px;
       }
 
-      .axis path,
-      .axis line {
-        fill: none;
-        stroke: #000;
-        shape-rendering: crispEdges;
+      #cluster_results{
+        background-color: white;
+        opacity: .9;
+        height: 600px;
+        width: 1000px;
       }
-
-/*        .x.axis path {
-          display: none;
-        }*/
-
-      .line {
-        fill: none;
-        stroke: steelblue;
-        stroke-width: 1.5px;
-      }
-
-      div.tooltip {   
-/*          position: absolute; */          
-        text-align: center;
-        color: black;  
-        width: 60px;                  
-        height: 28px;                 
-        padding: 2px;             
-        font: 12px sans-serif;        
-        background: lightsteelblue;   
-        border: 0px;      
-        border-radius: 8px;           
-        pointer-events: none;         
-      }
-
      </style>  
 </head>
 <body>
 <div class="body-container">
 <nav class="navbar navbar-default" role="navigation">
 	<div class="navbar-header">
-		<h1 style="color:white">Level UP</h1>
+		<h1>Level UP</h1>
 		<div id="nav">
 		<ul class="nav nav-tabs navbar-right">
   			<li role="presentation" class="active"><a href="/skill_sets" aria-controls="skills" role="tab" data-toggle="tabs">Skill Set Clusters</a></li>
@@ -71,7 +56,7 @@
 <div class="container-fluid">
 <!-- 	<div id="table"> -->
   <div class="row-fluid">
-		<div id="cluster_results" class="col-md-9" > </div>
+		<div id="cluster_results" class="col-md-9"> </div>
 		<div class="col-md-3" id="search">
       <p>Find out what skills are frequently associated in joblistings on Angel List.</p>
       <br>

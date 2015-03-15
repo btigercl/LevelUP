@@ -64,7 +64,7 @@ function visualizeCluster(datapassed){
 // console.log(links);
                  
   var width = 1000,
-    height = 700,
+    height = 600,
     nodesValues = d3.values(nodes);
 
   //main force function 

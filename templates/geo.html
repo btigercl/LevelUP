@@ -9,11 +9,7 @@
 	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
 	<script src="http://underscorejs.org/underscore-min.js"></script>
-	<script src='https://api.tiles.mapbox.com/mapbox.js/v2.1.5/mapbox.js'></script>
-	<link href='https://api.tiles.mapbox.com/mapbox.js/v2.1.5/mapbox.css' rel='stylesheet' />
 	<meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
-	<script scr="https://raw.githubusercontent.com/Caged/d3-tip/master/index.js"></script>
-	<script src="http://cdn.jsdelivr.net/typeahead.js/0.9.3/typeahead.min.js"></script> 
 	<!-- // <script src="../d3.min.js"></script> -->
 	<script src="http://d3js.org/d3.v3.js"></script>
 	<script type="text/javascript"
@@ -21,11 +17,24 @@
     </script>
 	<script type="text/javascript"></script>
 	<link rel="stylesheet" type="text/css" href="static/LevelUp.css"> 
+	<style type="text/css">
+		body{
+		/*background: #FFFFFF;*/
+		font-size: medium;
+		background-image: url(https://farm4.staticflickr.com/3906/14317125527_21cfeb38d6_b.jpg);
+		background-repeat: no-repeat;
+		background-size: cover;
+		}
+
+		#mapdiv {
+			opacity: .9;
+		}
+	</style>
 </head>
 <body>
 <nav class="navbar navbar-default" role="navigation">
 	<div class="navbar-header">
-		<h1 style="color:white">Level UP</h1>
+		<h1>Level UP</h1>
 		<div id="nav">
 		<ul class="nav nav-tabs navbar-right">
 			<li role="presentation"><a href="/skill_sets" aria-controls="skills" role="tab" data-toggle="tabs">Skill Set Clusters</a></li>
@@ -37,22 +46,20 @@
 </nav>
 <div class="container-fluid">
 <!-- <div id="table"> -->
-<!-- 	<div id="geo_results"> 
-		<p>Thinking of moving? See where your skills are in most demand, according to Careerbuilder's and AngelList's joblistings.</p>
-	</div> -->
 	<div class="row-fluid">
 		<div class="col-md-9"> 
-			<div id ="mapdiv" style= "height:700px;width:1000px;"></div>
+			<div id ="mapdiv" style= "height:600px;width:1000px;"></div>
 		</div>
 		<div class="col-md-3" id="search">
 			<form action="/geographic_demand_skill" method="GET">
+				<p>Thinking of moving? See where your skills are in most demand, according to Careerbuilder's and AngelList's joblistings.</p>
 				<h3>Select Technology:</h3> 
 				<label><SELECT name="selected_geo_skill">
 					{% for i in skills %}
 					<label><option value={{ i }}>{{ i }}</option></label>
 					{% endfor %}
 					</SELECT></label>
-				<label><input type="submit" id="geo_skill_button">Submit</input></label>
+				<label><input type="submit" id="geo_skill_button"></input></label>
 			</form>
 		</div>
 	</div>

@@ -9,27 +9,28 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
     <script src="http://underscorejs.org/underscore-min.js"></script>
-    <script src='https://api.tiles.mapbox.com/mapbox.js/v2.1.5/mapbox.js'></script>
-    <link href='https://api.tiles.mapbox.com/mapbox.js/v2.1.5/mapbox.css' rel='stylesheet' />
     <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
     <script scr="https://raw.githubusercontent.com/Caged/d3-tip/master/index.js"></script>
-    <script src="http://cdn.jsdelivr.net/typeahead.js/0.9.3/typeahead.min.js"></script> 
     <!-- // <script src="../d3.min.js"></script> -->
     <script src="http://d3js.org/d3.v3.js"></script>
-    <script type="text/javascript"></script>
       <link rel="stylesheet" type="text/css" href="static/LevelUp.css">
       <style>
 
+      body{
+        /*background: #FFFFFF;*/
+        font-size: medium;
+        background-image: url(https://farm6.staticflickr.com/5154/14185447737_0aba637f46_b.jpg);
+        /*background-image: url(https://farm4.staticflickr.com/3904/14327833686_a89caa3cc3_b.jpg);*/
+        background-repeat: no-repeat;
+        background-size: cover;
+      }
       #trends_results {
         position: relative;
-/*        height: 900px;
-        width: 600px;*/
+        background-color: white;
+        opacity: .9;
+        height: 600px;
+        width: 1000px;
       }
-        path.link {
-          fill: none;
-          stroke: #666;
-          stroke-width: 3px;
-        }
 
         .axis path,
         .axis line {
@@ -37,10 +38,6 @@
           stroke: #000;
           shape-rendering: crispEdges;
         }
-
-/*        .x.axis path {
-          display: none;
-        }*/
 
         .line {
           fill: none;
@@ -75,7 +72,7 @@
 <body>
 <nav class="navbar navbar-default" role="navigation">
 	<div class="navbar-header">
-		<h1 style="color:white">Level UP</h1>
+		<h1>Level UP</h1>
 		<div id="nav">
 		<ul class="nav nav-tabs navbar-right">
   			<li role="presentation"><a href="/skill_sets" aria-controls="skills" role="tab" data-toggle="tabs">Skill Set Clusters</a></li>

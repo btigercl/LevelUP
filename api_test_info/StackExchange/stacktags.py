@@ -67,7 +67,7 @@ def stackexchange_call(name, tagurl, skill_id):
 
 
 def main():
-	seeds =	[("osx", "osx", 70730), ("hibernate", "hibernate", 35292), ("postgresql", "postgresql", 22286), ("vba", "vba", 50304)]
+	seeds =	[("codeigniter", "codeigniter", 16749)]
 
 	for seed in seeds:
 		name = seed[0]
@@ -82,7 +82,7 @@ if __name__ == "__main__":
 
 #To Seed 
 #("sqlite", "sqlite", 72469), ("bootstrap", "twitter-bootstrap", 84038), ("scala", "scala", 37332), ("codeigniter", "codeigniter", 16749)
-
+#("osx", "osx", 70730), ("hibernate", "hibernate", 35292), ("postgresql", "postgresql", 22286),("vba", "vba", 50304)
 
 #("python", "python", 14775), ("qt", "qt", 34130), ("matlab", "matlab", 28665), ("linq", "linq", 76132)
 #("r", "r", 21803), ("eclipse", "eclipse", 39991 12-9-29), ("vb.net", "vb.net", 16023), ("mongodb", "mongodb",16999)

@@ -43,7 +43,7 @@ function draw_line_graph(multiLinedata) {
   console.log(multiLinedata);
 
   var margin = {top: 30, right: 20, bottom: 25, left: 30},
-    width = 900 - margin.left - margin.right,
+    width = 1000 - margin.left - margin.right,
     height = 600 - margin.top - margin.bottom;
 
   var parseDate = d3.time.format("%Y-%m").parse;
@@ -137,12 +137,12 @@ function draw_line_graph(multiLinedata) {
         div.html("<br>" + d.key + "<br>" + y + "%")
           .attr('id', 'checking')
           .style("left", (d3.event.pageX) + "px")
-          .style("top", (d3.event.pageY + 2) + "px");
+          .style("top", (d3.event.pageY) + "px");
           })
   
       .on("mouseout", function(){
         tooltip.transition()
-        .duration(500)
+        .duration(300)
         .style("opacity", 0);
       })
   
