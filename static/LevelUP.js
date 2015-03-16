@@ -16,15 +16,15 @@ function loadCluster(){
 }
 
 //Inserts name of graph into header div
-// function headerOnLoad(name){
-//     $.ajax({
-//     url: "/cookies"})
-//     .done(function(data, error){
-//       var jsonSkill = JSON.parse(data);
-//       var skill = jsonSkill.skill;
-//       $("#title").append("<h3> Skill Graph for " + skill + "</h3>");
-//     });
-// }
+function headerOnLoad(name){
+    $.ajax({
+    url: "/cookies"})
+    .done(function(data, error){
+      var jsonSkill = JSON.parse(data);
+      var skill = jsonSkill.skill;
+      $("#cluster_header").append("<h2>Skill Graph for " + skill + "</h2>");
+    });
+}
 
 
 // $(document).ready(loadCluster())
@@ -38,6 +38,8 @@ function startCluster(evt){
   $("#cluster_results").empty()
   var skillName= $( "select[name='selected_skill']" ).val();
   console.log(skillName)
+  $("#cluster_header").empty()
+  $("#cluster_header").append("<h1>Skill Graph for " + skillName + "</h1>");
   var encodedSkill = encodeURIComponent(skillName);
 
   d3.json( "/skill_angelList_call?selected_skill=" + encodedSkill, function(error, json) {
@@ -47,15 +49,15 @@ function startCluster(evt){
 }
 
 $('#skill_cluster_button').on('click', startCluster);
-$('#skill_cluster_button').on('click', clusterSpan);
+// $('#skill_cluster_button').on('click', clusterSpan);
 
-function clusterSpan(name){
-  evt.preventDefault();
-  debugger
-  var skillName= $( "select[name='selected_skill']" ).val();
-   console.log(skillName);
-  $("#title").append("<h3>Skill Graph for " + skillName + "</h3>");
-}
+// function clusterSpan(name){
+//   evt.preventDefault()
+//   $("#cluster_header").empty()
+//   var skillName= $( "select[name='selected_skill']" ).val();
+//    console.log(skillName);
+//   $("#cluster_header").append("<h1>Skill Graph for " + skillName + "</h1>");
+// }
 
 
 //Skill Set D3 code that creates graph 
@@ -147,8 +149,10 @@ function visualizeCluster(datapassed){
   //Allows user to click on a node and create a new graph based on skill node clicked on
   function click() {
     if (d3.event.defaultPrevented) return;
+    $("#cluster_header").empty()
     var d = d3.select(this).node().__data__;
     var tagDisplayname = d.name;
+    $("#cluster_header").append("<h1>Skill Graph for " + d.name + "</h1>");
     encodedNodeskill = encodeURIComponent(tagDisplayname);
     d3.json( "/skill_angelList_call?selected_skill=" + encodedNodeskill, function(error, json) {
     newData = json;

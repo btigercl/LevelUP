@@ -108,7 +108,7 @@ function draw_line_graph(multiLinedata) {
     .attr("y", 6)
     .attr("dy", ".71em")
     .style("text-anchor", "end")
-    .text("Percent of Stackoverflow Activity (%)");
+    .text("Percent (%)");
 
 
   dataNest.forEach(function(d) {

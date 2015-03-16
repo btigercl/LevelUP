@@ -74,27 +74,34 @@
 			</div>
 		</nav>
 	</div>
-	<div class="row-fluid" id="headerTrends"> </div>
+	<div class="row-fluid" id="header">
+		<div class="col-md-9" id="trends_header">
+			<h1> Precentage of Stack Overflow Activity by Skill</h1> 
+		</div>
+		<div class="col-md-3" id="aside">				
+				<h3>Graph Legend</h3>
+				<div id="trends_legend"></div> 
+		</div>
+	</div>
 	<div class="row-fluid">
 		<div class="col-md-9" id="trends_results"></div>
 		<div class="col-md-3" id="search">
 				<p>We can learn about a skill's popularity today, but what about a skills popularity over time? Check out how many people are asking about a skill on Stack Overflow since 2008 to today.</p>
-				<br>
 				<form id="trends_form" name="trends_form" action="/db_call_trend" method="get">
 					<h3>Select Skill:</h3>
-					<label><SELECT name="selected_trend1">
+					<label><SELECT class="form-control" name="selected_trend1">
 						{% for i in trends %}
 						<label><option value={{ i }}>{{ i }}</option></label>
 						{% endfor %}
 					</SELECT></label>
 					<h3>Select Second Skill:</h3>
-					<label><SELECT name="selected_trend2">
+					<label><SELECT class="form-control" name="selected_trend2">
 						{% for i in trends %}
 						<label><option value={{ i }}>{{ i }}</option></label>
 						{% endfor %}
 					</SELECT></label>
 					<h3>Select Third Skill:</h3>
-					<label><SELECT name="selected_trend3">
+					<label><SELECT class="form-control" name="selected_trend3">
 						{% for i in trends %}
 						<label><option value={{ i }}>{{ i }}</option></label>
 						{% endfor %}
@@ -103,8 +110,8 @@
 					<label><input type="submit" id="trend_button"></input></label>
 				</form>
 				<br>
-				<h3>Graph Legend</h3>
-				<div id="trends_legend"></div> 
+<!-- 				<h3>Graph Legend</h3>
+				<div id="trends_legend"></div>  -->
 		</div>
 	</div>
  </div>

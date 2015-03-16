@@ -26,11 +26,11 @@
 <body id= "landings">
 	<div id="center">
 	<h1 style="font-family:Special Elite;">Welcome to LevelUP</h1>
-	<p>Find out what skills you need to LevelUP in your field</p>
+	<p>A tool to find out what skills you need to LevelUP in your field</p>
 		<form id="landing_form" action="/skill_sets" method="get">
-		<h5>What skill are you interested in?</h5>
+		<h4>What skill are you interested in?</h4>
 			
-			<label><SELECT name="selected_landing_skill" id="skill_dropdown">
+			<label><SELECT class="form-control" name="selected_landing_skill" id="skill_dropdown">
 	        	{% for i in skills %}
 	            <label><option value="{{ i }}">{{ i }}</option></label>
 	            {% endfor %}

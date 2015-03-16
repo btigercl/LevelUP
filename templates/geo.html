@@ -41,7 +41,12 @@
 			</div>
 		</nav>
 	</div>
-	<div class="row-fluid" id="headerTrends"> </div>
+	<div class="row-fluid" id="header">
+		<div class="col-md-9" id="cluster_header">
+			<h1>Map</h1>
+		</div>
+		<div class="col-md-3" id="aside"></div>					
+	</div>
 	<div class="row-fluid">
 		<div class="col-md-9"> 
 			<div id ="mapdiv" style= "height:600px;width:100%;display:absolute;"></div>
@@ -50,7 +55,7 @@
 				<form action="/geographic_demand_skill" method="GET">
 					<p>Thinking of moving? See where your skills are in most demand, according to Careerbuilder's and AngelList's joblistings.</p>
 					<h3>Select Technology:</h3> 
-					<label><SELECT name="selected_geo_skill">
+					<label><SELECT class="form-control" name="selected_geo_skill">
 						{% for i in skills %}
 						<label><option value={{ i }}>{{ i }}</option></label>
 						{% endfor %}

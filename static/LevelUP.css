@@ -10,41 +10,6 @@ div{
 	padding: 0px;
 }
 
-#title{
-	font-family: Electrolize;
-	color: blue;
-	float: right;
-}
-
-#logo{
-	color: white; 
-}
-
-#center {
-	opacity: 0.9;
-	border: 2px solid;
-    border-radius: 25px;
-    font-size: large;
-	font-family: Electrolize;
-	font-weight: 900;
-	font color: black;
-	position: fixed;
-  	top: 50%;
-  	left: 50%;
-  	margin-top: -50px;
-  	margin-left: -310px;
-  	background-color: #8C9C9C;
-  	padding: 15px;
-}
-
-#trends_results {
-	position: relative;
-	background-color: white;
-	opacity: .9;
-	height: 600px;
-	width: 1000px;
-}
-
 .navbar {
 	font-family: Special Elite;
 	font-size: 150%; 
@@ -103,9 +68,28 @@ div{
 	margin-right: 20px;
 }
 
+#circle1{
+	width: 10px;
+	height: 10px;
+	background-color: blue;
+	display: inline-block;
+	border-radius: 50%;
+	margin-right: 20px;
+}
+
+#circle2{
+	width: 20px;
+	height: 20px;
+	background-color: blue;
+	display: inline-block;
+	border-radius: 50%;
+}
+
+
 #trends_legend {
 	text-align: center;
 }
+
 
 #search {
 	vertical-align: top;
@@ -121,6 +105,85 @@ div{
 	vertical-align: top;
 	padding: 15px;
 	font-family: Electrolize;
+}
+
+#trends_header{
+	vertical-align: top;
+	font-family: Electrolize;
+	position: relative;
+	text-align: center;
+	background-color: white;
+	opacity: .9;
+	padding-top: 0px;
+	padding-bottom: 0px;
+}
+
+#cluster_header{
+	vertical-align: top;
+	font-family: Electrolize;
+	position: relative;
+	text-align: center;
+	background-color: white;
+	opacity: .9;
+	padding-top: 0px;
+	padding-bottom: 0px;
+}
+
+#goe_header{
+	vertical-align: top;
+	font-family: Electrolize;
+	position: relative;
+	text-align: center;
+	background-color: white;
+	opacity: .9;
+	padding-top: 0px;
+	padding-bottom: 0px;
+}
+
+#aside{
+	vertical-align: top;
+	font-family: Electrolize;
+	font-size: 100%;
+	font-style: #8C9C9C;
+	background-color: #8C9C9C;
+	opacity: .9;
+	padding-top: 0px;
+	padding-bottom: 0px;
+}
+
+#title{
+	font-family: Electrolize;
+	color: blue;
+	float: right;
+}
+
+#logo{
+	color: white; 
+}
+
+#center {
+	opacity: 0.9;
+	border: 2px solid;
+    border-radius: 25px;
+    font-size: large;
+	font-family: Electrolize;
+	font-weight: 900;
+	font color: black;
+	position: fixed;
+  	top: 50%;
+  	left: 50%;
+  	margin-top: -50px;
+  	margin-left: -310px;
+  	background-color: #8C9C9C;
+  	padding: 15px;
+}
+
+#trends_results {
+	position: relative;
+	background-color: white;
+	opacity: .9;
+	height: 600px;
+	width: 1000px;
 }
 
 /*https://farm3.staticflickr.com/2927/14164315519_d78b0f50e8_b.jpg
