@@ -141,8 +141,8 @@ function draw_line_graph(multiLinedata) {
           })
   
       .on("mouseout", function(){
-        tooltip.transition()
-        .duration(50)
+        div.transition()
+        .duration(2000)
         .style("opacity", 0);
       })
   

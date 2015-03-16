@@ -149,7 +149,7 @@ def cookies_storage():
 	return skill_to_send
 
 def date_converstion(date):
-	#changes reable dates to unix
+	"""changes reable dates to unix"""
 	date_string = str(date)
 	date_time = date_string[0:10]
 	cleandate = datetime.datetime.strptime(date_time, '%Y-%m-%d')

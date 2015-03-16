@@ -94,8 +94,6 @@ function visualizeCluster(datapassed){
     .data(force.links())
     .enter().append("svg:path")
     .attr("class", "link");
-  
-
                       
   // define the nodes
   var node = svg.selectAll(".node")
@@ -105,8 +103,6 @@ function visualizeCluster(datapassed){
     .on("click", click)
     .call(force.drag);
     
-
-  
   //color scale                 
   var color = d3.scale.category20c();
 

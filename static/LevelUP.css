@@ -1,12 +1,8 @@
 html,body { height:100%; }
 
 body{
-	/*background: #FFFFFF;*/
 	font-size: medium;
 	height: 100%;
-	/*background-image: url(https://farm4.staticflickr.com/3904/14327833686_a89caa3cc3_b.jpg);*/
-	/*background-repeat: no-repeat;*/
-	/*background-size: cover;*/
 }
 
 div{
@@ -25,10 +21,28 @@ div{
 }
 
 #center {
-/*	background-color: white;*/
-	opacity: 0.7;
+	opacity: 0.9;
 	border: 2px solid;
     border-radius: 25px;
+    font-size: large;
+	font-family: Electrolize;
+	font-weight: 900;
+	font color: black;
+	position: fixed;
+  	top: 50%;
+  	left: 50%;
+  	margin-top: -50px;
+  	margin-left: -310px;
+  	background-color: #8C9C9C;
+  	padding: 15px;
+}
+
+#trends_results {
+	position: relative;
+	background-color: white;
+	opacity: .9;
+	height: 600px;
+	width: 1000px;
 }
 
 .navbar {
@@ -36,7 +50,6 @@ div{
 	font-size: 150%; 
 	padding: 0;
 	margin: 0;
-/*	padding-left: 15px;*/
 	border: none;
 	-webkit-box-shadow: none;
 	box-shadow: none;
@@ -57,21 +70,11 @@ div{
 	width: 100%;
 	padding: 25px;
 	padding-top: 10px;
-/*	margin: 0px;
-
-	margin-right: auto;
-	margin-left: auto;
-	height: 100%;*/
-	/*background-color: E7E6EB;*/
 }
+
 .row-fluid {
 	display: table-row;
 	height: 100%;
-/*	padding: 25;*/
-/*	margin: -15px;
-	padding: -15px;
-	margin-top: 0px;
-	height: 100%;*/
 }
 
 .col-md-9{
@@ -79,19 +82,14 @@ div{
 	display: table-cell;
 	float: none;
 	width: 75%;
-/*	width: 75%;
-	height: 100%;
-	vertical-align: top;*/
 }
 
 .col-md-3{	
 	height: 100%;
 	width: 25%;	
-/*	padding-top: 15px;
-*/	display: table-cell;
+	display: table-cell;
 	float: none;
-/*	vertical-align: top;
-*/}
+}
 
 .legend-text {
 	display: inline-block;
@@ -105,19 +103,11 @@ div{
 	margin-right: 20px;
 }
 
-/*#table {
-	display: table;
-	margin: 0;
-	padding: 0;
-	width: 100%;
-}
-*/
 #trends_legend {
 	text-align: center;
 }
 
 #search {
-/*	display: table-cell;*/
 	vertical-align: top;
 	font-family: Electrolize;
 	font-size: 100%;
@@ -128,7 +118,6 @@ div{
 }
 
 #result {
-/*	display: table-cell;*/
 	vertical-align: top;
 	padding: 15px;
 	font-family: Electrolize;
