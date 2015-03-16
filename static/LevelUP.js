@@ -1,5 +1,5 @@
 // Skill Set Tab 
-// $(document).ready(loadCluster())
+//Calls skill set cluster graph when page loads
 function loadCluster(){
   $.ajax({
     url: "/cookies"})
@@ -15,6 +15,7 @@ function loadCluster(){
   });
 }
 
+//Inserts name of graph into header div
 // function headerOnLoad(name){
 //     $.ajax({
 //     url: "/cookies"})
@@ -25,6 +26,11 @@ function loadCluster(){
 //     });
 // }
 
+
+// $(document).ready(loadCluster())
+
+
+//Calls skill set cluster graph when drop down is used 
 var clusterData;
 
 function startCluster(evt){
@@ -52,10 +58,11 @@ function clusterSpan(name){
 }
 
 
-//Skill Set D3 code 
+//Skill Set D3 code that creates graph 
 
 function visualizeCluster(datapassed){  
 
+  //parses and binds data for nodes and links
   console.log(datapassed);
   var roleList = createRoletaglist(datapassed);
   var nodes = makeNodes(datapassed);
@@ -84,12 +91,13 @@ function visualizeCluster(datapassed){
   var svg = d3.select("#cluster_results").append("svg")
     .attr("width", width)
     .attr("height", height);  
-       
+  
+  //add tooltip div to SVG     
   var div = d3.select("#cluster_results").append("div")   
     .attr("class", "tooltip")               
     .style("opacity", 0);
 
-  // add the links
+  // adds the links
   var path = svg.append("svg:g").selectAll("path")
     .data(force.links())
     .enter().append("svg:path")
@@ -117,6 +125,7 @@ function visualizeCluster(datapassed){
     .attr("dy", ".35em")    
     .text(function(d) { return d.name; });
 
+  //This is the animation and movement of the graph  
   function tick() {
     path.attr("d", function(d) {
       var dx = d.target.x - d.source.x,
@@ -135,6 +144,7 @@ function visualizeCluster(datapassed){
       return "translate(" + d.x + "," + d.y + ")"; });
   }
   
+  //Allows user to click on a node and create a new graph based on skill node clicked on
   function click() {
     if (d3.event.defaultPrevented) return;
     var d = d3.select(this).node().__data__;
@@ -143,8 +153,6 @@ function visualizeCluster(datapassed){
     d3.json( "/skill_angelList_call?selected_skill=" + encodedNodeskill, function(error, json) {
     newData = json;
     $("#cluster_results").empty();
-      // path.exit().remove();
-      // node.exit().remove();
     visualizeCluster(newData);
     });
   }
@@ -181,7 +189,7 @@ function createRoletaglist(dict){
 }
 
 
-//Bootstrap Javascript 
+//Bootstrap Javascript for tabs and tab animation
 $('a[data-nexttab]').on('click', function () {
   var id = $(this).data('nexttab');
     $('.nav-tabs li:eq(' + id + ') a').tab('show');   
