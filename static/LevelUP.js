@@ -1,18 +1,3 @@
-//Landing page
-
-// function entryData(evt){
-//   evt.preventDefault();
-//   var entrySkill= $("select[name='selected_landing_skill']" ).val();
-//   console.log("hi")
-//   var encodedEntryskill = encodeURIComponent(entrySkill);
-
-//   d3.json("/skill_sets?selected_skill=" + encodedEntryskill function(error, json) {
-//     startData = json;
-//     visualizeCluster(startData)
-//   });
-// }
-// $("#landing_button").on('click', entryData);
-
 // Skill Set Tab 
 // $(document).ready(loadCluster())
 function loadCluster(){
@@ -30,6 +15,15 @@ function loadCluster(){
   });
 }
 
+// function headerOnLoad(name){
+//     $.ajax({
+//     url: "/cookies"})
+//     .done(function(data, error){
+//       var jsonSkill = JSON.parse(data);
+//       var skill = jsonSkill.skill;
+//       $("#title").append("<h3> Skill Graph for " + skill + "</h3>");
+//     });
+// }
 
 var clusterData;
 
@@ -47,8 +41,16 @@ function startCluster(evt){
 }
 
 $('#skill_cluster_button').on('click', startCluster);
-// $('#landing_button').on('click', startCluster);
-// $('#skill_cluster_button').on('click', emptyClusterdiv);
+$('#skill_cluster_button').on('click', clusterSpan);
+
+function clusterSpan(name){
+  evt.preventDefault();
+  debugger
+  var skillName= $( "select[name='selected_skill']" ).val();
+   console.log(skillName);
+  $("#title").append("<h3>Skill Graph for " + skillName + "</h3>");
+}
+
 
 //Skill Set D3 code 
 

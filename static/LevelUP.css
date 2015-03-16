@@ -14,8 +14,14 @@ div{
 	padding: 0px;
 }
 
+#title{
+	font-family: Electrolize;
+	color: blue;
+	float: right;
+}
+
 #logo{
-	font color: white; 
+	color: white; 
 }
 
 #center {
@@ -30,7 +36,7 @@ div{
 	font-size: 150%; 
 	padding: 0;
 	margin: 0;
-	padding-left: 15px;
+/*	padding-left: 15px;*/
 	border: none;
 	-webkit-box-shadow: none;
 	box-shadow: none;
@@ -49,8 +55,10 @@ div{
 .container-fluid {
 	display: table;
 	width: 100%;
+	padding: 25px;
+	padding-top: 10px;
 /*	margin: 0px;
-	padding: 0px;
+
 	margin-right: auto;
 	margin-left: auto;
 	height: 100%;*/
@@ -59,6 +67,7 @@ div{
 .row-fluid {
 	display: table-row;
 	height: 100%;
+/*	padding: 25;*/
 /*	margin: -15px;
 	padding: -15px;
 	margin-top: 0px;

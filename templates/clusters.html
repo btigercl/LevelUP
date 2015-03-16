@@ -55,7 +55,9 @@
   </div>
 <!-- 	<div id="table"> -->
   <div class="row-fluid">
-		<div class="col-md-9" id="cluster_results"></div>
+		<div class="col-md-9" id="cluster_results">
+      <span id="title"></span>  
+    </div>
 		<div class="col-md-3" id="search">
       <p>Find out what skills are frequently associated in joblistings on Angel List.</p>
       <br>
@@ -78,7 +80,7 @@
 </div>
 <script scr="/static/cluster.js"></script>
 <script src="/static/LevelUp.js"></script>
-<script type="text/javascript"> $(document).ready(loadCluster())
-</script>
+<script type="text/javascript"> $(document).ready(loadCluster())</script>
+<script type="text/javascript"> $(document).ready(headerOnLoad())</script>
 </body>
 </html>

@@ -67,7 +67,7 @@ def stackexchange_call(name, tagurl, skill_id):
 
 
 def main():
-	seeds =	[("extjs", "extjs", 30785), ("jsf", "jsf", 36726), ("backbone.js", "backbone", 33096)]
+	seeds =	[("jsf", "jsf", 36726), ("backbone.js", "backbone", 33096)]
 
 	for seed in seeds:
 		name = seed[0]

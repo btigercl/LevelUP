@@ -142,7 +142,7 @@ function draw_line_graph(multiLinedata) {
   
       .on("mouseout", function(){
         tooltip.transition()
-        .duration(300)
+        .duration(50)
         .style("opacity", 0);
       })
   

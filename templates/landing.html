@@ -43,6 +43,7 @@
 	<p>Find out what skills you need to LevelUP in your field</p>
 		<form id="landing_form" action="/skill_sets" method="get">
 		<h5>What skill are you interested in?</h5>
+			
 			<label><SELECT name="selected_landing_skill" id="skill_dropdown">
 	        	{% for i in skills %}
 	            <label><option value="{{ i }}">{{ i }}</option></label>
