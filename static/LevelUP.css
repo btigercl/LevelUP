@@ -14,6 +14,9 @@ div{
 	padding: 0px;
 }
 
+#logo{
+	font color: white; 
+}
 
 #center {
 /*	background-color: white;*/
@@ -27,16 +30,21 @@ div{
 	font-size: 150%; 
 	padding: 0;
 	margin: 0;
-	padding-left: 5px;
+	padding-left: 15px;
 	border: none;
 	-webkit-box-shadow: none;
 	box-shadow: none;
 	background: transparent;
+	font color: white;
 } 
 
 /*#page-header {
 	font color: white;
 }*/
+
+.navbar-header{
+	font color: white;
+}
 
 .container-fluid {
 	display: table;
