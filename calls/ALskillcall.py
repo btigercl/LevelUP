@@ -5,10 +5,12 @@ from unicodedata import normalize
 import csv
 
 def urlmaker(id, token):
+	"""creates url"""
 	return "https://api.angel.co/1/tags/" + id  + "/jobs?access_token=" + token
 
 
 def ALskillcall(id, skill_name):
+	"""Makes api call""" 
 	token = os.environ.get("AngelList_Token2")
 	req = requests.get(urlmaker(str(id), token)).json()
 	num_pages = req['last_page']

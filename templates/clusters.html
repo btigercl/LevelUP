@@ -18,9 +18,11 @@
 
 	body{
 		font-size: large;
-		background-image: url(https://farm4.staticflickr.com/3904/14327833686_a89caa3cc3_b.jpg);
+		background-image: url(https://farm6.staticflickr.com/5513/14370075880_13469fa02e_b.jpg);
+		/*background-image: url(https://farm4.staticflickr.com/3904/14327833686_a89caa3cc3_b.jpg);*/
 		background-repeat: no-repeat;
 		background-size: cover;
+		padding-bottom: 0px;
 	}
 	path.link {
 		fill: none;
@@ -31,8 +33,9 @@
 	#cluster_results{
 		background-color: white;
 		opacity: .9;
-		height: 600px;
-		width: 1000px;
+		height: 500px;
+		width: 900px;
+		padding-bottom: 0px;
 	}
 	</style>  
 </head>
@@ -62,7 +65,7 @@
 	<div class="row-fluid">
 		<div class="col-md-9" id="cluster_results"> </div>
 		<div class="col-md-3" id="search">
-			<p>Sometimes learning one skill requires you to know several others. The Skills Sets graph illustrates these connections. Node size indicates how frequently the node skill was associated with the main skill in AngelList joblistings. Click on the nodes to find out what other skills are associated with them!</p>
+			<p>The Skills Sets graph illustrates connections between skills. Node size indicates how frequently a skill appeared with the main skill in AngelList joblistings. Click on the skill nodes to view other skill connections.</p>
 			<form  action="/skill_angelList_call" id="cluster_form" method="GET">
 				<h3>Select Technology:</h3> 
 					<label><SELECT class="form-control" name="selected_skill" id="skill_dropdown">

@@ -13,8 +13,8 @@ div{
 .navbar {
 	font-family: Special Elite;
 	font-size: 150%; 
-	padding: 0;
-	margin: 0;
+	padding: 0px;
+	margin: 0px;
 	border: none;
 	-webkit-box-shadow: none;
 	box-shadow: none;
@@ -33,8 +33,8 @@ div{
 .container-fluid {
 	display: table;
 	width: 100%;
-	padding: 25px;
-	padding-top: 10px;
+	padding: 15px;
+	padding-top: 0px;
 }
 
 .row-fluid {
@@ -43,7 +43,7 @@ div{
 }
 
 .col-md-9{
-	padding: 0;
+	padding: 0px;
 	display: table-cell;
 	float: none;
 	width: 75%;
@@ -54,11 +54,13 @@ div{
 	width: 25%;	
 	display: table-cell;
 	float: none;
+	padding: 0px;
 }
 
 .legend-text {
+	text-align: center;
 	display: inline-block;
-	margin-right: 5px;
+	padding-right: 10px;
 }
 
 .legend-box {
@@ -68,22 +70,6 @@ div{
 	margin-right: 20px;
 }
 
-#circle1{
-	width: 10px;
-	height: 10px;
-	background-color: blue;
-	display: inline-block;
-	border-radius: 50%;
-	margin-right: 20px;
-}
-
-#circle2{
-	width: 20px;
-	height: 20px;
-	background-color: blue;
-	display: inline-block;
-	border-radius: 50%;
-}
 
 
 #trends_legend {
@@ -118,6 +104,11 @@ div{
 	padding-bottom: 0px;
 }
 
+#skill_titles{
+	padding: 0px;
+	border-width: 0px;
+}
+
 #cluster_header{
 	vertical-align: top;
 	font-family: Electrolize;
@@ -129,7 +120,8 @@ div{
 	padding-bottom: 0px;
 }
 
-#goe_header{
+
+#map_header{
 	vertical-align: top;
 	font-family: Electrolize;
 	position: relative;
@@ -149,6 +141,7 @@ div{
 	opacity: .9;
 	padding-top: 0px;
 	padding-bottom: 0px;
+	text-align: center;
 }
 
 #title{

@@ -23,11 +23,11 @@ app.jinja_env.undefined = jinja2.StrictUndefined
 
 @app.route("/")
 def landing():
-	"""Home page and lead into site. Basic html/css/bootstrap with a kind of overview of the site"""
+	"""Leads into site where user picks throughline skill"""
 	skills = slimmodel.get_trend_skill_name()
+	session['skill'] = None
 	skill_list = []
 	for skill in skills:
-		if skill[0] not in skill_list and skill[0] != "question":
 			skill_list.append(skill[0]) 
 	return render_template("landing.html", skills=skill_list)
 
@@ -40,7 +40,6 @@ def skill_sets():
 	skills = slimmodel.get_trend_skill_name()
 	skill_list = []
 	for skill in skills:
-		if skill[0] not in skill_list and skill[0] != "question":
 			skill_list.append(skill[0]) 
 	return render_template("clusters.html", skills=skill_list)
 
@@ -81,7 +80,6 @@ def trends():
 	trend_skill_list = slimmodel.get_trend_skill_name()	
 	skill_list = []
 	for skill in trend_skill_list:
-		if skill[0] not in skill_list and skill[0] != "question":
 			skill_list.append(skill[0])
 	return render_template("trends.html", trends=skill_list)
 
@@ -107,7 +105,6 @@ def geographic_demand():
 	skills = slimmodel.get_trend_skill_name()
 	skill_list = []
 	for skill in skills:
-		if skill[0] not in skill_list and skill[0] != "question":
 			skill_list.append(skill[0]) 
 	return render_template("geo.html", skills = skill_list)
 
@@ -149,7 +146,7 @@ def cookies_storage():
 	return skill_to_send
 
 def date_converstion(date):
-	"""changes reable dates to unix"""
+	"""changes reable dates to unix time"""
 	date_string = str(date)
 	date_time = date_string[0:10]
 	cleandate = datetime.datetime.strptime(date_time, '%Y-%m-%d')

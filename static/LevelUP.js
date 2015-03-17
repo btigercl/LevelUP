@@ -22,7 +22,7 @@ function headerOnLoad(name){
     .done(function(data, error){
       var jsonSkill = JSON.parse(data);
       var skill = jsonSkill.skill;
-      $("#cluster_header").append("<h2>Skill Graph for " + skill + "</h2>");
+      $("#cluster_header").append("<h2>skill set graph for " + skill + "</h2>");
     });
 }
 
@@ -39,7 +39,7 @@ function startCluster(evt){
   var skillName= $( "select[name='selected_skill']" ).val();
   console.log(skillName)
   $("#cluster_header").empty()
-  $("#cluster_header").append("<h1>Skill Graph for " + skillName + "</h1>");
+  $("#cluster_header").append("<h1>skill set graph for " + skillName + "</h1>");
   var encodedSkill = encodeURIComponent(skillName);
 
   d3.json( "/skill_angelList_call?selected_skill=" + encodedSkill, function(error, json) {
@@ -49,16 +49,6 @@ function startCluster(evt){
 }
 
 $('#skill_cluster_button').on('click', startCluster);
-// $('#skill_cluster_button').on('click', clusterSpan);
-
-// function clusterSpan(name){
-//   evt.preventDefault()
-//   $("#cluster_header").empty()
-//   var skillName= $( "select[name='selected_skill']" ).val();
-//    console.log(skillName);
-//   $("#cluster_header").append("<h1>Skill Graph for " + skillName + "</h1>");
-// }
-
 
 //Skill Set D3 code that creates graph 
 
@@ -152,7 +142,7 @@ function visualizeCluster(datapassed){
     $("#cluster_header").empty()
     var d = d3.select(this).node().__data__;
     var tagDisplayname = d.name;
-    $("#cluster_header").append("<h1>Skill Graph for " + d.name + "</h1>");
+    $("#cluster_header").append("<h1>skill set graph for " + d.name + "</h1>");
     encodedNodeskill = encodeURIComponent(tagDisplayname);
     d3.json( "/skill_angelList_call?selected_skill=" + encodedNodeskill, function(error, json) {
     newData = json;
@@ -161,7 +151,7 @@ function visualizeCluster(datapassed){
     });
   }
 }
-
+//Parses and formats data to create the nodes
 function makeNodes(data){
   var nodes = [{name: data.name, weight: data.children.length}];
     _.each(data.children, function(item, index){
@@ -170,7 +160,7 @@ function makeNodes(data){
   return nodes;
 }
 
-
+//Parses and formats data to create links
 function processDataIntoLinks(nodes){
   var result = [];
   for (var index = 0; index < _.size(nodes); index++){
@@ -179,6 +169,7 @@ function processDataIntoLinks(nodes){
   return result;
 }
 
+//This parses out the roletag information from the dictionary and inserts ranked list items into the DOM
 function createRoletaglist(dict){
   $("#dynamic_list").empty()
    _.each(dict.roletag_list, function(item, index){

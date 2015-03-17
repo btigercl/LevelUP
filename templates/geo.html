@@ -15,7 +15,7 @@
 	<link href='http://fonts.googleapis.com/css?family=Special+Elite' rel='stylesheet' type='text/css'>
 	<style type="text/css">
 		body{
-		font-size: medium;
+		font-size: large;
 		background-image: url(https://farm4.staticflickr.com/3906/14317125527_21cfeb38d6_b.jpg);
 		background-repeat: no-repeat;
 		background-size: cover;
@@ -34,7 +34,7 @@
 				<h1 id="logo">Level UP</h1>
 				<div id="nav">
 				<ul class="nav nav-tabs navbar-right">
-					<li role="presentation"><a href="/skill_sets" aria-controls="skills" role="tab" data-toggle="tabs">Skill Set Clusters</a></li>
+					<li role="presentation"><a href="/skill_sets" aria-controls="skills" role="tab" data-toggle="tabs">Skill Sets</a></li>
 					<li role="presentation"><a href="/trends" aria-controls="trends" role="tab" data-toggle="tabs">Trends</a></li>
 					<li role="presentation" class="active"><a href="/geographic_demand" aria-controls="Skills" role="tab" data-toggle="tabs">Geographic Demand</a></li>
 				</ul>
@@ -42,9 +42,7 @@
 		</nav>
 	</div>
 	<div class="row-fluid" id="header">
-		<div class="col-md-9" id="cluster_header">
-			<h1>Map</h1>
-		</div>
+		<div class="col-md-9" id="map_header"></div>
 		<div class="col-md-3" id="aside"></div>					
 	</div>
 	<div class="row-fluid">
@@ -53,7 +51,7 @@
 		</div>
 		<div class="col-md-3" id="search">
 				<form action="/geographic_demand_skill" method="GET">
-					<p>Thinking of moving? See where your skills are in most demand, according to Careerbuilder's and AngelList's joblistings.</p>
+					<p>Thinking of moving? See where your skills are in demand according to AngelList joblistings.</p>
 					<h3>Select Technology:</h3> 
 					<label><SELECT class="form-control" name="selected_geo_skill">
 						{% for i in skills %}

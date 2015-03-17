@@ -21,6 +21,7 @@ function get_graph_data(evt){
   evt.preventDefault();
   $("#trends_results").empty()
   $("#trends_legend").empty()
+  $("#skill_titles").empty()
   var trend1= $( "select[name='selected_trend1']" ).val();
   var trend2= $( "select[name='selected_trend2']" ).val();
   var trend3= $( "select[name='selected_trend3']" ).val();
@@ -38,71 +39,79 @@ function get_graph_data(evt){
 
 $('#trend_button').on('click', get_graph_data);
 
-
+//This function draw the line graph and inserts the legend 
 function draw_line_graph(multiLinedata) { 
   console.log(multiLinedata);
 
-  var margin = {top: 30, right: 20, bottom: 25, left: 40},
+  //creates canvas size
+  var margin = {top: 30, right: 45, bottom: 30, left: 40},
     width = 1000 - margin.left - margin.right,
     height = 600 - margin.top - margin.bottom;
 
+  //Format each data's date
   var parseDate = d3.time.format("%Y-%m").parse;
 
+  //sets the x/y axis and scale
   var x = d3.time.scale()
               .range([0, width]);
-
   var y = d3.scale.linear()
               .range([height, 0]);
-
   var xAxis = d3.svg.axis()
               .scale(x)
               .orient("bottom");
-
   var yAxis = d3.svg.axis()
               .scale(y)
               .orient("left");
-
+  
+  //binds the data to the line              
   var line = d3.svg.line()
     .interpolate("basis")
     .x(function(d) {return x(d.date);})
     .y(function(d) {return y(d.percent);
   });
 
+  //creates the canvas
   var svg = d3.select("#trends_results").append("svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
     .append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
+  //parses and formats the data for D3
   var data1 = parseData(multiLinedata);
 
+  //sends parsed and formated data to date formatter
   data1.forEach(function(d) {
     d.date = parseDate(d.date);
   });
 
+  //dynamically sets the size of the x/y axis based on the data
   x.domain(d3.extent(data1, function(d) { return d.date; }));
   y.domain(d3.extent(data1, function(d) { return d.percent; }));
 
+  //establishes the tooltip
   var div = d3.select("#trends_results").append("div")   
     .attr("class", "tooltip")               
     .style("opacity", 0);                
 
+  //nests the data and allows for as many lines as needed for the data submitted
   var dataNest = d3.nest()
     .key(function(d) {return d.trendName;})
     .entries(data1);
 
+  //establish the color scale
   var color = d3.scale.category10()
 
+  //appends x/y axis to canvas
   svg.append("g")
     .attr("class", "x axis")
     .attr("transform", "translate(0," + height + ")")
     .call(xAxis);
-
   svg.append("g")
     .attr("class", "y axis")
     .call(yAxis)
               
-
+  //adds text to the y axis
   .append("text")
     .attr("transform", "rotate(-90)")
     .attr("y", 6)
@@ -110,7 +119,7 @@ function draw_line_graph(multiLinedata) {
     .style("text-anchor", "end")
     .text("Percent (%)");
 
-
+  //function creates the lines, inserts the mouseover/out and binds data to tooltip, inserts legend into DOM   
   dataNest.forEach(function(d) {
     svg.append("path")
       .attr("class", "line")
@@ -153,8 +162,11 @@ function draw_line_graph(multiLinedata) {
   var newLegendColor = $('<div class="legend-box" style="background-color:'+ legendColor + '"></div>');
   legendContainer.append(newLegendText, newLegendColor); 
 
+  var skillName = d.key;
+  var skillTitleContainer = $("#skill_titles").append(skillName + " ");
   });
 
+//creates line drawing animation 
 var curtain = svg.append('rect')
     .attr('x', -1 * width)
     .attr('y', -1 * height)
@@ -163,9 +175,7 @@ var curtain = svg.append('rect')
     .attr('class', 'curtain')
     .attr('transform', 'rotate(180)')
     .style('fill', '#ffffff')
-
-  /* Optionally add a guideline */
-  var guideline = svg.append('line')
+   var guideline = svg.append('line')
     .attr('stroke', '#333')
     .attr('stroke-width', 0)
     .attr('class', 'guide')
@@ -184,11 +194,13 @@ var curtain = svg.append('rect')
         .remove()
     });
 
-  /* Create a shared transition for anything we're animating */
+  //executes the animation 
   t.select('rect.curtain')
     .attr('width', 0);
   t.select('line.guide')
     .attr('transform', 'translate(' + width + ', 0)')
+
+  $("#skill_titles").append("stack overflow activity")
 }
 
 // Parse out the line graph data
