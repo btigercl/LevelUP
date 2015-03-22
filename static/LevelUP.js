@@ -22,6 +22,7 @@ function headerOnLoad(name){
     .done(function(data, error){
       var jsonSkill = JSON.parse(data);
       var skill = jsonSkill.skill;
+      console.log(skill);
       $("#cluster_header").append("<h2>skill set graph for " + skill + "</h2>");
     });
 }
