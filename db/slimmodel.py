@@ -82,7 +82,7 @@ def get_skill_by_name(passed_name):
 	return skill_obj
 
 def get_trend_skill_name():
-	skill_name_list = Session.query(Stack_Overflow_Trends.skill).filter(Stack_Overflow_Trends.skill != 'question').distinct().order_by('skill').all()
+	skill_name_list = Session.query(Stack_Overflow_Trends.skill).filter(Stack_Overflow_Trends.skill != 'question', Stack_Overflow_Trends.skill != ".net").distinct().order_by('skill').all()
 	return skill_name_list
 
 def get_trend_by_name(name):

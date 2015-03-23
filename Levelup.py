@@ -111,7 +111,8 @@ def geographic_demand():
 def geographic_demand_skill():
 	"""This makes a dynamic call to CareerBuilder to return lat/long/location of demand for a skill set"""
 	skill_name = request.args.get("selected_geo_skill")
-	skill = normalize('NFKD', skill_name).encode('ascii', 'ignore')
+	skill = normalize('NFKD', skill_name).encode('ascii', 'ignore') 
+	geoskill = "geo" + normalize('NFKD', skill_name).encode('ascii', 'ignore') 
 	skill_obj = slimmodel.get_skill_by_tagname(skill)
 	skill_id_to_send = skill_obj.id
 	json_db_oject = jsonmodel.get_object_by_skill_id(2 + skill_id_to_send)
