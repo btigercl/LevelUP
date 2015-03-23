@@ -35,8 +35,8 @@ def add_skill_object(skill_id, skill_name_passed, json_string, date):
 	Session.add(new_skill_object)
 	Session.commit()
 
-def updating_skill_object(skill_name_passed, new_json, new_date):
-	skill_object_stored = Session.query(Stored_JSON_Objects).filter_by(skill_name=skill_name_passed).first()
+def updating_skill_object(id_passed, new_json, new_date):
+	skill_object_stored = Session.query(Stored_JSON_Objects).filter_by(id=id_passed).first()
 	skill_object_stored.skill_object = new_json
 	skill_object_stored.date_stored = new_date
 

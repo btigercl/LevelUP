@@ -57,21 +57,18 @@ def skill_angelList_call():
 	expiration_date = current_time_epoch - 259200
 	if json_db_oject == None:	
 		AL_skills_dict = ALskillcall.ALskillcall(skill_id_to_send, skill_name)
-		print AL_skills_dict
 		json_translated = json.dumps(AL_skills_dict) 
 		jsonmodel.add_skill_object(skill_id_to_send, skill, json_translated, current_time)
 		jsoned = jsonify(AL_skills_dict) 
-		return jsoned
+		return jsoned 
 	elif date_converstion(json_db_oject.date_stored) < expiration_date:
 		AL_skills_dict = ALskillcall.ALskillcall(skill_id_to_send, skill_name)
-		print AL_skills_dict
 		json_translated = json.dumps(AL_skills_dict) 
-		jsonmodel.updating_skill_object(skill, json_translated, current_time)
+		jsonmodel.updating_skill_object(skill_id_to_send, json_translated, current_time)
 		jsoned = jsonify(AL_skills_dict) 
 		return jsoned
 	else:
 		json_dict = json.loads(json_db_oject.skill_obj)
-		print json_dict
 		json_to_send = jsonify(json_dict)
 		return json_to_send
 

@@ -24,7 +24,7 @@ class JobTitle(Base):
 	jobtitle = Column(String(64), nullable=False)
 
 	def __repr__(self):
-		return "Job Title: %d, Tag Name: %s, Tag Display: %s, Job_id: %s" % (self.id, self.tagdisplay, self.tagname, self.jobtitle)
+		return "ID: %r, Tag Name: %s, Tag Display: %s, Job_title: %s" % (self.id, self.tagdisplay, self.tagname, self.jobtitle)
 	
 
 class Skills(Base):
