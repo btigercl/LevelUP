@@ -137,6 +137,11 @@ def geographic_demand_skill():
 		json_to_send = jsonify(json_dict)
 		return json_to_send
 
+@app.route("/emerging_tech")
+def emerging_tech():
+	"""Render jinja insert for emerging_tech.""" 
+	return render_template("emerging_tech.html")
+
 @app.route("/cookies")
 def cookies_storage():
 	"""om-nom-nom"""

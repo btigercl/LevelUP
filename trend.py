@@ -2,6 +2,7 @@ from db import slimmodel
 from datetime import date
 
 def cal_trend_precent_by_day(name):
+	"""gives granularity on a daily level"""
 	trend_dict_list = []
 	trend_obj_list = slimmodel.get_trend_by_name(name)
 	question_list = slimmodel.get_trend_by_name("question")
@@ -26,6 +27,7 @@ def cal_trend_precent_by_day(name):
 # q_date_slice = q_date[8:10] + '-' + q_date[5:7] + "-" + q_date[0:4]
 # date_slice = returned_date[8:10] + '-' + returned_date[5:7] + "-" + returned_date[0:4]
 def cal_trend_precent_by_month(name):
+	"""granularity on a per month level"""
 	trend_month_info = []
 	month_list = ["2009-01", "2009-02", "2009-03", "2009-04", "2009-05", "2009-06", "2009-07", "2009-08", "2009-09", "2009-10", "2009-11", "2009-12", "2010-01", "2010-02", "2010-03", "2010-04", "2010-05", "2010-06", "2010-07", "2010-08", "2010-09", "2010-10", "2010-11", "2010-12", "2011-01", "2011-02", "2011-03", "2011-04", "2011-05", "2011-06", "2011-07", "2011-08", "2011-09", "2011-10", "2011-11", "2011-12", "2012-01", "2012-02", "2012-03", "2012-04", "2012-05", "2012-06", "2012-07", "2012-08", "2012-09", "2012-10", "2012-11", "2012-12", "2013-01", "2013-02", "2013-03", "2013-04", "2013-05", "2013-06", "2013-07", "2013-08", "2013-09", "2013-10", "2013-11", "2013-12", "2014-01", "2014-02", "2014-03", "2014-04", "2014-05", "2014-06", "2014-07", "2014-08", "2014-09", "2014-10", "2014-11", "2014-12"]
 	trend_obj_list = slimmodel.get_trend_by_name(name)
@@ -60,6 +62,7 @@ def cal_trend_precent_by_month(name):
 
 
 def cal_trend_precent_by_year(name):
+	"""granularity on a per year level"""
 	trend_year_info = []
 	year_list = ["2008", "2009", "2010", "2011", "2012", "2013", "2014"]
 	trend_obj_list = slimmodel.get_trend_by_name(name)
@@ -94,7 +97,7 @@ def cal_trend_precent_by_year(name):
 	return trend_year_info
 
 def creating_multi_trend_dict(name1, name2, name3):
-	
+	"""used to pass through many arguments to create a multi line graph"""
 	input_list = [name1, name2, name3]
 	trends_dict_list = []
 
@@ -107,6 +110,7 @@ def creating_multi_trend_dict(name1, name2, name3):
 	return trends_dict_list
 
 def creating_trend_dict(name1):
+	"""used to write a single line dict"""
 	returned_dict = cal_trend_precent_by_month(name1)
 	return returned_dict
 # creating_multi_trend_dict("css", "html", "javascript")
