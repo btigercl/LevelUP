@@ -1,7 +1,7 @@
 from flask import Flask, render_template, redirect, request, session, flash, g, url_for, jsonify 
 import jinja2
 import os
-from db import slimmodel, jsonmodel
+from database import slimmodel, jsonmodel
 from calls import ALskillcall, ALlocation, CBskillcall
 import json
 import pprint

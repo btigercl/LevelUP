@@ -1,0 +1,14 @@
+{"items":
+
+[{"has_synonyms":true,"is_moderator_only":false,"is_required":false,"count":472,"name":"python-module"},
+
+{"has_synonyms":false,"is_moderator_only":false,"is_required":false,"count":305,"name":"cpython"},
+
+{"has_synonyms":false,"is_moderator_only":false,"is_required":false,"count":270,"name":"mod-python"},
+
+{"has_synonyms":false,"is_moderator_only":false,"is_required":false,"count":27,"name":"dnspython"},
+
+{"has_synonyms":false,"is_moderator_only":false,"is_required":false,"count":25,"name":"ironpython-stu
+dio"}],
+
+"has_more":false,"quota_max":10000,"quota_remaining":9933}

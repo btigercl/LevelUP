@@ -1,0 +1,10 @@
+Metadata-Version: 1.0
+Name: python-angellist
+Version: 1.0
+Summary: Light wrapper around AngelList API
+Home-page: https://github.com/sandeepbhaskar/python-angellist
+Author: Sandeep Bhaskar
+Author-email: sandeep.bhaskar19@gmail.com
+License: MIT
+Description: UNKNOWN
+Platform: UNKNOWN

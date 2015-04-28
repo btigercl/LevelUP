@@ -1,4 +1,4 @@
-from db import slimmodel
+from database import slimmodel
 from datetime import date
 
 def cal_trend_precent_by_day(name):
