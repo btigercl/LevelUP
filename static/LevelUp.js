@@ -37,13 +37,16 @@ var clusterData;
 function startCluster(evt){
   evt.preventDefault();
   $("#cluster_results").empty()
+  $("#cluster_results").append("<h1 style=text-align:center> Loading... </h1>") 
   var skillName= $( "select[name='selected_skill']" ).val();
   console.log(skillName)
   $("#cluster_header").empty()
+  $("#dynamic_list").empty()
   $("#cluster_header").append("<h1>skill set graph for " + skillName + "</h1>");
   var encodedSkill = encodeURIComponent(skillName);
 
   d3.json( "/skill_angelList_call?selected_skill=" + encodedSkill, function(error, json) {
+    $("#cluster_results").empty()
     clusterData = json;
     visualizeCluster(clusterData);
   });  
@@ -141,6 +144,9 @@ function visualizeCluster(datapassed){
   function click() {
     if (d3.event.defaultPrevented) return;
     $("#cluster_header").empty()
+    $("#dynamic_list").empty()
+    $("#cluster_results").empty()
+    $("#cluster_results").append("<h1 style=text-align:center> Loading... </h1>") 
     var d = d3.select(this).node().__data__;
     var tagDisplayname = d.name;
     $("#cluster_header").append("<h1>skill set graph for " + d.name + "</h1>");
@@ -172,7 +178,6 @@ function processDataIntoLinks(nodes){
 
 //This parses out the roletag information from the dictionary and inserts ranked list items into the DOM
 function createRoletaglist(dict){
-  $("#dynamic_list").empty()
    _.each(dict.roletag_list, function(item, index){
       var front = "<li>";
       var middle = String(item) 
